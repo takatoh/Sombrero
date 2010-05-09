@@ -42,16 +42,16 @@ class PhotoClipperApp < Sinatra::Base
 
 
   get '/images/photos/*' do
-    send_file "#{PC_CONFIG["storage"]}/photos/#{params[:splat][0]}"
+    send_file "#{SOMBRERO_CONFIG["storage"]}/photos/#{params[:splat][0]}"
   end
 
   get '/images/samples/*' do
-    send_file "#{PC_CONFIG["storage"]}/samples/#{params[:splat][0]}"
+    send_file "#{SOMBRERO_CONFIG["storage"]}/samples/#{params[:splat][0]}"
   end
 
   get '/images/thumbs/*' do
   #   content_type "image/jpeg"
-    send_file "#{PC_CONFIG["storage"]}/thumbs/#{params[:splat][0]}"
+    send_file "#{SOMBRERO_CONFIG["storage"]}/thumbs/#{params[:splat][0]}"
   end
 
 

@@ -17,13 +17,13 @@ class PhotoStorage
     @photo_dir     = "photos"
     @thumbnail_dir = "thumbs"
     @sample_dir    = "samples"
-    if defined? PC_PROVIDES_URL
-      @provides_url = PC_PROVIDES_URL
+    if defined? SOMBRERO_PROVIDES_URL
+      @provides_url = SOMBRERO_PROVIDES_URL
     else
       @provides_url = ""
     end
-    if defined? PC_ARRANGED_FILE_ENCODING
-      @arranged_file_encoding = PC_ARRANGED_FILE_ENCODING
+    if defined? SOMBRERO_ARRANGED_FILE_ENCODING
+      @arranged_file_encoding = SOMBRERO_ARRANGED_FILE_ENCODING
     else
       @arranged_file_encoding = nil
     end

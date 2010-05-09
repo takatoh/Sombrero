@@ -44,7 +44,7 @@ class PhotoRegistrar
     md5 = Digest::MD5.hexdigest(content)
     raise Rejection.new("Already exist(#{md5})") if Photo.find(:md5 => md5)
 
-    storage = PhotoStorage.new(PC_CONFIG["storage"])
+    storage = PhotoStorage.new(SOMBRERO_CONFIG["storage"])
     path, thumbnail_path, sample_path = storage.store(content, md5 + File.extname(file))
     photo = Photo.create({
       :url            => info[:url],
