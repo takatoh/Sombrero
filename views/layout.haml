@@ -1,0 +1,36 @@
+!!! XML
+!!! Strict
+
+%html
+  %head
+    %title PhotoClipper
+    %meta{:"http-equiv" => "Content-Type", :comment => "text/html", :charset => "utf-8"}
+    %link{:rel => "stylesheet", :type => "text/css", :href => "/style.css"}
+    %link{:rel => "stylesheet", :type => "text/css", :href => "/js/highslide/highslide.css"}
+  %body
+    %div#container
+      %div#header
+        %h1
+          %a{:href => "/"} PhotoClipper
+        %div#menu
+          %ul
+            %li
+              %a{:href => "/clip/new"} Clip a photo
+            %li
+              %a{:href => "/post/new"} Post a photo
+      %div#menuBar
+        %ul
+          %li
+            %a{:href => "/recent/1"} Recent
+          %li
+            %a{:href => "/list/1"} List
+          %li
+            Gallery
+          %li
+            Directory
+          %li
+            Setting
+      %div#content
+        != yield
+      %div#footer
+        = "Powered by PhotoClipper v.#{PHOTO_CLIPPER_VERSION}"

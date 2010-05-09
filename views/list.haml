@@ -1,0 +1,23 @@
+%div.page_navi
+  - unless @page.first_page?
+    %span
+      %a{:href => "/list/#{@page.prev_page}"} &#171; Prev
+  %span= "[ #{@page.current_page} / #{@page.page_count} ]"
+  - unless @page.last_page?
+    %span
+      %a{:href => "/list/#{@page.next_page}"} Next &#187;
+
+%div#main
+  - @photos.each do |photo|
+    %div.photoBox
+      %a{:href => '/images/' + photo.path}
+        %img.thumbnail{:src => '/images/' + photo.thumbnail_path}
+
+%div.page_navi
+  - unless @page.first_page?
+    %span
+      %a{:href => "/list/#{@page.prev_page}"} &#171; Prev
+  %span= "[ #{@page.current_page} / #{@page.page_count} ]"
+  - unless @page.last_page?
+    %span
+      %a{:href => "/list/#{@page.next_page}"} Next &#187;

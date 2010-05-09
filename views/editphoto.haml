@@ -1,0 +1,38 @@
+!!! XML
+!!! Strict
+
+%html
+  %head
+    %title PhotoClipper
+    %meta{:"http-equiv" => "Content-Type", :comment => "text/html", :charset => "utf-8"}
+    %link{:rel => "stylesheet", :type => "text/css", :href => "/style.css"}
+    %link{:rel => "stylesheet", :type => "text/css", :href => "/js/highslide/highslide.css"}
+    %script{:type => "text/javascript", :src => "/js/highslide/highslide.js"}
+    %script{:type => "text/javascript", :src => "/js/highslide/highslide-with-html.js"}
+  %body
+    %h2 Edit photo information
+    %div
+      %form{ :action => "/photos/#{@photo.id}", :method => "POST" }
+        %input{ :type => "hidden", :name => "_method", :value => "PUT" }
+        %table
+          %tr
+            %td Id:
+            %td= @photo.id
+          %tr
+            %td URL:
+            %td= @photo.url
+          %tr
+            %td Page URL:
+            %td= @photo.page_url
+          %tr
+            %td Title:
+            %td
+              %input{ :type => "text", :name => "title", :size => 80, :value => @photo.title }
+          %tr
+            %td Note:
+            %td
+              %input{ :type => "text", :name => "note", :size => 80, :value => @photo.note }
+          %tr
+            %td
+            %td
+              %input{ :type => "submit", :value => "Save" }

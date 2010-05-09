@@ -1,0 +1,20 @@
+%div
+  %form{ :action => "/post", :method => "POST", :enctype => "multipart/form-data" }
+    %table
+      %tr
+        %td URL:
+        %td
+          %input{ :type => "text", :name => "url", :size => 100 }
+      %tr
+        %td Page URL:
+        %td
+          %input{ :type => "text", :name => "page_url", :size => 100 }
+      %tr
+        %td File:
+        %td
+          %input{ :type => "file", :name => "file", :size => 100 }
+      %tr
+        %td
+        %td
+          %input{ :type => "submit", :value => "Post" }
+

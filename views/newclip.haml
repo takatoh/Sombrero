@@ -1,0 +1,16 @@
+%div
+  %form{ :action => "/clip", :method => "POST" }
+    %table
+      %tr
+        %td URL:
+        %td
+          %input{ :type => "text", :name => "url", :size => 100 }
+      %tr
+        %td Page URL:
+        %td
+          %input{ :type => "text", :name => "page_url", :size => 100 }
+      %tr
+        %td
+        %td
+          %input{ :type => "submit", :value => "Clip" }
+
