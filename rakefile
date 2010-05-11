@@ -1,0 +1,25 @@
+require 'rubygems'
+require 'rake'
+require 'sequel'
+require 'sequel/extensions/migration'
+
+require 'boot'
+
+
+namespace :db do
+  desc "Migrate database."
+  task :migrate do
+    Sequel::Migrator.apply(DB, './db/migration')
+  end
+end
+
+desc "Setup app."
+task :setup => [ :directories, "db:migrate" ]
+
+task :directories => %w( tmp storage/photos storage/samples storage/thumbs )
+
+directory "tmp"
+directory "storage/photos"
+directory "storage/samples"
+directory "storage/thumbs"
+
