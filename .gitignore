@@ -1,1 +1,3 @@
 db/sombrero.db
+tmp/
+storage/
