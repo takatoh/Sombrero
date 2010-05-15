@@ -1,5 +1,5 @@
 #
-#  PhotoClipper Web App.
+#  Sombrero Web App.
 #
 
 
