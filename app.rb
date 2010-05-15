@@ -55,33 +55,33 @@ class PhotoClipperApp < Sinatra::Base
   end
 
 
-  # Recent photos.
+  # Recent posts.
 
   get '/recent/:page' do
-    @page = ::Photo.order_by(:id.desc).paginate(params[:page].to_i, 10)
-    @photos = @page.all
+    @page = ::Post.order_by(:id.desc).paginate(params[:page].to_i, 10)
+    @posts = @page.all
     @pg = params[:page]
     session["page"] = params[:page]
     haml :recent
   end
 
 
-  # List photos.
+  # List posts.
 
   get '/list' do
     redirect '/list/1'
   end
 
   get '/list/:page' do
-    @page = ::Photo.order_by(:id.desc).paginate(params[:page].to_i, 20)
-    @photos = @page.all
+    @page = ::Posto.order_by(:id.desc).paginate(params[:page].to_i, 20)
+    @posts = @page.all
     @pg = params[:page]
     session["page"] = params[:page]
     haml :list
   end
 
 
-  # List photos with size.
+  # List posts with size.
 
   get '/wallpapers/:size' do
     redirect "/wallpapers/#{params[:size]}/1"
@@ -93,7 +93,7 @@ class PhotoClipperApp < Sinatra::Base
     w = m[1].to_i
     h = m[2].to_i
     @page = ::Photo.filter(:width => w, :height => h).order_by(:id.desc).paginate(params[:page].to_i, 20)
-    @photos = @page.all
+    @posts = @page.all
     @pg = params[:page]
     session["page"] = params[:page]
     haml :wallpapers

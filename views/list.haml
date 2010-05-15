@@ -8,7 +8,7 @@
       %a{:href => "/list/#{@page.next_page}"} Next &#187;
 
 %div#main
-  - @photos.each do |photo|
+  - @posts.each do |photo|
     %div.photoBox
       %a{:href => '/images/' + photo.path}
         %img.thumbnail{:src => '/images/' + photo.thumbnail_path}

@@ -16,7 +16,7 @@
         %a{:href => "/recent/#{@page.next_page}"} Next &#187;
 
   %div#main{:class => "highslide-gallery"}
-    - @photos.each do |photo|
+    - @posts.each do |photo|
       %div.photo
         %div.thumbnailBox
           %a.highslide{:href => '/images/' + photo.path, :onclick => "return hs.expand(this)"}
