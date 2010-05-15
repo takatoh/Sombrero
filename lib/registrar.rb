@@ -10,6 +10,7 @@ require 'digest/md5'
 
 require 'boot'
 require 'model/photo'
+require 'model/post'
 require 'file_fetcher'
 require 'photo_storage'
 
@@ -47,17 +48,22 @@ class PhotoRegistrar
     storage = PhotoStorage.new(SOMBRERO_CONFIG["storage"])
     path, thumbnail_path, sample_path = storage.store(content, md5 + File.extname(file))
     photo = Photo.create({
-      :url            => info[:url],
-      :page_url       => info[:page_url],
       :width          => width,
       :height         => height,
+      :filesize       => content.size,
+      :md5            => md5,
       :path           => path,
       :sample_path    => sample_path,
       :thumbnail_path => thumbnail_path,
-      :filesize       => content.size,
-      :md5            => md5,
       :posted_date    => Time.now
     })
+    post = Post.create({
+      :url            => info[:url],
+      :page_url       => info[:page_url],
+      :posted_date    => Time.now
+    })
+    post.photo = photo
+    post.save
     img = nil
     FileUtils.rm(file)
     photo
