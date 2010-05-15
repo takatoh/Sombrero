@@ -13,7 +13,7 @@ require 'registrar'
 require 'version'
 
 
-class PhotoClipperApp < Sinatra::Base
+class SombreroApp < Sinatra::Base
 
   helpers do
     include Rack::Utils
