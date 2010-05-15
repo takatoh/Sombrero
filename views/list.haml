@@ -8,10 +8,10 @@
       %a{:href => "/list/#{@page.next_page}"} Next &#187;
 
 %div#main
-  - @posts.each do |photo|
+  - @posts.each do |post|
     %div.photoBox
-      %a{:href => '/images/' + photo.path}
-        %img.thumbnail{:src => '/images/' + photo.thumbnail_path}
+      %a{:href => '/images/' + post.photo.path}
+        %img.thumbnail{:src => '/images/' + post.photo.thumbnail_path}
 
 %div.page_navi
   - unless @page.first_page?

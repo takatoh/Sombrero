@@ -73,7 +73,7 @@ class PhotoClipperApp < Sinatra::Base
   end
 
   get '/list/:page' do
-    @page = ::Posto.order_by(:id.desc).paginate(params[:page].to_i, 20)
+    @page = ::Post.order_by(:id.desc).paginate(params[:page].to_i, 20)
     @posts = @page.all
     @pg = params[:page]
     session["page"] = params[:page]
