@@ -158,8 +158,8 @@ class PhotoClipperApp < Sinatra::Base
   end
 
   get '/photo/:id.delete' do
-    @photo = Photo.find(:id => params[:id])
-    @photo.delete
+    @post = Post.find(:id => params[:id])
+    @post.delete
     redirect "/recent/#{session["page"]}"
   end
 
