@@ -9,17 +9,17 @@
           %th
             Title:
           %td
-            = h @photo.title
+            = h @post.title
         %tr
           %th
             Original:
           %td
-            %a{:href => @photo.url}= h @photo.url
+            %a{:href => @post.url}= h @post.url
         %tr
           %th
             Website:
           %td
-            %a{:href => @photo.page_url}= h @photo.page_url
+            %a{:href => @post.page_url}= h @post.page_url
         %tr
           %th
             Size:
@@ -39,4 +39,4 @@
           %th
             Posted:
           %td
-            = h @photo.date
+            = h @post.date

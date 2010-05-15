@@ -168,11 +168,13 @@ class PhotoClipperApp < Sinatra::Base
 
   get '/photo/:id' do
     @photo = Photo.find(:id => params[:id])
+    @post = @photo.posts.first
     haml :photo
   end
 
   get '/photo/md5/:md5' do
     @photo = Photo.find(:md5 => params[:md5])
+    @post = @photo.posts.first
     haml :photo
   end
 
