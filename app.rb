@@ -139,22 +139,21 @@ class PhotoClipperApp < Sinatra::Base
 
   # Edit photo information.
 
-  get '/photo/:id.edit' do
-    @photo = Photo.find(:id => params[:id])
-    haml :editphoto
-  end
+#  get '/photo/:id.edit' do
+#    @post = Post.find(:id => params[:id])
+#    haml :editphoto
+#  end
 
   post '/photo/:id.edit' do
-    @photo = Photo.find(:id => params[:id])
-#    session["page"] ||= "1"
+    @post = Post.find(:id => params[:id])
     haml :editphoto, :layout => false
   end
 
   put '/photo/:id' do
-    @photo = Photo.find(:id => params[:id])
-    @photo.title = params[:title]
-    @photo.note = params[:note]
-    @photo.save
+    @post = Post.find(:id => params[:id])
+    @post.title = params[:title]
+    @post.note = params[:note]
+    @post.save
     redirect "/recent/#{session["page"]}"
   end
 
