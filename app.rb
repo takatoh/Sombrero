@@ -155,7 +155,7 @@ class PhotoClipperApp < Sinatra::Base
     @photo.title = params[:title]
     @photo.note = params[:note]
     @photo.save
-    redirect "/#{session["page"]}"
+    redirect "/recent/#{session["page"]}"
   end
 
   get '/photo/:id.delete' do
