@@ -44,6 +44,7 @@ Usage: #{psr.program_name} [option] URL
 EOB
 psr.on('-d', '--dry-run', %q[not register photos.]){@options[:dryrun] = true}
 psr.on('-r', '--recursive=N', %q[recursive crawl.]){|v| @options[:rec] = v.to_i}
+psr.on('-i', '--input=YAML', %q[input url from YAML.]){|v| @options[:input] = v}
 psr.on('-V', '--verbose', %q[verbose mode.]){@options[:verbose] = true}
 psr.on('--ignore-media-type', %q[ignore media-type.]){@options[:ignore_media_type] = true}
 psr.on('--link-only', %q[register linked photo only.]){@options[:link_only] = true}
@@ -59,8 +60,13 @@ end
 
 @ragistrar = PhotoRegistrar.new(@options)
 
-urls = [ARGV.shift]
+urls = if @options[:input]
+  YAML.load_file(@options[:input])
+else
+  [ARGV.shift]
+end
 urls.each do |url|
+  puts ""
   puts "Start crawling: #{url}"
   puts "  at #{Time.now.to_s}"
   crawler = PCrawler.new(url, @options)
