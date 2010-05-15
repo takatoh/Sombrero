@@ -1,9 +1,7 @@
-class CreateComments < Sequel::Migration
+class CreatePhotos < Sequel::Migration
   def up
     create_table :photos do
       primary_key :id
-      string      :url
-      string      :page_url
       integer     :width
       integer     :height
       integer     :filesize
