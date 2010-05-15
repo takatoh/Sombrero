@@ -81,7 +81,7 @@ class PhotoClipperApp < Sinatra::Base
   end
 
 
-  # List posts with size.
+  # List photos with size.
 
   get '/wallpapers/:size' do
     redirect "/wallpapers/#{params[:size]}/1"
@@ -93,7 +93,7 @@ class PhotoClipperApp < Sinatra::Base
     w = m[1].to_i
     h = m[2].to_i
     @page = ::Photo.filter(:width => w, :height => h).order_by(:id.desc).paginate(params[:page].to_i, 20)
-    @posts = @page.all
+    @photos = @page.all
     @pg = params[:page]
     session["page"] = params[:page]
     haml :wallpapers
