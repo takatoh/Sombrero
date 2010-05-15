@@ -11,7 +11,7 @@ require 'pcrawler'
 require 'registrar'
 
 
-SCRIPT_VERSION = "0.1.0"
+SCRIPT_VERSION = "0.2.0"
 
 
 def err_exit(msg)
@@ -33,6 +33,16 @@ def register_photo(image)
   end
 end
 
+def conv_opt(opt)
+  { :dryrun            => opt["dry-run"],
+    :rec               => opt["recursive"],
+    :verbose           => opt["verbose"],
+    :ignore_media_type => opt["ignore-media-type"],
+    :link_only         => opt["link-only"],
+    :embed_only        => opt["embed_only"]
+  }
+end
+
 
 @options = { :dryrun => false,
           }
@@ -44,6 +54,7 @@ Usage: #{psr.program_name} [option] URL
 EOB
 psr.on('-d', '--dry-run', %q[not register photos.]){@options[:dryrun] = true}
 psr.on('-r', '--recursive=N', %q[recursive crawl.]){|v| @options[:rec] = v.to_i}
+psr.on('-i', '--input=YAML', %q[input url and options from YAML file.]){|v| @options[:input] = v}
 psr.on('-V', '--verbose', %q[verbose mode.]){@options[:verbose] = true}
 psr.on('--ignore-media-type', %q[ignore media-type.]){@options[:ignore_media_type] = true}
 psr.on('--link-only', %q[register linked photo only.]){@options[:link_only] = true}
@@ -57,24 +68,30 @@ rescue OptionParser::InvalidOption => err
 end
 
 
-@ragistrar = PhotoRegistrar.new(@options)
-
-urls = [ARGV.shift]
-urls.each do |url|
+sources = if @options[:input]
+  YAML.load_file(@options[:input])
+else
+  [ {"url" => ARGV.shift, "options" => @options} ]
+end
+sources.each do |src|
+  url = src["url"]
+  opt = conv_opt(src["options"] || {})
+  puts ""
   puts "Start crawling: #{url}"
   puts "  at #{Time.now.to_s}"
-  crawler = PCrawler.new(url, @options)
+  crawler = PCrawler.new(url, opt)
   crawler.crawl
 
+  @ragistrar = PhotoRegistrar.new(opt)
   print "\n"
   puts "Register to database."
-  unless @options[:link_only]
+  unless opt[:link_only]
     puts "--- Embeded images:"
     crawler.embeded_images.each do |i|
       register_photo(i)
     end
   end
-  unless @options[:embed_only]
+  unless opt[:embed_only]
     puts "--- Linked images:"
     crawler.linked_images.each do |i|
       register_photo(i)
