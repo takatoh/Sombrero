@@ -75,7 +75,7 @@ else
 end
 sources.each do |src|
   url = src["url"]
-  opt = conv_opt(src["options"] || {})
+  opt = @options[:input] ? conv_opt(src["options"] || {}) : src["options"]
   puts ""
   puts "Start crawling: #{url}"
   puts "  at #{Time.now.to_s}"
