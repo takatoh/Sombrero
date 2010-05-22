@@ -1,6 +1,7 @@
 #!ruby
 #
-
+# ppost.rb - Post photos to sombrero.
+#
 
 require File.dirname(__FILE__) + "/../boot"
 require 'pcrawler'
@@ -37,6 +38,8 @@ psr.banner =<<EOB
 Pick out hyper-links in specified page.
 Usage: #{psr.program_name} [option] URL
 EOB
+psr.on('-u', '--url=URL', %q[photo URL.]){|v| @options[:url] = v}
+psr.on('-p', '--page-url=URL', %q[page URL.]){|v| @options[:page_url] = v}
 #psr.on('-i', '--input=YAML', %q[input from YAML file.]){|v| @options[:input] = v}
 #psr.on('-d', '--dry-run', %q[not register photos.]){@options[:dryrun] = true}
 #psr.on('-V', '--verbose', %q[verbose mode.]){@options[:verbose] = true}
@@ -52,7 +55,7 @@ end
 sources = if @options[:input]
   YAML.load_file(@options[:input])
 else
-  [ {"file" => ARGV.shift, "url" => nil, "page_url" => nil} ]
+  [ {"file" => ARGV.shift, "url" => @options[:url], "page_url" => @options[:page_url]} ]
 end
 sources.each do |src|
   @ragistrar = PhotoRegistrar.new(:keep => true)
