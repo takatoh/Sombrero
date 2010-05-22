@@ -1,9 +1,6 @@
 #!ruby
 #
-# Rubygem `Hpricot' is required.
-# You can install the gem:
-#
-# <tt>gem install hpricot</tt>
+# pcrawl.rb - Crawl web page and register photos.
 #
 
 require File.dirname(__FILE__) + "/../boot"
