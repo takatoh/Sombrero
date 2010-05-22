@@ -30,7 +30,6 @@ end
 
 
 @options = { :dryrun  => false,
-             :verbose => false
            }
 
 psr = OptionParser.new
@@ -41,8 +40,7 @@ EOB
 psr.on('-u', '--url=URL', %q[photo URL.]){|v| @options[:url] = v}
 psr.on('-p', '--page-url=URL', %q[page URL.]){|v| @options[:page_url] = v}
 psr.on('-i', '--input=YAML', %q[input from YAML file.]){|v| @options[:input] = v}
-#psr.on('-d', '--dry-run', %q[not register photos.]){@options[:dryrun] = true}
-#psr.on('-V', '--verbose', %q[verbose mode.]){@options[:verbose] = true}
+psr.on('-d', '--dry-run', %q[not register photos.]){@options[:dryrun] = true}
 psr.on_tail('-v', '--version', %q[show version.]){puts "#{psr.program_name} v#{SCRIPT_VERSION}"; exit}
 psr.on_tail('-h', '--help', %q[show this message.]){puts "#{psr}"; exit}
 begin
