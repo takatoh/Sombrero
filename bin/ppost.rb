@@ -40,7 +40,7 @@ Usage: #{psr.program_name} [option] URL
 EOB
 psr.on('-u', '--url=URL', %q[photo URL.]){|v| @options[:url] = v}
 psr.on('-p', '--page-url=URL', %q[page URL.]){|v| @options[:page_url] = v}
-#psr.on('-i', '--input=YAML', %q[input from YAML file.]){|v| @options[:input] = v}
+psr.on('-i', '--input=YAML', %q[input from YAML file.]){|v| @options[:input] = v}
 #psr.on('-d', '--dry-run', %q[not register photos.]){@options[:dryrun] = true}
 #psr.on('-V', '--verbose', %q[verbose mode.]){@options[:verbose] = true}
 psr.on_tail('-v', '--version', %q[show version.]){puts "#{psr.program_name} v#{SCRIPT_VERSION}"; exit}
@@ -52,14 +52,15 @@ rescue OptionParser::InvalidOption => err
 end
 
 
+@ragistrar = PhotoRegistrar.new(:keep => true)
 sources = if @options[:input]
-  YAML.load_file(@options[:input])
+  YAML.load_file(@options[:input]).map{|p| p.update("file" => p["path"]) }
 else
   [ {"file" => ARGV.shift, "url" => @options[:url], "page_url" => @options[:page_url]} ]
 end
+
+puts "Register to database."
+puts ""
 sources.each do |src|
-  @ragistrar = PhotoRegistrar.new(:keep => true)
-  print "\n"
-  puts "Register to database."
   register_photo(src)
 end
