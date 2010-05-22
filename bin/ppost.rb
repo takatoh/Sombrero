@@ -8,7 +8,7 @@ require 'pcrawler'
 require 'registrar'
 
 
-SCRIPT_VERSION = "0.0.0"
+SCRIPT_VERSION = "0.1.0"
 
 
 def err_exit(msg)
@@ -34,7 +34,7 @@ end
 
 psr = OptionParser.new
 psr.banner =<<EOB
-Pick out hyper-links in specified page.
+Post photos to Sombrero.
 Usage: #{psr.program_name} [option] URL
 EOB
 psr.on('-u', '--url=URL', %q[photo URL.]){|v| @options[:url] = v}
@@ -53,13 +53,13 @@ end
 
 @ragistrar = PhotoRegistrar.new(:keep => true)
 sources = if @options[:input]
-  YAML.load_file(@options[:input]).map do |p|
-    file = p["path"]
-    if @options[:source_dir]
-      file = File.join(@options[:source_dir], p["path"])
-    end
-    p.update("file" => file)
+  src = YAML.load_file(@options[:input])
+  if @options[:source_dir]
+    src.map{|p| p.update("file" => File.join(@options[:source_dir], p["path"]))}
+  else
+    src.map{|p| p.update("file" => p["path"])}
   end
+  src
 else
   [ {"file" => ARGV.shift, "url" => @options[:url], "page_url" => @options[:page_url]} ]
 end
