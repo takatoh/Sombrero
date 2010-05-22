@@ -11,7 +11,7 @@ require 'pcrawler'
 require 'registrar'
 
 
-SCRIPT_VERSION = "0.2.0"
+SCRIPT_VERSION = "0.2.1"
 
 
 def err_exit(msg)
@@ -49,7 +49,7 @@ end
 
 psr = OptionParser.new
 psr.banner =<<EOB
-Pick out hyper-links in specified page.
+Crawl a specified URL and register photo.
 Usage: #{psr.program_name} [option] URL
 EOB
 psr.on('-d', '--dry-run', %q[not register photos.]){@options[:dryrun] = true}
@@ -59,7 +59,7 @@ psr.on('-V', '--verbose', %q[verbose mode.]){@options[:verbose] = true}
 psr.on('--ignore-media-type', %q[ignore media-type.]){@options[:ignore_media_type] = true}
 psr.on('--link-only', %q[register linked photo only.]){@options[:link_only] = true}
 psr.on('--embed-only', %q[register embeded photo only.]){@options[:embed_only] = true}
-psr.on_tail('-v', '--version', %q[show version.]){puts "#{psr.program_name} ver.#{SCRIPT_VERSION}"; exit}
+psr.on_tail('-v', '--version', %q[show version.]){puts "#{psr.program_name} v#{SCRIPT_VERSION}"; exit}
 psr.on_tail('-h', '--help', %q[show this message.]){puts "#{psr}"; exit}
 begin
   psr.parse!
