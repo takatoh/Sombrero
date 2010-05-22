@@ -1,6 +1,10 @@
 #
 #  PhotoRegistrar  -  Register to database and store to filesystem.
 #
+#  options:
+#    :ignore_media_type
+#    :keep
+
 
 require 'rubygems'
 require 'rmagick'
@@ -65,10 +69,10 @@ class PhotoRegistrar
     post.photo = photo
     post.save
     img = nil
-    FileUtils.rm(file)
+    FileUtils.rm(file) unless @options[:keep]
     photo
   rescue Rejection
-    FileUtils.rm(file) if File.exist?(file)
+    FileUtils.rm(file) if File.exist?(file) && !@options[:keep]
     raise
 #  rescue => err
 #  ensure
