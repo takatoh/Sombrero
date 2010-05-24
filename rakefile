@@ -16,10 +16,14 @@ end
 desc "Setup app."
 task :setup => [ :directories, "db:migrate" ]
 
-task :directories => %w( tmp storage/photos storage/samples storage/thumbs )
+task :directories => [ "tmp",
+                       "#{SOMBRERO_CONFIG["storage"]}/photos",
+                       "#{SOMBRERO_CONFIG["storage"]}/samples",
+                       "#{SOMBRERO_CONFIG["storage"]}/thumbs"
+                     ]
 
 directory "tmp"
-directory "storage/photos"
-directory "storage/samples"
-directory "storage/thumbs"
+directory "#{SOMBRERO_CONFIG["storage"]}/photos"
+directory "#{SOMBRERO_CONFIG["storage"]}/samples"
+directory "#{SOMBRERO_CONFIG["storage"]}/thumbs"
 
