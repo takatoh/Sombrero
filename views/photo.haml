@@ -1,42 +1,41 @@
-%div#content
-  %div#main
-    %div
-      %a{:href => '/images/' + @photo.path}
-        %img{:src => '/images/' + @photo.sample_path}
-    %div
-      %table
-        %tr
-          %th
-            Title:
-          %td
-            = h @post.title
-        %tr
-          %th
-            Original:
-          %td
-            %a{:href => @post.url}= h @post.url
-        %tr
-          %th
-            Website:
-          %td
-            %a{:href => @post.page_url}= h @post.page_url
-        %tr
-          %th
-            Size:
-          %td
-            = h(@photo.width.to_s + "x" + @photo.height.to_s)
-        %tr
-          %th
-            File size:
-          %td
-            = h @photo.filesize
-        %tr
-          %th
-            MD5:
-          %td
-            = h @photo.md5
-        %tr
-          %th
-            Posted:
-          %td
-            = h @post.date
+%div#main
+  %div
+    %a{:href => '/images/' + @photo.path}
+      %img{:src => '/images/' + @photo.sample_path}
+  %div
+    %table
+      %tr
+        %th
+          Title:
+        %td
+          = h @post.title
+      %tr
+        %th
+          Original:
+        %td
+          %a{:href => @post.url}= h @post.url
+      %tr
+        %th
+          Website:
+        %td
+          %a{:href => @post.page_url}= h @post.page_url
+      %tr
+        %th
+          Size:
+        %td
+          = h(@photo.width.to_s + "x" + @photo.height.to_s)
+      %tr
+        %th
+          File size:
+        %td
+          = h @photo.filesize
+      %tr
+        %th
+          MD5:
+        %td
+          = h @photo.md5
+      %tr
+        %th
+          Posted:
+        %td
+          = h @post.date
