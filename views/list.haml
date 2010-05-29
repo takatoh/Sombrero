@@ -10,7 +10,7 @@
 %div#main
   - @posts.each do |post|
     %div.photoBox
-      %a{:href => '/images/' + post.photo.path}
+      %a{:href => '/photo/' + post.photo.id.to_s}
         %img.thumbnail{:src => '/images/' + post.photo.thumbnail_path}
 
 %div.page_navi
