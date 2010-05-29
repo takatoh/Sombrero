@@ -4,6 +4,7 @@
 #  options:
 #    :ignore_media_type
 #    :keep
+#    :force
 
 
 require 'rubygems'
@@ -47,20 +48,25 @@ class PhotoRegistrar
 
     content = File.open(file, "rb"){|f| f.read}
     md5 = Digest::MD5.hexdigest(content)
-    raise Rejection.new("Already exist(#{md5})") if Photo.find(:md5 => md5)
+    
+    photo =  Photo.find(:md5 => md5)
+    if photo
+      raise Rejection.new("Already exist(#{md5})") unless @options[:force]
+    else
+      storage = PhotoStorage.new(SOMBRERO_CONFIG["storage"])
+      path, thumbnail_path, sample_path = storage.store(content, md5 + File.extname(file))
+      photo = Photo.create({
+        :width          => width,
+        :height         => height,
+        :filesize       => content.size,
+        :md5            => md5,
+        :path           => path,
+        :sample_path    => sample_path,
+        :thumbnail_path => thumbnail_path,
+        :posted_date    => Time.now
+      })
+    end
 
-    storage = PhotoStorage.new(SOMBRERO_CONFIG["storage"])
-    path, thumbnail_path, sample_path = storage.store(content, md5 + File.extname(file))
-    photo = Photo.create({
-      :width          => width,
-      :height         => height,
-      :filesize       => content.size,
-      :md5            => md5,
-      :path           => path,
-      :sample_path    => sample_path,
-      :thumbnail_path => thumbnail_path,
-      :posted_date    => Time.now
-    })
     post = Post.create({
       :url            => info[:url],
       :page_url       => info[:page_url],
