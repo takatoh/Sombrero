@@ -126,13 +126,18 @@ class SombreroApp < Sinatra::Base
   end
 
   post '/post' do
-    if params[:file]
-      new_filename = params[:file][:filename]
-      save_file = './tmp/' + new_filename
-      File.open(save_file, 'wb'){ |f| f.write(params[:file][:tempfile].read) }
-      registrar = PhotoRegistrar.new( :force => params[:force] )
-      registrar.post(save_file, { :url => params[:url], :page_url => params[:page_url] })
-      redirect '/'
+    begin
+      if params[:file]
+        new_filename = params[:file][:filename]
+        save_file = './tmp/' + new_filename
+        File.open(save_file, 'wb'){ |f| f.write(params[:file][:tempfile].read) }
+        registrar = PhotoRegistrar.new( :force => params[:force] )
+        registrar.post(save_file, { :url => params[:url], :page_url => params[:page_url] })
+        redirect '/'
+      end
+    rescue PhotoRegistrar::Rejection => e
+      @md5 = /\((.+)\)/.match(e.message)[1]
+      haml :already_exist
     end
   end
 
