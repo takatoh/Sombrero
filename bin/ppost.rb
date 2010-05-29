@@ -8,7 +8,7 @@ require 'pcrawler'
 require 'registrar'
 
 
-SCRIPT_VERSION = "0.1.0"
+SCRIPT_VERSION = "0.2.0"
 
 
 def err_exit(msg)
@@ -41,6 +41,7 @@ psr.on('-u', '--url=URL', %q[photo URL.]){|v| @options[:url] = v}
 psr.on('-p', '--page-url=URL', %q[page URL.]){|v| @options[:page_url] = v}
 psr.on('-i', '--input=YAML', %q[input from YAML file.]){|v| @options[:input] = v}
 psr.on('--source-dir=DIR', %q[read file from DIR.]){|v| @options[:source_dir] = v}
+psr.on('-f', '--force', %q[force to register.]){|v| @options[:force] = true}
 psr.on('--dry-run', %q[not register photos.]){@options[:dryrun] = true}
 psr.on_tail('-v', '--version', %q[show version.]){puts "#{psr.program_name} v#{SCRIPT_VERSION}"; exit}
 psr.on_tail('-h', '--help', %q[show this message.]){puts "#{psr}"; exit}
@@ -51,7 +52,7 @@ rescue OptionParser::InvalidOption => err
 end
 
 
-@ragistrar = PhotoRegistrar.new(:keep => true)
+@ragistrar = PhotoRegistrar.new(:keep => true, :force => @options[:force])
 sources = if @options[:input]
   src = YAML.load_file(@options[:input])
   if @options[:source_dir]
