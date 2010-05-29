@@ -51,7 +51,9 @@ class PhotoRegistrar
     
     photo =  Photo.find(:md5 => md5)
     if photo
-      raise Rejection.new("Already exist(#{md5})") unless @options[:force]
+      if !(@options[:force]) || photo.posts.map{|p| p.url}.include?(info[:url])
+        raise Rejection.new("Already exist(#{md5})")
+      end
     else
       storage = PhotoStorage.new(SOMBRERO_CONFIG["storage"])
       path, thumbnail_path, sample_path = storage.store(content, md5 + File.extname(file))
