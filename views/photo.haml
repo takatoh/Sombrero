@@ -1,24 +1,9 @@
 %div#main
-  %div
+  %div#photo
     %a{:href => '/images/' + @photo.path}
       %img{:src => '/images/' + @photo.sample_path}
-  %div
+  %div#photoInfo
     %table
-      %tr
-        %th
-          Title:
-        %td
-          = h @post.title
-      %tr
-        %th
-          Original:
-        %td
-          %a{:href => @post.url}= h @post.url
-      %tr
-        %th
-          Website:
-        %td
-          %a{:href => @post.page_url}= h @post.page_url
       %tr
         %th
           Size:
@@ -36,6 +21,9 @@
           = h @photo.md5
       %tr
         %th
-          Posted:
+          Sources:
         %td
-          = h @post.date
+          %ul
+            - @posts.each do |post|
+              %li
+                %a{:href => post.url}= h post.url

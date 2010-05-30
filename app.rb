@@ -179,7 +179,7 @@ class SombreroApp < Sinatra::Base
 
   get '/photo/md5/:md5' do
     @photo = Photo.find(:md5 => params[:md5])
-    @post = @photo.posts.first
+    @posts = @photo.posts
     haml :photo
   end
 
