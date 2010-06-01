@@ -10,6 +10,7 @@
 require 'rubygems'
 require 'rmagick'
 require 'fileutils'
+require 'pathname'
 require 'digest/md5'
 
 require 'boot'
@@ -30,9 +31,8 @@ class PhotoRegistrar
 
 
   def clip(photo_info)
-    fname = ""
     c = FileFetcher.fetch(photo_info[:url], :ignore_media_type => @options[:ignore_media_type])
-    fname = File.join("./tmp", c[:filename])
+    fname = Pathname.new("./tmp") + c[:filename]
     File.open(fname, "wb"){|f| f.write(c[:body])}
 
     post(fname, photo_info)
@@ -40,6 +40,7 @@ class PhotoRegistrar
 
 
   def post(file, photo_info)
+    file = Pathname.new(file) if file.instance_of?(String)
     img = Magick::Image.read(file).first
     width = img.columns
     height = img.rows
@@ -79,7 +80,7 @@ class PhotoRegistrar
     FileUtils.rm(file) unless @options[:keep]
     photo
   rescue Rejection
-    FileUtils.rm(file) if File.exist?(file) && !@options[:keep]
+    FileUtils.rm(file) if file.exist? && !@options[:keep]
     raise
   end
 
