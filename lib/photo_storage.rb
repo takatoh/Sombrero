@@ -37,6 +37,9 @@ class PhotoStorage
   end
 
 
+
+  private
+
   def make_thumbnail(photopath, opts = {})
     thumbpath = thumb_fullpath(opts[:name])
     return thumb_path(opts[:name]) if File.exist?(thumbpath) and !opts[:force]
@@ -70,10 +73,6 @@ class PhotoStorage
     sample.write(samplepath)
     sample_path(opts[:name])
   end
-
-
-
-  private
 
   def photo_path(filename)
     File.join(@photo_dir, filename.slice(0,2), filename.slice(2,2), filename)
