@@ -28,12 +28,9 @@ class PhotoStorage
 
   def store(content, filename)
     fullpath = photo_fullpath(filename)
-    dir = fullpath.parent
-    unless File.exist?(dir)
-      FileUtils.mkdir_p(dir)
-    end
-    File.open(fullpath, "wb") do |f|
-      f.write(content)
+    unless File.exist?(fullpath)
+      FileUtils.mkdir_p(fullpath.parent)
+      File.open(fullpath, "wb"){|f| f.write(content)}
     end
     name = filename.sub(File.extname(filename), ".#{@format}")
     thumb_path = make_thumbnail(fullpath, {:name => name})
@@ -47,10 +44,8 @@ class PhotoStorage
 
   def make_thumbnail(photopath, opts = {})
     thumbpath = thumb_fullpath(opts[:name])
-    return thumb_path(opts[:name]) if File.exist?(thumbpath) and !opts[:force]
-    unless File.exist?(thumbpath.parent)
-      FileUtils.mkdir_p(thumbpath.parent)
-    end
+    return thumb_path(opts[:name]) if File.exist?(thumbpath)
+    FileUtils.mkdir_p(thumbpath.parent)
     geometry = Magick::Geometry.from_s(THUMBNAIL_GEOMETRY)
     img = Magick::Image.read(photopath).first
     thumbnail = img.change_geometry(geometry) do |cols, rows, i|
@@ -62,10 +57,8 @@ class PhotoStorage
 
   def make_sample(photopath, opts = {})
     samplepath = sample_fullpath(opts[:name])
-    return sample_path(opts[:name]) if File.exist?(samplepath) and !opts[:force]
-    unless File.exist?(samplepath.parent)
-      FileUtils.mkdir_p(samplepath.parent)
-    end
+    return sample_path(opts[:name]) if File.exist?(samplepath)
+    FileUtils.mkdir_p(samplepath.parent)
     img = Magick::Image.read(photopath).first
     if img.columns > SAMPLE_WIDTH or img.rows > SAMPLE_HEIGHT
       geometry = Magick::Geometry.from_s("#{SAMPLE_WIDTH.to_s}x#{SAMPLE_HEIGHT.to_s}")
