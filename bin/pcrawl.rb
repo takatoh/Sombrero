@@ -8,7 +8,7 @@ require 'pcrawler'
 require 'registrar'
 
 
-SCRIPT_VERSION = "0.2.1"
+SCRIPT_VERSION = "0.3.0"
 
 
 def err_exit(msg)
@@ -34,6 +34,7 @@ def conv_opt(opt)
   { :dryrun            => opt["dry-run"],
     :rec               => opt["recursive"],
     :verbose           => opt["verbose"],
+    :force             => opt["force"],
     :ignore_media_type => opt["ignore-media-type"],
     :link_only         => opt["link-only"],
     :embed_only        => opt["embed_only"]
@@ -53,6 +54,7 @@ psr.on('-d', '--dry-run', %q[not register photos.]){@options[:dryrun] = true}
 psr.on('-r', '--recursive=N', %q[recursive crawl.]){|v| @options[:rec] = v.to_i}
 psr.on('-i', '--input=YAML', %q[input url and options from YAML file.]){|v| @options[:input] = v}
 psr.on('-V', '--verbose', %q[verbose mode.]){@options[:verbose] = true}
+psr.on('-f', '--force', %q[force to register.]){@options[:force] = true}
 psr.on('--ignore-media-type', %q[ignore media-type.]){@options[:ignore_media_type] = true}
 psr.on('--link-only', %q[register linked photo only.]){@options[:link_only] = true}
 psr.on('--embed-only', %q[register embeded photo only.]){@options[:embed_only] = true}
