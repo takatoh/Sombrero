@@ -10,7 +10,6 @@
 require 'rubygems'
 require 'rmagick'
 require 'fileutils'
-require 'tempfile'
 require 'digest/md5'
 
 require 'boot'
@@ -30,17 +29,17 @@ class PhotoRegistrar
   end
 
 
-  def clip(photo)
+  def clip(photo_info)
     fname = ""
-    c = FileFetcher.fetch(photo[:url], :ignore_media_type => @options[:ignore_media_type])
+    c = FileFetcher.fetch(photo_info[:url], :ignore_media_type => @options[:ignore_media_type])
     fname = File.join("./tmp", c[:filename])
     File.open(fname, "wb"){|f| f.write(c[:body])}
 
-    post(fname, photo)
+    post(fname, photo_info)
   end
 
 
-  def post(file, info)
+  def post(file, photo_info)
     img = Magick::Image.read(file).first
     width = img.columns
     height = img.rows
@@ -48,10 +47,10 @@ class PhotoRegistrar
 
     content = File.open(file, "rb"){|f| f.read}
     md5 = Digest::MD5.hexdigest(content)
-    
+
     photo =  Photo.find(:md5 => md5)
     if photo
-      if !(@options[:force]) || photo.posts.map{|p| p.url}.include?(info[:url])
+      if !(@options[:force]) || photo.posts.map{|p| p.url}.include?(photo_info[:url])
         raise Rejection.new("Already exist(#{md5})")
       end
     else
@@ -70,8 +69,8 @@ class PhotoRegistrar
     end
 
     post = Post.create({
-      :url            => info[:url],
-      :page_url       => info[:page_url],
+      :url            => photo_info[:url],
+      :page_url       => photo_info[:page_url],
       :posted_date    => Time.now
     })
     post.photo = photo
@@ -82,13 +81,10 @@ class PhotoRegistrar
   rescue Rejection
     FileUtils.rm(file) if File.exist?(file) && !@options[:keep]
     raise
-#  rescue => err
-#  ensure
-#    FileUtils.rm(fname) if File.exist?(fname)
   end
 
 
-##
+
   private
 
   def small_image?(w, h)
