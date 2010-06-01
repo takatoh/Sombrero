@@ -2,7 +2,6 @@
 #  File fetcher
 #
 
-require 'open-uri'
 require 'rubygems'
 require 'httpclient'
 
@@ -21,14 +20,11 @@ class FileFetcher
     h = client.head(url)
     if opts[:ignore_media_type] || IMAGE_CONTENT_TYPES.member?(h.contenttype)
       c = client.get(url)
-      body = c.content
       filename = File.basename(url)
-      { :filename => filename, :body => body }
+      { :filename => filename, :body => c.content }
     else
       raise NotImage.new("Content-Type: #{h.contenttype}")
     end
-  rescue => err
-    raise NotImage.new
   end
 
 end   # of class FileFetcher
