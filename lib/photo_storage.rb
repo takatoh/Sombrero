@@ -12,6 +12,11 @@ require 'digest/md5'
 
 class PhotoStorage
 
+  THUMBNAIL_GEOMETRY = "150x150"
+  SAMPLE_WIDTH       = 600
+  SAMPLE_HEIGHT      = 800
+
+
   def initialize(base_dir)
     @storage_dir   = Pathname.new(base_dir).expand_path
     @photo_dir     = "photos"
@@ -46,7 +51,7 @@ class PhotoStorage
     unless File.exist?(thumbpath.parent)
       FileUtils.mkdir_p(thumbpath.parent)
     end
-    geometry = Magick::Geometry.from_s("150x150")
+    geometry = Magick::Geometry.from_s(THUMBNAIL_GEOMETRY)
     img = Magick::Image.read(photopath).first
     thumbnail = img.change_geometry(geometry) do |cols, rows, i|
       i.resize!(cols, rows)
@@ -62,8 +67,8 @@ class PhotoStorage
       FileUtils.mkdir_p(samplepath.parent)
     end
     img = Magick::Image.read(photopath).first
-    if img.columns > 600 or img.rows > 800
-      geometry = Magick::Geometry.from_s("600x800")
+    if img.columns > SAMPLE_WIDTH or img.rows > SAMPLE_HEIGHT
+      geometry = Magick::Geometry.from_s("#{SAMPLE_WIDTH.to_s}x#{SAMPLE_HEIGHT.to_s}")
       sample = img.change_geometry(geometry) do |cols, rows, i|
         i.resize!(cols, rows)
       end
