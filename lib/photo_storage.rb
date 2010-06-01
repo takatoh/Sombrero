@@ -5,7 +5,6 @@
 require 'rubygems'
 require 'rmagick'
 require 'fileutils'
-require 'iconv'
 require 'uri'
 require 'digest/md5'
 
@@ -17,16 +16,6 @@ class PhotoStorage
     @photo_dir     = "photos"
     @thumbnail_dir = "thumbs"
     @sample_dir    = "samples"
-    if defined? SOMBRERO_PROVIDES_URL
-      @provides_url = SOMBRERO_PROVIDES_URL
-    else
-      @provides_url = ""
-    end
-    if defined? SOMBRERO_ARRANGED_FILE_ENCODING
-      @arranged_file_encoding = SOMBRERO_ARRANGED_FILE_ENCODING
-    else
-      @arranged_file_encoding = nil
-    end
     @format = "jpg"
   end
 
@@ -109,11 +98,5 @@ class PhotoStorage
     File.join(@storage_dir, sample_path(filename))
   end
 
-  def local_encoding(path)
-    if @arranged_file_encoding
-      Iconv.iconv(@arranged_file_encoding, 'UTF-8', path).first
-    else
-      path
-    end
-  end
-end
+end   # of class PhotoStorage
+
