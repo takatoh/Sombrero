@@ -1,6 +1,6 @@
 %div#main
   %div#photo
-    %a{:href => '/images/' + @photo.path}
+    %a{:href => '/images/' + @photo.path, :target => '_brank'}
       %img{:src => '/images/' + @photo.sample_path}
   %div#photoInfo
     %table
@@ -9,11 +9,13 @@
           Size:
         %td
           = h(@photo.width.to_s + "x" + @photo.height.to_s)
+          pixels
       %tr
         %th
           File size:
         %td
           = h @photo.filesize
+          bytes
       %tr
         %th
           MD5:
