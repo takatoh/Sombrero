@@ -9,7 +9,7 @@ require 'sequel/extensions/pagination'
 
 require 'boot'
 require 'model/photo'
-require 'registrar'
+require 'photo_registrar'
 require 'version'
 
 

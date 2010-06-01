@@ -5,7 +5,7 @@
 
 require File.dirname(__FILE__) + "/../boot"
 require 'pcrawler'
-require 'registrar'
+require 'photo_registrar'
 
 
 SCRIPT_VERSION = "0.3.0"
