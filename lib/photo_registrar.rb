@@ -89,7 +89,7 @@ class PhotoRegistrar
   private
 
   def small_image?(w, h)
-    w < 200 or h < 200
+    w < SOMBRERO_CONFIG["minimum_photo_width"] or h < SOMBRERO_CONFIG["minimum_photo_height"]
   end
 
 
