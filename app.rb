@@ -164,12 +164,12 @@ class SombreroApp < Sinatra::Base
 
   get '/photo/:id.delete' do
     @post = Post.find(:id => params[:id])
-    @post.delete
+    @post.destroy
     redirect "/recent/#{session["page"]}"
   end
 
 
-  # Edit and delete phost.
+  # Edit and delete post.
 
   post '/post/:id.edit' do
     @post = Post.find(:id => params[:id])
@@ -186,7 +186,7 @@ class SombreroApp < Sinatra::Base
 
   get '/post/:id.delete' do
     @post = Post.find(:id => params[:id])
-    @post.delete
+    @post.destroy
     redirect "/recent/#{session["page"]}"
   end
 
