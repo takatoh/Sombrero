@@ -169,6 +169,28 @@ class SombreroApp < Sinatra::Base
   end
 
 
+  # Edit and delete phost.
+
+  post '/post/:id.edit' do
+    @post = Post.find(:id => params[:id])
+    haml :editpost, :layout => false
+  end
+
+  put '/post/:id' do
+    @post = Post.find(:id => params[:id])
+    @post.title = params[:title]
+    @post.note = params[:note]
+    @post.save
+    redirect "/recent/#{session["page"]}"
+  end
+
+  get '/post/:id.delete' do
+    @post = Post.find(:id => params[:id])
+    @post.delete
+    redirect "/recent/#{session["page"]}"
+  end
+
+
   # Show photo.
 
   get '/photo/:id' do

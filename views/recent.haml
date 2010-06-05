@@ -24,9 +24,9 @@
         %div.control
           %ul
             %li
-              %a{ :href => ('/photo/' + post.photo.id.to_s + '.edit'), :onclick => "return hs.htmlExpand(this, { objectType: 'ajax', width: 500, height: 300 } )" } edit
+              %a{ :href => ('/post/' + post.id.to_s + '.edit'), :onclick => "return hs.htmlExpand(this, { objectType: 'ajax', width: 500, height: 300 } )" } edit
             %li
-              %a{ :href => ('/photo/' + post.photo.id.to_s + '.delete?pg=' + @pg) } delete
+              %a{ :href => ('/post/' + post.id.to_s + '.delete') } delete
         %div.photoTitle= post.title || "(no title)"
         %div.photoInfo
           %table
