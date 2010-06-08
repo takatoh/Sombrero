@@ -34,12 +34,14 @@ class SombreroApp < Sinatra::Base
     redirect '/recent/1'
   end
 
+  # Style sheet
 
-  get '/style.css' do
+  get '/css/:style.css' do
     content_type 'text/css', :charset => 'utf-8'
-    sass :style
+    sass params[:style].intern
   end
 
+  #
 
   get '/images/photos/*' do
     send_file "#{SOMBRERO_CONFIG["storage"]}/photos/#{params[:splat][0]}"
@@ -60,6 +62,7 @@ class SombreroApp < Sinatra::Base
   get '/recent/:page' do
     @page = ::Post.order_by(:id.desc).paginate(params[:page].to_i, 10)
     @posts = @page.all
+    @styles = %w( css/base js/highslide/highslide )
     @pg = params[:page]
     session["page"] = params[:page]
     haml :recent
@@ -75,6 +78,7 @@ class SombreroApp < Sinatra::Base
   get '/list/:page' do
     @page = ::Post.order_by(:id.desc).paginate(params[:page].to_i, 20)
     @posts = @page.all
+    @styles = %w( css/base )
     @pg = params[:page]
     session["page"] = params[:page]
     haml :list
@@ -84,6 +88,7 @@ class SombreroApp < Sinatra::Base
   # List photos with size.
 
   get '/wallpapers/:size' do
+    @styles = %w( css/base )
     redirect "/wallpapers/#{params[:size]}/1"
   end
 
@@ -94,6 +99,7 @@ class SombreroApp < Sinatra::Base
     h = m[2].to_i
     @page = ::Photo.filter(:width => w, :height => h).order_by(:id.desc).paginate(params[:page].to_i, 20)
     @photos = @page.all
+    @styles = %w( css/base )
     @pg = params[:page]
     session["page"] = params[:page]
     haml :wallpapers
@@ -103,6 +109,7 @@ class SombreroApp < Sinatra::Base
   # Clip a new photo.
 
   get '/clip/new' do
+    @styles = %w( css/base )
     haml :newclip
   end
 
@@ -122,6 +129,7 @@ class SombreroApp < Sinatra::Base
   # Post a new photo.
 
   get '/post/new' do
+    @styles = %w( css/base )
     haml :newpost
   end
 
@@ -151,6 +159,7 @@ class SombreroApp < Sinatra::Base
 
   post '/photo/:id.edit' do
     @post = Post.find(:id => params[:id])
+    @styles = %w( css/base )
     haml :editphoto, :layout => false
   end
 
@@ -173,6 +182,7 @@ class SombreroApp < Sinatra::Base
 
   post '/post/:id.edit' do
     @post = Post.find(:id => params[:id])
+    @styles = %w( css/base )
     haml :editpost, :layout => false
   end
 
@@ -196,12 +206,14 @@ class SombreroApp < Sinatra::Base
   get '/photo/:id' do
     @photo = Photo.find(:id => params[:id])
     @posts = @photo.posts
+    @styles = %w( css/base )
     haml :photo
   end
 
   get '/photo/md5/:md5' do
     @photo = Photo.find(:md5 => params[:md5])
     @posts = @photo.posts
+    @styles = %w( css/base )
     haml :photo
   end
 
