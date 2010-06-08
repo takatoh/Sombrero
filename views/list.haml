@@ -1,23 +1,24 @@
-%div.page_navi
-  - unless @page.first_page?
-    %span
-      %a{:href => "/list/#{@page.prev_page}"} &#171; Prev
-  %span= "[ #{@page.current_page} / #{@page.page_count} ]"
-  - unless @page.last_page?
-    %span
-      %a{:href => "/list/#{@page.next_page}"} Next &#187;
-
 %div#main
-  - @posts.each do |post|
-    %div.photoBox
-      %a{:href => '/photo/' + post.photo.id.to_s}
-        %img.thumbnail{:src => '/images/' + post.photo.thumbnail_path}
+  %div.page_navi
+    - unless @page.first_page?
+      %span
+        %a{:href => "/list/#{@page.prev_page}"} &#171; Prev
+    %span= "[ #{@page.current_page} / #{@page.page_count} ]"
+    - unless @page.last_page?
+      %span
+        %a{:href => "/list/#{@page.next_page}"} Next &#187;
 
-%div.page_navi
-  - unless @page.first_page?
-    %span
-      %a{:href => "/list/#{@page.prev_page}"} &#171; Prev
-  %span= "[ #{@page.current_page} / #{@page.page_count} ]"
-  - unless @page.last_page?
-    %span
-      %a{:href => "/list/#{@page.next_page}"} Next &#187;
+  %div#photoList
+    - @posts.each do |post|
+      %div.photoBox
+        %a{:href => '/photo/' + post.photo.id.to_s}
+          %img.thumbnail{:src => '/images/' + post.photo.thumbnail_path}
+
+  %div.page_navi
+    - unless @page.first_page?
+      %span
+        %a{:href => "/list/#{@page.prev_page}"} &#171; Prev
+    %span= "[ #{@page.current_page} / #{@page.page_count} ]"
+    - unless @page.last_page?
+      %span
+        %a{:href => "/list/#{@page.next_page}"} Next &#187;
