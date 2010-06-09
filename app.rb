@@ -62,7 +62,7 @@ class SombreroApp < Sinatra::Base
   get '/recent/:page' do
     @page = ::Post.order_by(:id.desc).paginate(params[:page].to_i, 10)
     @posts = @page.all
-    @styles = %w( css/base js/highslide/highslide )
+    @styles = %w( css/base css/recent js/highslide/highslide )
     @pg = params[:page]
     session["page"] = params[:page]
     haml :recent
@@ -78,7 +78,7 @@ class SombreroApp < Sinatra::Base
   get '/list/:page' do
     @page = ::Post.order_by(:id.desc).paginate(params[:page].to_i, 20)
     @posts = @page.all
-    @styles = %w( css/base )
+    @styles = %w( css/base css/list )
     @pg = params[:page]
     session["page"] = params[:page]
     haml :list
@@ -206,14 +206,14 @@ class SombreroApp < Sinatra::Base
   get '/photo/:id' do
     @photo = Photo.find(:id => params[:id])
     @posts = @photo.posts
-    @styles = %w( css/base )
+    @styles = %w( css/base css/photo )
     haml :photo
   end
 
   get '/photo/md5/:md5' do
     @photo = Photo.find(:md5 => params[:md5])
     @posts = @photo.posts
-    @styles = %w( css/base )
+    @styles = %w( css/base css/photo )
     haml :photo
   end
 

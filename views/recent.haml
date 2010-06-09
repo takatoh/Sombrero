@@ -6,7 +6,7 @@
   hs.wrapperClassName = 'draggable-header';
 
 %div#main
-  %div.page_navi
+  %div.pageNavi
     - unless @page.first_page?
       %span
         %a{:href => "/recent/#{@page.prev_page}"} &#171; Prev
@@ -17,7 +17,7 @@
 
   %div#recentList{:class => "highslide-gallery"}
     - @posts.each do |post|
-      %div.photo
+      %div.recentPhoto
         %div.thumbnailBox
           %a.highslide{:href => '/images/' + post.photo.path, :onclick => "return hs.expand(this)"}
             %img{:src => '/images/' + post.photo.thumbnail_path}
@@ -66,7 +66,7 @@
               %td
                 = h post.date
 
-  %div.page_navi
+  %div.pageNavi
     - unless @page.first_page?
       %span
         %a{:href => "/recent/#{@page.prev_page}"} &#171; Prev

@@ -1,5 +1,5 @@
 %div#main
-  %div.page_navi
+  %div.pageNavi
     - unless @page.first_page?
       %span
         %a{:href => "/list/#{@page.prev_page}"} &#171; Prev
@@ -14,7 +14,7 @@
         %a{:href => '/photo/' + post.photo.id.to_s}
           %img.thumbnail{:src => '/images/' + post.photo.thumbnail_path}
 
-  %div.page_navi
+  %div.pageNavi
     - unless @page.first_page?
       %span
         %a{:href => "/list/#{@page.prev_page}"} &#171; Prev
