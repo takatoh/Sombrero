@@ -11,7 +11,7 @@
   %div#photoList
     - @photos.each do |photo|
       %div.photoBox
-        %a{:href => '/images/' + photo.path}
+        %a{:href => '/photo/' + photo.id.to_s}
           %img.thumbnail{:src => '/images/' + photo.thumbnail_path}
 
   %div.pageNavi

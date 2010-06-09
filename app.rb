@@ -99,7 +99,7 @@ class SombreroApp < Sinatra::Base
     @page = ::Photo.filter(:width => w, :height => h).order_by(:id.desc).paginate(params[:page].to_i, 20)
     @photos = @page.all
     @styles = %w( css/base css/list )
-#    @pg = params[:page]
+    @pg = params[:page]
     session["page"] = params[:page]
     haml :wallpapers
   end
