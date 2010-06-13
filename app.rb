@@ -196,6 +196,7 @@ class SombreroApp < Sinatra::Base
   get '/photo/:id' do
     @photo = Photo.find(:id => params[:id])
     @posts = @photo.posts
+    @tags = @photo.taggings.map{|t| t.tag}
     haml :photo
   end
 

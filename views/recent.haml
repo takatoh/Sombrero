@@ -62,6 +62,11 @@
                 = h post.photo.md5
             %tr
               %th
+                Tags:
+              %td
+                = h post.photo.taggings.map{|t| t.tag.name}.join(' ')
+            %tr
+              %th
                 Posted:
               %td
                 = h post.date

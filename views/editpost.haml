@@ -33,6 +33,10 @@
             %td
               %input{ :type => "text", :name => "note", :size => 80, :value => @post.note }
           %tr
+            %td Tags:
+            %td
+              %input{ :type => "text", :name => "tags", :size => 80, :value => @post.photo.taggings.map{|t| t.tag.name}.join(' ') }
+          %tr
             %td
             %td
               %input{ :type => "submit", :value => "Save" }
