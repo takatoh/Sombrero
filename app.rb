@@ -8,7 +8,7 @@ require 'sinatra/base'
 require 'sequel/extensions/pagination'
 
 require 'boot'
-require 'model/photo'
+require 'model'
 require 'photo_registrar'
 require 'version'
 
