@@ -109,12 +109,13 @@ class SombreroApp < Sinatra::Base
   post '/clip' do
     begin
       registrar = PhotoRegistrar.new( :force => params[:force] )
-      registrar.clip({ :url => params[:url], :page_url => params[:page_url] })
+      registrar.clip({ :url      => params[:url],
+                       :page_url => params[:page_url],
+                       :tags     => params[:tags] })
       redirect '/'
     rescue PhotoRegistrar::Rejection => e
       @md5 = /\((.+)\)/.match(e.message)[1]
       haml :already_exist
-#      redirect '/'
     end
   end
 
@@ -132,7 +133,9 @@ class SombreroApp < Sinatra::Base
         save_file = './tmp/' + new_filename
         File.open(save_file, 'wb'){ |f| f.write(params[:file][:tempfile].read) }
         registrar = PhotoRegistrar.new( :force => params[:force] )
-        registrar.post(save_file, { :url => params[:url], :page_url => params[:page_url] })
+        registrar.post(save_file, { :url      => params[:url],
+                                    :page_url => params[:page_url],
+                                    :tags     => params[:tags] })
         redirect '/'
       end
     rescue PhotoRegistrar::Rejection => e
