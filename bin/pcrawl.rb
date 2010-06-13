@@ -8,7 +8,7 @@ require 'pcrawler'
 require 'photo_registrar'
 
 
-SCRIPT_VERSION = "0.3.0"
+SCRIPT_VERSION = "0.4.0"
 
 
 def err_exit(msg)
@@ -20,7 +20,9 @@ def register_photo(image)
   begin
     puts image[:image_url]
     unless @options[:dryrun]
-      photo = @ragistrar.clip({:url => image[:image_url], :page_url => image[:page_url]})
+      photo = @ragistrar.clip( { :url      => image[:image_url],
+                                 :page_url => image[:page_url],
+                                 :tags     => @options[:tags] } )
       puts "  => Accepted: #{photo.width}x#{photo.height} (#{photo.md5})"
     end
   rescue FileFetcher::NotImage => err
@@ -55,6 +57,7 @@ psr.on('-r', '--recursive=N', %q[recursive crawl.]){|v| @options[:rec] = v.to_i}
 psr.on('-i', '--input=YAML', %q[input url and options from YAML file.]){|v| @options[:input] = v}
 psr.on('-V', '--verbose', %q[verbose mode.]){@options[:verbose] = true}
 psr.on('-f', '--force', %q[force to register.]){@options[:force] = true}
+psr.on('-t', '--tags=TAGS', %q[set tags.]){|v| @options[:tags] = v}
 psr.on('--ignore-media-type', %q[ignore media-type.]){@options[:ignore_media_type] = true}
 psr.on('--link-only', %q[register linked photo only.]){@options[:link_only] = true}
 psr.on('--embed-only', %q[register embeded photo only.]){@options[:embed_only] = true}
