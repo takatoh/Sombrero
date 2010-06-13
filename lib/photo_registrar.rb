@@ -14,8 +14,7 @@ require 'pathname'
 require 'digest/md5'
 
 require 'boot'
-require 'model/photo'
-require 'model/post'
+require 'model'
 require 'file_fetcher'
 require 'photo_storage'
 
