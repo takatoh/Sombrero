@@ -1,5 +1,5 @@
 %div#main
-  %div.page_navi
+  %div.pageNavi
     - unless @page.first_page?
       %span
         %a{:href => "/wallpapers/#{@size}/#{@page.prev_page}"} &#171; Prev
@@ -14,7 +14,7 @@
         %a{:href => '/images/' + photo.path}
           %img.thumbnail{:src => '/images/' + photo.thumbnail_path}
 
-  %div.page_navi
+  %div.pageNavi
     - unless @page.first_page?
       %span
         %a{:href => "/wallpapers/#{@size}/#{@page.prev_page}"} &#171; Prev

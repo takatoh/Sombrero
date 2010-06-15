@@ -88,7 +88,6 @@ class SombreroApp < Sinatra::Base
   # List photos with size.
 
   get '/wallpapers/:size' do
-    @styles = %w( css/base )
     redirect "/wallpapers/#{params[:size]}/1"
   end
 
@@ -99,8 +98,8 @@ class SombreroApp < Sinatra::Base
     h = m[2].to_i
     @page = ::Photo.filter(:width => w, :height => h).order_by(:id.desc).paginate(params[:page].to_i, 20)
     @photos = @page.all
-    @styles = %w( css/base )
-    @pg = params[:page]
+    @styles = %w( css/base css/list )
+#    @pg = params[:page]
     session["page"] = params[:page]
     haml :wallpapers
   end
