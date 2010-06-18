@@ -41,7 +41,14 @@ class PCrawler
       g.get
       @embeded_images.concat(g.pick_img)
       @linked_images.concat(g.pick_aimg)
-      linked_pages = g.pick_linked_pages + g.pick_frame
+      frames = g.pick_frame
+      frames.each do |frm|
+        c = PCrawler.new(frm, opts)
+        c.crawl
+        @embeded_images.concat(c.embeded_images)
+        @linked_images.concat(c.linked_images)
+      end
+      linked_pages = g.pick_linked_pages
       if @options[:rec].nil? || @options[:rec] <= 1
         @linked_pages.concat(linked_pages).sort.uniq
       else
