@@ -1,15 +1,11 @@
 #
-# Rubygem `Hpricot' is required.
-# You can install the gem:
-#
-# <tt>gem install hpricot</tt>
+#  PCrawler
 #
 
 require 'net/http'
 require 'uri'
-require 'optparse'
 require 'rubygems'
-require 'hpricot'
+require 'nokogiri'
 require 'image_types'
 
 
@@ -92,7 +88,7 @@ class PCrawler
       response = @http.start {|http| http.get(@path) }
       raise UnwelcomeResponse.new("Unwelcome response: code=#{response.code}; url=#{@url}") unless response.code == "200"
       @content = response.body
-      @root = Hpricot(@content).root
+      @root = Nokogiri::HTML(@content).root
     end
 
     def pick_img
