@@ -11,7 +11,7 @@ require 'image_types'
 
 class PCrawler
 
-  attr_reader :embeded_images, :linked_images, :linked_pages
+  attr_reader :embeded_images, :linked_images, :linked_pages, :background_images
 
   def initialize(url, options)
     @url = url
@@ -28,6 +28,7 @@ class PCrawler
     @embeded_images = []
     @linked_images = []
     @linked_pages = []
+    @background_images = []
   end
 
   def crawl
@@ -44,6 +45,7 @@ class PCrawler
         @embeded_images.concat(c.embeded_images)
         @linked_images.concat(c.linked_images)
       end
+      @background_images = g.pick_bg_images if @options[:include_bg_image]
       linked_pages = g.pick_linked_pages
       if @options[:rec].nil? || @options[:rec] <= 1
         @linked_pages.concat(linked_pages).sort.uniq
@@ -158,6 +160,16 @@ class PCrawler
       frames || []
     end
 
+    def pick_bg_images
+      bg_images = @root.search("//*/@background").map do |a|
+        { :image_url => url_clean(full_url(a.value)), :page_url => @url }
+      end
+      if @options[:verbose]
+        $stderr.puts "  Background images:"
+        bg_images.each{|bg| $stderr.puts "  #{bg[:image_url]}"}
+      end
+      bg_images || []
+    end
 
     private
 
