@@ -6,6 +6,11 @@
     %table
       %tr
         %th
+          Photo Id:
+        %td
+          = h @photo.id.to_s
+      %tr
+        %th
           Size:
         %td
           = h(@photo.width.to_s + "x" + @photo.height.to_s)
