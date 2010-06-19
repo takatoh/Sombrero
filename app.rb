@@ -6,6 +6,8 @@
 require 'rubygems'
 require 'sinatra/base'
 require 'sequel/extensions/pagination'
+require 'haml'
+require 'sass'
 
 require 'boot'
 require 'model/photo'
