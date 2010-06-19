@@ -30,16 +30,16 @@ class PCrawler
     @linked_pages = []
   end
 
-  def crawl(url = @url, opts = @options)
-    $stderr.puts "Start crawling: #{url}\n" if opts[:verbose]
+  def crawl
+    $stderr.puts "Start crawling: #{@url}\n" if @options[:verbose]
     begin
-      g = ContentGetter.new(url, @proxy_host, @proxy_port, opts)
+      g = ContentGetter.new(@url, @proxy_host, @proxy_port, @options)
       g.get
       @embeded_images.concat(g.pick_img)
       @linked_images.concat(g.pick_aimg)
       frames = g.pick_frame
       frames.each do |frm|
-        c = PCrawler.new(frm, opts)
+        c = PCrawler.new(frm, @options)
         c.crawl
         @embeded_images.concat(c.embeded_images)
         @linked_images.concat(c.linked_images)
@@ -48,14 +48,15 @@ class PCrawler
       if @options[:rec].nil? || @options[:rec] <= 1
         @linked_pages.concat(linked_pages).sort.uniq
       else
-        opts2 = opts.dup
-        opts2[:rec] = opts[:rec] - 1
+        opts2 = @options.dup
+        opts2[:rec] = @options[:rec] - 1
         linked_pages.each do |lp|
           next if @linked_pages.member?(lp)
           @linked_pages << lp
           crawl(lp, opts2)
         end
       end
+      self
     rescue ContentGetter::UnwelcomeResponse => err
     rescue => err
       $stderr.puts err.message
