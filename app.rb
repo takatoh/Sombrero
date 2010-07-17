@@ -113,6 +113,7 @@ class SombreroApp < Sinatra::Base
   end
 
   post '/clip' do
+    @styles = %w( css/base )
     begin
       registrar = PhotoRegistrar.new( :force => params[:force] )
       registrar.clip({ :url => params[:url], :page_url => params[:page_url] })
@@ -120,7 +121,6 @@ class SombreroApp < Sinatra::Base
     rescue PhotoRegistrar::Rejection => e
       @md5 = /\((.+)\)/.match(e.message)[1]
       haml :already_exist
-#      redirect '/'
     end
   end
 
@@ -133,6 +133,7 @@ class SombreroApp < Sinatra::Base
   end
 
   post '/post' do
+    @styles = %w( css/base )
     begin
       if params[:file]
         new_filename = params[:file][:filename]
