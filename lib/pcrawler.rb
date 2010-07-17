@@ -1,21 +1,17 @@
 #
-# Rubygem `Hpricot' is required.
-# You can install the gem:
-#
-# <tt>gem install hpricot</tt>
+#  PCrawler
 #
 
 require 'net/http'
 require 'uri'
-require 'optparse'
 require 'rubygems'
-require 'hpricot'
+require 'nokogiri'
 require 'image_types'
 
 
 class PCrawler
 
-  attr_reader :embeded_images, :linked_images, :linked_pages
+  attr_reader :embeded_images, :linked_images, :linked_pages, :background_images
 
   def initialize(url, options)
     @url = url
@@ -32,27 +28,37 @@ class PCrawler
     @embeded_images = []
     @linked_images = []
     @linked_pages = []
+    @background_images = []
   end
 
-  def crawl(url = @url, opts = @options)
-    $stderr.puts "Start crawling: #{url}\n" if opts[:verbose]
+  def crawl
+    $stderr.puts "Start crawling: #{@url}\n" if @options[:verbose]
     begin
-      g = ContentGetter.new(url, @proxy_host, @proxy_port, opts)
+      g = ContentGetter.new(@url, @proxy_host, @proxy_port, @options)
       g.get
       @embeded_images.concat(g.pick_img)
       @linked_images.concat(g.pick_aimg)
-      linked_pages = g.pick_linked_pages + g.pick_frame
+      frames = g.pick_frame
+      frames.each do |frm|
+        c = PCrawler.new(frm, @options)
+        c.crawl
+        @embeded_images.concat(c.embeded_images)
+        @linked_images.concat(c.linked_images)
+      end
+      @background_images = g.pick_bg_images if @options[:include_bg_image]
+      linked_pages = g.pick_linked_pages
       if @options[:rec].nil? || @options[:rec] <= 1
         @linked_pages.concat(linked_pages).sort.uniq
       else
-        opts2 = opts.dup
-        opts2[:rec] = opts[:rec] - 1
+        opts2 = @options.dup
+        opts2[:rec] = @options[:rec] - 1
         linked_pages.each do |lp|
           next if @linked_pages.member?(lp)
           @linked_pages << lp
           crawl(lp, opts2)
         end
       end
+      self
     rescue ContentGetter::UnwelcomeResponse => err
     rescue => err
       $stderr.puts err.message
@@ -85,7 +91,7 @@ class PCrawler
       response = @http.start {|http| http.get(@path) }
       raise UnwelcomeResponse.new("Unwelcome response: code=#{response.code}; url=#{@url}") unless response.code == "200"
       @content = response.body
-      @root = Hpricot(@content).root
+      @root = Nokogiri::HTML(@content).root
     end
 
     def pick_img
@@ -154,6 +160,16 @@ class PCrawler
       frames || []
     end
 
+    def pick_bg_images
+      bg_images = @root.search("//*/@background").map do |a|
+        { :image_url => url_clean(full_url(a.value)), :page_url => @url }
+      end
+      if @options[:verbose]
+        $stderr.puts "  Background images:"
+        bg_images.each{|bg| $stderr.puts "  #{bg[:image_url]}"}
+      end
+      bg_images || []
+    end
 
     private
 

@@ -5,8 +5,8 @@
   hs.outlineType = 'rounded-white';
   hs.wrapperClassName = 'draggable-header';
 
-%div#content
-  %div.page_navi
+%div#main
+  %div.pageNavi
     - unless @page.first_page?
       %span
         %a{:href => "/recent/#{@page.prev_page}"} &#171; Prev
@@ -15,9 +15,11 @@
       %span
         %a{:href => "/recent/#{@page.next_page}"} Next &#187;
 
-  %div#main{:class => "highslide-gallery"}
+  %div#recentList{:class => "highslide-gallery"}
     - @posts.each do |post|
-      %div.photo
+      %div.recentPhoto
+        %div.postId
+          = h('#' + post.id.to_s)
         %div.thumbnailBox
           %a.highslide{:href => '/images/' + post.photo.path, :onclick => "return hs.expand(this)"}
             %img{:src => '/images/' + post.photo.thumbnail_path}
@@ -32,11 +34,6 @@
           %table
             %tr
               %th
-                Id:
-              %td
-                = h post.id
-            %tr
-              %th
                 Source:
               %td
                 %a{:href => post.url}= h post.url
@@ -45,6 +42,11 @@
                 Webpage:
               %td
                 %a{:href => post.page_url}= h post.page_url
+            %tr
+              %th
+                Photo Id:
+              %td
+                %a{:href => "/photo/#{post.photo.id.to_s}"}= h post.photo.id
             %tr
               %th
                 Size:
@@ -71,7 +73,7 @@
               %td
                 = h post.date
 
-  %div.page_navi
+  %div.pageNavi
     - unless @page.first_page?
       %span
         %a{:href => "/recent/#{@page.prev_page}"} &#171; Prev

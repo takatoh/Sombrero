@@ -6,6 +6,7 @@
 require File.dirname(__FILE__) + "/../boot"
 require 'pcrawler'
 require 'photo_registrar'
+require 'optparse'
 
 
 SCRIPT_VERSION = "0.4.0"
@@ -39,28 +40,30 @@ def conv_opt(opt)
     :force             => opt["force"],
     :ignore_media_type => opt["ignore-media-type"],
     :link_only         => opt["link-only"],
-    :embed_only        => opt["embed_only"]
+    :embed_only        => opt["embed_only"],
+    :include_bg_image  => opt["include-bg-image"]
   }
 end
 
 
-@options = { :dryrun => false,
-          }
+@options = {}
 
 psr = OptionParser.new
 psr.banner =<<EOB
-Crawl a specified URL and register photo.
+#{psr.program_name} - Crawl specified URL then register photos.
 Usage: #{psr.program_name} [option] URL
 EOB
-psr.on('-d', '--dry-run', %q[not register photos.]){@options[:dryrun] = true}
-psr.on('-r', '--recursive=N', %q[recursive crawl.]){|v| @options[:rec] = v.to_i}
 psr.on('-i', '--input=YAML', %q[input url and options from YAML file.]){|v| @options[:input] = v}
-psr.on('-V', '--verbose', %q[verbose mode.]){@options[:verbose] = true}
 psr.on('-f', '--force', %q[force to register.]){@options[:force] = true}
 psr.on('-t', '--tags=TAGS', %q[set tags.]){|v| @options[:tags] = v}
 psr.on('--ignore-media-type', %q[ignore media-type.]){@options[:ignore_media_type] = true}
+psr.on('-r', '--recursive=N', %q[recursive crawl.]){|v| @options[:rec] = v.to_i}
 psr.on('--link-only', %q[register linked photo only.]){@options[:link_only] = true}
 psr.on('--embed-only', %q[register embeded photo only.]){@options[:embed_only] = true}
+psr.on('--include-bg-image', %q[include background images.]){@options[:include_bg_image] = true}
+psr.on('--ignore-media-type', %q[ignore media-type.]){@options[:ignore_media_type] = true}
+psr.on('-d', '--dry-run', %q[not register photos.]){@options[:dryrun] = true}
+psr.on('-V', '--verbose', %q[verbose mode.]){@options[:verbose] = true}
 psr.on_tail('-v', '--version', %q[show version.]){puts "#{psr.program_name} v#{SCRIPT_VERSION}"; exit}
 psr.on_tail('-h', '--help', %q[show this message.]){puts "#{psr}"; exit}
 begin
@@ -90,6 +93,12 @@ sources.each do |src|
   unless opt[:link_only]
     puts "--- Embeded images:"
     crawler.embeded_images.each do |i|
+      register_photo(i)
+    end
+  end
+  if opt[:include_bg_image]
+    puts "--- Background images:"
+    crawler.background_images.each do |i|
       register_photo(i)
     end
   end

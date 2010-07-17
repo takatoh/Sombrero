@@ -5,8 +5,10 @@
   %head
     %title Sombrero
     %meta{:"http-equiv" => "Content-Type", :comment => "text/html", :charset => "utf-8"}
-    %link{:rel => "stylesheet", :type => "text/css", :href => "/style.css"}
-    %link{:rel => "stylesheet", :type => "text/css", :href => "/js/highslide/highslide.css"}
+    - @styles.each do |style|
+      %link{:rel => "stylesheet", :type => "text/css", :href => "/#{style}.css"}
+
+
   %body
     %div#container
       %div#header
@@ -33,4 +35,4 @@
       %div#content
         != yield
       %div#footer
-        = "Powered by Sombrero v.#{SOMBRERO_VERSION}"
+        = "Sombrero v#{SOMBRERO_VERSION}"
