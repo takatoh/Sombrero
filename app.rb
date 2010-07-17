@@ -115,6 +115,7 @@ class SombreroApp < Sinatra::Base
   end
 
   post '/clip' do
+    @styles = %w( css/base )
     begin
       registrar = PhotoRegistrar.new( :force => params[:force] )
       registrar.clip({ :url      => params[:url],
@@ -136,6 +137,7 @@ class SombreroApp < Sinatra::Base
   end
 
   post '/post' do
+    @styles = %w( css/base )
     begin
       if params[:file]
         new_filename = params[:file][:filename]
