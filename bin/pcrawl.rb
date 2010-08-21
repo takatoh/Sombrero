@@ -26,8 +26,12 @@ def register_photo(image)
     end
   rescue FileFetcher::NotImage => err
     puts "  => Not image: #{err.message}"
+  rescue FileFetcher::FetchError => err
+    puts "  => Cannot fetch: #{err.message}"
   rescue PhotoRegistrar::Rejection => err
     puts "  => Rejected: #{err.message}"
+  rescue => err
+    puts "  => ERROR: #{err.message}"
   end
 end
 
