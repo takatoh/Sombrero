@@ -34,3 +34,11 @@
             - @posts.each do |post|
               %li
                 %a{:href => post.url}= h post.url
+      %tr
+        %th
+          Tags:
+        %td
+          %ul
+            - @tags.each do |tag|
+              %li
+                = h tag.name

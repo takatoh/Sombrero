@@ -14,8 +14,7 @@ require 'pathname'
 require 'digest/md5'
 
 require 'boot'
-require 'model/photo'
-require 'model/post'
+require 'model'
 require 'file_fetcher'
 require 'photo_storage'
 
@@ -68,6 +67,8 @@ class PhotoRegistrar
         :posted_date    => Time.now
       })
     end
+    photo.add_tags(photo_info[:tags])
+    photo.save
 
     post = Post.create({
       :url            => photo_info[:url],

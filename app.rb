@@ -10,7 +10,7 @@ require 'haml'
 require 'sass'
 
 require 'boot'
-require 'model/photo'
+require 'model'
 require 'photo_registrar'
 require 'version'
 
@@ -118,7 +118,9 @@ class SombreroApp < Sinatra::Base
     @styles = %w( css/base )
     begin
       registrar = PhotoRegistrar.new( :force => params[:force] )
-      registrar.clip({ :url => params[:url], :page_url => params[:page_url] })
+      registrar.clip({ :url      => params[:url],
+                       :page_url => params[:page_url],
+                       :tags     => params[:tags] })
       redirect '/'
     rescue PhotoRegistrar::Rejection => e
       @md5 = /\((.+)\)/.match(e.message)[1]
@@ -142,7 +144,9 @@ class SombreroApp < Sinatra::Base
         save_file = './tmp/' + new_filename
         File.open(save_file, 'wb'){ |f| f.write(params[:file][:tempfile].read) }
         registrar = PhotoRegistrar.new( :force => params[:force] )
-        registrar.post(save_file, { :url => params[:url], :page_url => params[:page_url] })
+        registrar.post(save_file, { :url      => params[:url],
+                                    :page_url => params[:page_url],
+                                    :tags     => params[:tags] })
         redirect '/'
       end
     rescue PhotoRegistrar::Rejection => e
@@ -193,6 +197,9 @@ class SombreroApp < Sinatra::Base
     @post.title = params[:title]
     @post.note = params[:note]
     @post.save
+    @photo = @post.photo
+    @photo.update_tags(params[:tags])
+    @photo.save
     redirect "/recent/#{session["page"]}"
   end
 
@@ -208,6 +215,7 @@ class SombreroApp < Sinatra::Base
   get '/photo/:id' do
     @photo = Photo.find(:id => params[:id])
     @posts = @photo.posts
+    @tags = @photo.taggings.map{|t| t.tag}
     @styles = %w( css/base css/photo )
     haml :photo
   end

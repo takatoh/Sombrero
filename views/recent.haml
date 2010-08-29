@@ -29,7 +29,7 @@
               %a{ :href => ('/post/' + post.id.to_s + '.edit'), :onclick => "return hs.htmlExpand(this, { objectType: 'ajax', width: 500, height: 300 } )" } edit
             %li
               %a{ :href => ('/post/' + post.id.to_s + '.delete') } delete
-        %div.photoTitle= post.title || "(no title)"
+        %div.photoTitle= (post.title.nil? || post.title.empty?) ? "(no title)" : post.title
         %div.photoInfo
           %table
             %tr
@@ -62,6 +62,11 @@
                 MD5:
               %td
                 = h post.photo.md5
+            %tr
+              %th
+                Tags:
+              %td
+                = h post.photo.taggings.map{|t| t.tag.name}.join(' ')
             %tr
               %th
                 Posted:
