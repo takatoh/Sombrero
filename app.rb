@@ -197,6 +197,9 @@ class SombreroApp < Sinatra::Base
     @post.title = params[:title]
     @post.note = params[:note]
     @post.save
+    @photo = @post.photo
+    @photo.update_tags(params[:tags])
+    @photo.save
     redirect "/recent/#{session["page"]}"
   end
 
