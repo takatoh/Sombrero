@@ -1,7 +1,7 @@
 = Sombrero
 
 
-== HEAD
+== v0.3.1    2010-08-31
 
 * [bug] ppost.rb v0.3.1. Using yaml file.
 * [bug] Showing photo with md5.
