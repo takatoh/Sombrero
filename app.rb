@@ -223,6 +223,7 @@ class SombreroApp < Sinatra::Base
   get '/photo/md5/:md5' do
     @photo = Photo.find(:md5 => params[:md5])
     @posts = @photo.posts
+    @tags = @photo.taggings.map{|t| t.tag}
     @styles = %w( css/base css/photo )
     haml :photo
   end
