@@ -9,7 +9,7 @@ require 'photo_registrar'
 require 'optparse'
 
 
-SCRIPT_VERSION = "0.3.0"
+SCRIPT_VERSION = "0.3.1"
 
 
 def err_exit(msg)
@@ -60,9 +60,7 @@ end
 sources = if @options[:input]
   src = YAML.load_file(@options[:input])
   if @options[:source_dir]
-    src.map{|p| p.update("file" => File.join(@options[:source_dir], p["path"]))}
-  else
-    src.map{|p| p.update("file" => p["path"])}
+    src.map{|p| p.update("file" => File.join(@options[:source_dir], p["file"]))}
   end
   src
 else
