@@ -6,11 +6,14 @@
 require File.dirname(__FILE__) + "/../boot"
 require 'pcrawler'
 require 'photo_registrar'
+require 'plogger'
 require 'optparse'
 
 
 SCRIPT_VERSION = "0.3.1"
 
+
+at_exit { @log.close if @log }
 
 def err_exit(msg)
   $stderr.print msg
@@ -19,15 +22,15 @@ end
 
 def register_photo(photo)
   begin
-    puts photo["file"]
+    @log.puts photo["file"]
     unless @options[:dryrun]
       p = @ragistrar.post(photo["file"], { :url      => photo["url"],
                                            :page_url => photo["page_url"],
                                            :tags     => photo["tags"] } )
-      puts "  => Accepted: #{p.width}x#{p.height} (#{p.md5})"
+      @log.puts "  => Accepted: #{p.width}x#{p.height} (#{p.md5})"
     end
   rescue PhotoRegistrar::Rejection => err
-    puts "  => Rejected: #{err.message}"
+    @log.puts "  => Rejected: #{err.message}"
   end
 end
 
@@ -47,6 +50,9 @@ psr.on('-t', '--tags=TAGS', %q[set tags.]){|v| @options[:tags] = v}
 psr.on('-f', '--force', %q[force to register.]){|v| @options[:force] = true}
 psr.on('--source-dir=DIR', %q[read file from DIR.]){|v| @options[:source_dir] = v}
 psr.on('-i', '--input=YAML', %q[input from YAML file.]){|v| @options[:input] = v}
+psr.on('-l', '--log[=FILE]', %q[log to FILE. default is 'ppost.log'.]){|v|
+  @options[:log] = v || "ppost.log"
+}
 psr.on('--dry-run', %q[not register photos.]){@options[:dryrun] = true}
 psr.on_tail('-v', '--version', %q[show version.]){
   puts "#{psr.program_name} v#{SCRIPT_VERSION}"; exit
@@ -60,6 +66,7 @@ end
 
 
 @ragistrar = PhotoRegistrar.new(:keep => true, :force => @options[:force])
+@log = @options[:log] ? PLogger.new(@options[:log]) : $stdout
 sources = if @options[:input]
   src = YAML.load_file(@options[:input])
   if @options[:source_dir]
@@ -73,8 +80,8 @@ else
       "tags"     => @options[:tags] } ]
 end
 
-puts "Register to database."
-puts ""
+@log.puts "Register to database."
+@log.puts ""
 sources.each do |src|
   register_photo(src)
 end

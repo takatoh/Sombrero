@@ -3,6 +3,8 @@
 
 == HEAD
 
+* [change] ppost.rb: add --log option.
+* [new] lib/plogger.rb
 * [bug] ppost.rb v0.3.1. Using yaml file.
 * [bug] Showing photo with md5.
 
