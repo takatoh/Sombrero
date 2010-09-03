@@ -21,7 +21,7 @@ def register_photo(photo)
   begin
     puts photo["file"]
     unless @options[:dryrun]
-      p = @ragistrar.post(photo["file"], { :url => photo["url"],
+      p = @ragistrar.post(photo["file"], { :url      => photo["url"],
                                            :page_url => photo["page_url"],
                                            :tags     => photo["tags"] } )
       puts "  => Accepted: #{p.width}x#{p.height} (#{p.md5})"
@@ -32,22 +32,25 @@ def register_photo(photo)
 end
 
 
-@options = { :dryrun => false,
-           }
+@options = {
+  :dryrun => false,
+}
 
 psr = OptionParser.new
 psr.banner =<<EOB
 Post photos to Sombrero.
-Usage: #{psr.program_name} [option] FILE
+Usage: #{psr.program_name} [option] <file>
 EOB
 psr.on('-u', '--url=URL', %q[photo URL.]){|v| @options[:url] = v}
 psr.on('-p', '--page-url=URL', %q[page URL.]){|v| @options[:page_url] = v}
-psr.on('-i', '--input=YAML', %q[input from YAML file.]){|v| @options[:input] = v}
-psr.on('--source-dir=DIR', %q[read file from DIR.]){|v| @options[:source_dir] = v}
-psr.on('-f', '--force', %q[force to register.]){|v| @options[:force] = true}
 psr.on('-t', '--tags=TAGS', %q[set tags.]){|v| @options[:tags] = v}
+psr.on('-f', '--force', %q[force to register.]){|v| @options[:force] = true}
+psr.on('--source-dir=DIR', %q[read file from DIR.]){|v| @options[:source_dir] = v}
+psr.on('-i', '--input=YAML', %q[input from YAML file.]){|v| @options[:input] = v}
 psr.on('--dry-run', %q[not register photos.]){@options[:dryrun] = true}
-psr.on_tail('-v', '--version', %q[show version.]){puts "#{psr.program_name} v#{SCRIPT_VERSION}"; exit}
+psr.on_tail('-v', '--version', %q[show version.]){
+  puts "#{psr.program_name} v#{SCRIPT_VERSION}"; exit
+}
 psr.on_tail('-h', '--help', %q[show this message.]){puts "#{psr}"; exit}
 begin
   psr.parse!
@@ -64,10 +67,10 @@ sources = if @options[:input]
   end
   src
 else
-  [ { "file" => ARGV.shift,
-      "url" => @options[:url],
+  [ { "file"     => ARGV.shift,
+      "url"      => @options[:url],
       "page_url" => @options[:page_url],
-      "tags" => @options[:tags] } ]
+      "tags"     => @options[:tags] } ]
 end
 
 puts "Register to database."
