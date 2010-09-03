@@ -28,9 +28,11 @@ def register_photo(photo)
                                            :page_url => photo["page_url"],
                                            :tags     => photo["tags"] } )
       @log.puts "  => Accepted: #{p.width}x#{p.height} (#{p.md5})"
+      @counter[:accepted] += 1
     end
   rescue PhotoRegistrar::Rejection => err
     @log.puts "  => Rejected: #{err.message}"
+    @counter[:rejected] += 1
   end
 end
 
@@ -80,8 +82,19 @@ else
       "tags"     => @options[:tags] } ]
 end
 
+@counter = {:accepted => 0, :rejected => 0, :error => 0}
 @log.puts "Register to database."
 @log.puts ""
 sources.each do |src|
-  register_photo(src)
+  begin
+    register_photo(src)
+  rescue => err
+    @log.puts "  => ERROR(SKIP): #{err.message}"
+    @counter[:error] += 1
+  end
 end
+@log.puts ""
+@log.puts "Accepted: #{@counter[:accepted]}"
+@log.puts "Rejected: #{@counter[:rejected]}"
+@log.puts "Error:    #{@counter[:error]}"
+@log.puts "TOTAL:    #{@counter.to_a.inject(0){|a,b| a + b[1]}}"
