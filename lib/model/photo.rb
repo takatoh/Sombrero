@@ -28,8 +28,12 @@ class Photo < Sequel::Model
   end
 
   def add_tags(tagnames)
-    tags = tagnames.split(/ +/)
-    tags.map{|tag| add_tag(tag)}.compact.size
+    if !(tagnames.nil? || tagnames.empty?)
+      tags = tagnames.split(/ +/)
+      tags.map{|tag| add_tag(tag)}.compact.size
+    else
+      0
+    end
   end
 
   def delete_tag(tagname)

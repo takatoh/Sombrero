@@ -3,6 +3,7 @@
 
 == HEAD
 
+* [bug] lib/model/photo.rb: in Photo#add_tags.
 * [change] ppost.rb: add --log option.
 * [new] lib/plogger.rb
 * [bug] ppost.rb v0.3.1. Using yaml file.
