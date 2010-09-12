@@ -3,6 +3,7 @@
 
 == HEAD
 
+* [new] TagType.
 * [new] Alias to tag.
 * [bug] lib/model/photo.rb: in Photo#add_tags.
 * [change] ppost.rb: add --log option. show statistics.

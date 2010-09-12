@@ -2,6 +2,7 @@ require 'boot'
 
 class Tag < Sequel::Model
   one_to_many :taggings
+  many_to_one :tag_type
 
 
   def add_alias(tag)
