@@ -1,6 +1,11 @@
 = Sombrero
 
 
+== HEAD
+
+* [change] pcrawl.rb v0.4.1. Show statistics.
+* [change] 'already exist' page.
+
 == v0.3.1    2010-08-31
 
 * [bug] ppost.rb v0.3.1. Using yaml file.
