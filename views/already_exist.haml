@@ -1,5 +1,43 @@
 %div#main
   %h3
-    The photo already exist: 
-  %a{ :href => ('/photo/md5/' + @md5) }
-    = h @md5
+    Rejected:
+    = h @message
+  %div.miniPhoto
+    %div.thumbnailBox
+      %a{:href => '/images/' + @photo.path}
+        %img{:src => '/images/' + @photo.thumbnail_path}
+    %div.photoInfo
+      %table
+        %tr
+          %th
+            MD5:
+          %td
+            = h @photo.md5
+        %tr
+          %th
+            Photo Id:
+          %td
+            %a{:href => "/photo/#{@photo.id.to_s}"}= h @photo.id
+        %tr
+          %th
+            Size:
+          %td
+            = h(@photo.width.to_s + "x" + @photo.height.to_s)
+        %tr
+          %th
+            File size:
+          %td
+            = h @photo.filesize
+        %tr
+          %th
+            Tags:
+          %td
+            = h @photo.taggings.map{|t| t.tag.name}.join(' ')
+        %tr
+          %th
+            Sources:
+          %td
+            %ul
+              - @photo.posts.each do |post|
+                %li
+                  %a{:href => post.url}= h post.url

@@ -115,7 +115,7 @@ class SombreroApp < Sinatra::Base
   end
 
   post '/clip' do
-    @styles = %w( css/base )
+    @styles = %w( css/base css/mini_photo )
     begin
       registrar = PhotoRegistrar.new( :force => params[:force] )
       registrar.clip({ :url      => params[:url],
@@ -123,7 +123,9 @@ class SombreroApp < Sinatra::Base
                        :tags     => params[:tags] })
       redirect '/'
     rescue PhotoRegistrar::Rejection => e
+      @message = e.message
       @md5 = /\((.+)\)/.match(e.message)[1]
+      @photo = Photo.find(:md5 => @md5)
       haml :already_exist
     end
   end
@@ -137,7 +139,7 @@ class SombreroApp < Sinatra::Base
   end
 
   post '/post' do
-    @styles = %w( css/base )
+    @styles = %w( css/base css/mini_photo )
     begin
       if params[:file]
         new_filename = params[:file][:filename]
@@ -150,7 +152,9 @@ class SombreroApp < Sinatra::Base
         redirect '/'
       end
     rescue PhotoRegistrar::Rejection => e
+      @message = e.message
       @md5 = /\((.+)\)/.match(e.message)[1]
+      @photo = Photo.find(:md5 => @md5)
       haml :already_exist
     end
   end
