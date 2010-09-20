@@ -1,0 +1,34 @@
+%div#main
+  %h2 Listing tag types
+
+  %div.pageNavi
+    - unless @page.first_page?
+      %span
+        %a{:href => "/tagtypes/#{@page.prev_page}"} &#171; Prev
+    %span= "[ #{@page.current_page} / #{@page.page_count} ]"
+    - unless @page.last_page?
+      %span
+        %a{:href => "/tagtypes/#{@page.next_page}"} Next &#187;
+
+  %div#tagTypeList
+    %table
+      %tr
+        %th.tagTypeName
+          Name
+        %th.tagTypeDescription
+          Description
+      - @tagtypes.each do |tagtype|
+        %tr
+          %td
+            = h tagtype.name
+          %td
+            = h tagtype.description
+
+  %div.pageNavi
+    - unless @page.first_page?
+      %span
+        %a{:href => "/tagtypes/#{@page.prev_page}"} &#171; Prev
+    %span= "[ #{@page.current_page} / #{@page.page_count} ]"
+    - unless @page.last_page?
+      %span
+        %a{:href => "/tagtypes/#{@page.next_page}"} Next &#187;
