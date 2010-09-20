@@ -33,5 +33,13 @@ class Tag < Sequel::Model
     Tag.filter(:alias_to => self.id).all || []
   end
 
+  def alias_for
+    Tag.first(:id => self.alias_to)
+  end
+
+  def to_s
+    self.name
+  end
+
 end
 

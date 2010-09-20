@@ -228,4 +228,15 @@ class SombreroApp < Sinatra::Base
     haml :photo
   end
 
+
+  # Listing tags.
+
+  get '/tags/:page' do
+    @page = ::Tag.order_by(:id.desc).paginate(params[:page].to_i, 25)
+    @tags = @page.all
+    @styles = %w( css/base css/tag_list )
+    session["page"] = params[:page]
+    haml :tag_list
+  end
+
 end

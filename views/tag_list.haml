@@ -1,0 +1,42 @@
+%div#main
+  %h2 Listing Tags
+
+  %div.pageNavi
+    - unless @page.first_page?
+      %span
+        %a{:href => "/tags/#{@page.prev_page}"} &#171; Prev
+    %span= "[ #{@page.current_page} / #{@page.page_count} ]"
+    - unless @page.last_page?
+      %span
+        %a{:href => "/tags/#{@page.next_page}"} Next &#187;
+
+  %div#tagList
+    %table
+      %tr
+        %th.tagName
+          Tag name
+        %th.tagType
+          Tag type
+        %th.tagDescription
+          Description
+        %th.tagAliasFor
+          Alias for
+      - @tags.each do |tag|
+        %tr
+          %td
+            = h tag.name
+          %td
+            = h tag.tag_type || ""
+          %td
+            = h tag.description
+          %td
+            = h tag.alias_for || ""
+
+  %div.pageNavi
+    - unless @page.first_page?
+      %span
+        %a{:href => "/tags/#{@page.prev_page}"} &#171; Prev
+    %span= "[ #{@page.current_page} / #{@page.page_count} ]"
+    - unless @page.last_page?
+      %span
+        %a{:href => "/tags/#{@page.next_page}"} Next &#187;
