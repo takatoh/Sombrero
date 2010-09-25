@@ -9,6 +9,7 @@ module ImageTypes
 
 
   def included_type?(file)
+    file = file.sub(/\?.+\z/, "")
     ext = File.extname(file).tr(".", "")
     IMAGE_TYPES.include?(ext)
   end

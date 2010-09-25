@@ -3,6 +3,7 @@
 
 == HEAD
 
+* [change] photo_registrar.rb: Support URL with query string.
 * [change] pcrawl.rb v0.4.1. Show statistics.
 * [change] 'already exist' page.
 
