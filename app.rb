@@ -88,8 +88,8 @@ class SombreroApp < Sinatra::Base
   end
 
   get '/list/:page' do
-    @page = ::Post.order_by(:id.desc).paginate(params[:page].to_i, 20)
-    @posts = @page.all
+    @page = ::Photo.order_by(:id.desc).paginate(params[:page].to_i, 20)
+    @photos = @page.all
     @styles = %w( css/base css/list )
     @pg = params[:page]
     session["page"] = params[:page]
