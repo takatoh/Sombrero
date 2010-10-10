@@ -42,10 +42,15 @@ Usage: #{psr.program_name} [option] FILE
 EOB
 psr.on('-u', '--url=URL', %q[photo URL.]){|v| @options[:url] = v}
 psr.on('-p', '--page-url=URL', %q[page URL.]){|v| @options[:page_url] = v}
-psr.on('-i', '--input=YAML', %q[input from YAML file.]){|v| @options[:input] = v}
-psr.on('--source-dir=DIR', %q[read file from DIR.]){|v| @options[:source_dir] = v}
-psr.on('-f', '--force', %q[force to register.]){|v| @options[:force] = true}
 psr.on('-t', '--tags=TAGS', %q[set tags.]){|v| @options[:tags] = v}
+psr.on('-f', '--force', %q[force to register.]){|v| @options[:force] = true}
+psr.on('-i', '--input=YAML', %q[input from YAML file.]){|v| @options[:input] = v}
+psr.on('--source-dir=DIR', %q[read file from DIR. use with --input option.]){|v|
+  @options[:source_dir] = v
+}
+psr.on('-l', '--log[=FILE]', %q[log to FILE. default is 'ppost.log'.]){|v|
+  @options[:log] = v || "ppost.log"
+}
 psr.on('--dry-run', %q[not register photos.]){@options[:dryrun] = true}
 psr.on_tail('-v', '--version', %q[show version.]){puts "#{psr.program_name} v#{SCRIPT_VERSION}"; exit}
 psr.on_tail('-h', '--help', %q[show this message.]){puts "#{psr}"; exit}
@@ -64,10 +69,17 @@ sources = if @options[:input]
   end
   src
 else
-  [ { "file" => ARGV.shift,
-      "url" => @options[:url],
+  files = if ARGV.size == 1 && File.directory?(ARGV[0])
+    Dir.glob("#{ARGV.shift}/**/*").sort
+  else
+    ARGV
+  end
+  files.map do |file|
+    { "file"     => file,
+      "url"      => @options[:url],
       "page_url" => @options[:page_url],
-      "tags" => @options[:tags] } ]
+      "tags"     => @options[:tags] }
+  end
 end
 
 puts "Register to database."
