@@ -70,7 +70,7 @@ sources = if @options[:input]
   src
 else
   files = if ARGV.size == 1 && File.directory?(ARGV[0])
-    Dir.glob("#{ARGV.shift}/**/*").sort
+    Dir.glob("#{ARGV.shift}/**/*").select{|f| File.file?(f)}.sort
   else
     ARGV
   end
