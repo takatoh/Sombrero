@@ -257,6 +257,17 @@ class SombreroApp < Sinatra::Base
 
   # Listing tag types.
 
+  get '/tagtypes/new' do
+    @styles = %w( css/base css/tag_type_list )
+    haml :tag_type_new
+  end
+
+  post '/tagtypes/new' do
+    @styles = %w( css/base css/tag_type_list )
+    ::TagType.create(:name => params[:name], :description => params[:description])
+    redirect "/tagtypes/1"
+  end
+
   get '/tagtypes/:page' do
     @page = ::TagType.order_by(:id).paginate(params[:page].to_i, 25)
     @tagtypes = @page.all
