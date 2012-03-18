@@ -28,6 +28,7 @@
           Description
         %th.tagAliasFor
           Alias for
+        %th.tagEdit
       - @tags.each do |tag|
         %tr
           %td
@@ -38,6 +39,8 @@
             = h tag.description
           %td
             = h tag.alias_for || ""
+          %td
+            %a{:href => "/tags/edit/#{tag.id}"} (edit)
 
   %div.pageNavi
     - unless @page.first_page?
