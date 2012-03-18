@@ -6,11 +6,14 @@
 require File.dirname(__FILE__) + "/../boot"
 require 'pcrawler'
 require 'photo_registrar'
+require 'plogger'
 require 'optparse'
 
 
-SCRIPT_VERSION = "0.3.1"
+SCRIPT_VERSION = "0.3.2"
 
+
+at_exit { @log.close if @log }
 
 def err_exit(msg)
   $stderr.print msg
@@ -19,26 +22,29 @@ end
 
 def register_photo(photo)
   begin
-    puts photo["file"]
+    @log.puts photo["file"]
     unless @options[:dryrun]
-      p = @ragistrar.post(photo["file"], { :url => photo["url"],
+      p = @ragistrar.post(photo["file"], { :url      => photo["url"],
                                            :page_url => photo["page_url"],
                                            :tags     => photo["tags"] } )
-      puts "  => Accepted: #{p.width}x#{p.height} (#{p.md5})"
+      @log.puts "  => Accepted: #{p.width}x#{p.height} (#{p.md5})"
+      @counter[:accepted] += 1
     end
   rescue PhotoRegistrar::Rejection => err
-    puts "  => Rejected: #{err.message}"
+    @log.puts "  => Rejected: #{err.message}"
+    @counter[:rejected] += 1
   end
 end
 
 
-@options = { :dryrun => false,
-           }
+@options = {
+  :dryrun => false,
+}
 
 psr = OptionParser.new
 psr.banner =<<EOB
 Post photos to Sombrero.
-Usage: #{psr.program_name} [option] FILE
+Usage: #{psr.program_name} [option] <file>
 EOB
 psr.on('-u', '--url=URL', %q[photo URL.]){|v| @options[:url] = v}
 psr.on('-p', '--page-url=URL', %q[page URL.]){|v| @options[:page_url] = v}
@@ -52,7 +58,9 @@ psr.on('-l', '--log[=FILE]', %q[log to FILE. default is 'ppost.log'.]){|v|
   @options[:log] = v || "ppost.log"
 }
 psr.on('--dry-run', %q[not register photos.]){@options[:dryrun] = true}
-psr.on_tail('-v', '--version', %q[show version.]){puts "#{psr.program_name} v#{SCRIPT_VERSION}"; exit}
+psr.on_tail('-v', '--version', %q[show version.]){
+  puts "#{psr.program_name} v#{SCRIPT_VERSION}"; exit
+}
 psr.on_tail('-h', '--help', %q[show this message.]){puts "#{psr}"; exit}
 begin
   psr.parse!
@@ -62,6 +70,7 @@ end
 
 
 @ragistrar = PhotoRegistrar.new(:keep => true, :force => @options[:force])
+@log = @options[:log] ? PLogger.new(@options[:log]) : $stdout
 sources = if @options[:input]
   src = YAML.load_file(@options[:input])
   if @options[:source_dir]
@@ -82,8 +91,19 @@ else
   end
 end
 
-puts "Register to database."
-puts ""
+@counter = {:accepted => 0, :rejected => 0, :error => 0}
+@log.puts "Register to database."
+@log.puts ""
 sources.each do |src|
-  register_photo(src)
+  begin
+    register_photo(src)
+  rescue => err
+    @log.puts "  => ERROR(SKIP): #{err.message}"
+    @counter[:error] += 1
+  end
 end
+@log.puts ""
+@log.puts "Accepted: #{@counter[:accepted]}"
+@log.puts "Rejected: #{@counter[:rejected]}"
+@log.puts "Error:    #{@counter[:error]}"
+@log.puts "TOTAL:    #{@counter.to_a.inject(0){|a,b| a + b[1]}}"

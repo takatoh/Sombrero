@@ -242,4 +242,73 @@ class SombreroApp < Sinatra::Base
     haml :photo
   end
 
+
+  # Listing tags.
+
+  get '/tags/:page' do
+    @page = ::Tag.order_by(:id.desc).paginate(params[:page].to_i, 25)
+    @tags = @page.all
+    @styles = %w( css/base css/tag_list )
+    session["page"] = params[:page]
+    haml :tag_list
+  end
+
+  get '/tags/edit/:id' do
+    @tag = ::Tag.find(:id => params[:id])
+    @styles = %w( css/base css/tag_list )
+    @tag_type_name = if @tag.tag_type then @tag.tag_type.name else "" end
+    haml :tag_edit
+  end
+
+  put '/tags/edit/:id' do
+    @tag = ::Tag.find(:id => params[:id])
+    @styles = %w( css/base css/tag_list )
+    @tag.name = params[:name]
+    @tag.description = params[:description]
+    unless params[:tagtype].empty?
+      tag_type = ::TagType.find(:name => params[:tagtype])
+      @tag.tag_type_id = tag_type.id if tag_type
+    end
+    @tag.save
+    pg = session["page"]
+    redirect "/tags/#{pg}"
+  end
+
+  # Listing tag types.
+
+  get '/tagtypes/new' do
+    @styles = %w( css/base css/tag_type_list )
+    haml :tag_type_new
+  end
+
+  post '/tagtypes/new' do
+    @styles = %w( css/base css/tag_type_list )
+    ::TagType.create(:name => params[:name], :description => params[:description])
+    redirect "/tagtypes/1"
+  end
+
+  get '/tagtypes/:page' do
+    @page = ::TagType.order_by(:id).paginate(params[:page].to_i, 25)
+    @tagtypes = @page.all
+    @styles = %w( css/base css/tag_type_list)
+    session["page"] = params[:page]
+    haml :tag_type_list
+  end
+
+  get '/tagtypes/edit/:id' do
+    @tag_type = ::TagType.find(:id => params[:id])
+    @styles = %w( css/base css/tag_type_list )
+    haml :tag_type_edit
+  end
+
+  put '/tagtypes/edit/:id' do
+    @tag_type = ::TagType.find(:id => params[:id])
+    @styles = %w( css/base css/tag_type_list )
+    @tag_type.name = params[:name]
+    @tag_type.description = params[:description]
+    @tag_type.save
+    pg = session["page"]
+    redirect "/tagtypes/#{pg}"
+  end
+
 end

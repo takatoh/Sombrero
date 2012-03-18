@@ -3,6 +3,11 @@
 
 == HEAD
 
+* [new] TagType.
+* [new] Alias for tag (still on the way).
+* [bug] lib/model/photo.rb: in Photo#add_tags.
+* [change] ppost.rb: add --log option. show statistics. v0.3.2.
+* [new] lib/plogger.rb
 * [change] photo_registrar.rb: Support URL with query string.
 * [change] pcrawl.rb v0.4.1. Show statistics.
 * [change] 'already exist' page.
