@@ -281,4 +281,20 @@ class SombreroApp < Sinatra::Base
     haml :tag_type_list
   end
 
+  get '/tagtypes/edit/:id' do
+    @tag_type = ::TagType.find(:id => params[:id])
+    @styles = %w( css/base css/tag_type_list )
+    haml :tag_type_edit
+  end
+
+  put '/tagtypes/edit/:id' do
+    @tag_type = ::TagType.find(:id => params[:id])
+    @styles = %w( css/base css/tag_type_list )
+    @tag_type.name = params[:name]
+    @tag_type.description = params[:description]
+    @tag_type.save
+    pg = session["page"]
+    redirect "/tagtypes/#{pg}"
+  end
+
 end

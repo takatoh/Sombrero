@@ -26,12 +26,15 @@
           Name
         %th.tagTypeDescription
           Description
+        %th
       - @tagtypes.each do |tagtype|
         %tr
           %td
             = h tagtype.name
           %td
             = h tagtype.description
+          %td
+            %a{:href => "/tagtypes/edit/#{tagtype.id}"} (edit)
 
   %div.pageNavi
     - unless @page.first_page?
