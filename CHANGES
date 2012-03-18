@@ -1,7 +1,7 @@
 = Sombrero
 
 
-== HEAD
+== v0.3.2    2012-03-18
 
 * [new] TagType.
 * [new] Alias for tag (still on the way).
