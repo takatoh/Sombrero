@@ -34,7 +34,7 @@
           %td
             = h tag.name
           %td
-            = h tag.tag_type || ""
+            = h(tag.tag_type ? tag.tag_type.name : "")
           %td
             = h tag.description
           %td

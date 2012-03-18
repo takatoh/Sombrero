@@ -242,6 +242,7 @@ class SombreroApp < Sinatra::Base
   get '/tags/edit/:id' do
     @tag = ::Tag.find(:id => params[:id])
     @styles = %w( css/base css/tag_list )
+    @tag_type_name = if @tag.tag_type then @tag.tag_type.name else "" end
     haml :tag_edit
   end
 
@@ -250,6 +251,10 @@ class SombreroApp < Sinatra::Base
     @styles = %w( css/base css/tag_list )
     @tag.name = params[:name] unless params[:name].empty?
     @tag.description = params[:description] unless params[:description].empty?
+    unless params[:tagtype].empty?
+      tag_type = ::TagType.find(:name => params[:tagtype])
+      @tag.tag_type_id = tag_type.id if tag_type
+    end
     @tag.save
     pg = session["page"]
     redirect "/tags/#{pg}"

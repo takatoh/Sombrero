@@ -23,6 +23,10 @@
         %td
           %input{ :type => "text", :name => "description", :size => 80, :value => @tag.description }
       %tr
+        %td Tag type:
+        %td
+          %input{ :type => "text", :name => "tagtype", :size => 80, :value => @tag_type_name }
+      %tr
         %td
         %td
           %input{ :type => "submit", :value => "Save" }
