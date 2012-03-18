@@ -9,7 +9,7 @@ require 'photo_registrar'
 require 'optparse'
 
 
-SCRIPT_VERSION = "0.4.0"
+SCRIPT_VERSION = "0.4.1"
 
 
 def err_exit(msg)
@@ -25,15 +25,20 @@ def register_photo(image)
                                  :page_url => image[:page_url],
                                  :tags     => @options[:tags] } )
       puts "  => Accepted: #{photo.width}x#{photo.height} (#{photo.md5})"
+      @counter[:accepted] += 1
     end
   rescue FileFetcher::NotImage => err
     puts "  => Not image: #{err.message}"
+    @counter[:error] += 1
   rescue FileFetcher::FetchError => err
     puts "  => Cannot fetch: #{err.message}"
+    @counter[:error] += 1
   rescue PhotoRegistrar::Rejection => err
     puts "  => Rejected: #{err.message}"
+    @counter[:rejected] += 1
   rescue => err
     puts "  => ERROR: #{err.message}"
+    @counter[:error] += 1
   end
 end
 
@@ -77,6 +82,7 @@ rescue OptionParser::InvalidOption => err
 end
 
 
+@counter = {:accepted => 0, :rejected => 0, :error => 0}
 sources = if @options[:input]
   YAML.load_file(@options[:input])
 else
@@ -113,3 +119,9 @@ sources.each do |src|
     end
   end
 end
+
+puts ""
+puts "Accepted: #{@counter[:accepted]}"
+puts "Rejected: #{@counter[:rejected]}"
+puts "Error:    #{@counter[:error]}"
+puts "TOTAL:    #{@counter.to_a.inject(0){|a,b| a + b[1]}}"

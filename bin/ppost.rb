@@ -50,8 +50,15 @@ psr.on('-u', '--url=URL', %q[photo URL.]){|v| @options[:url] = v}
 psr.on('-p', '--page-url=URL', %q[page URL.]){|v| @options[:page_url] = v}
 psr.on('-t', '--tags=TAGS', %q[set tags.]){|v| @options[:tags] = v}
 psr.on('-f', '--force', %q[force to register.]){|v| @options[:force] = true}
+<<<<<<< HEAD
 psr.on('--source-dir=DIR', %q[read file from DIR.]){|v| @options[:source_dir] = v}
 psr.on('-i', '--input=YAML', %q[input from YAML file.]){|v| @options[:input] = v}
+=======
+psr.on('-i', '--input=YAML', %q[input from YAML file.]){|v| @options[:input] = v}
+psr.on('--source-dir=DIR', %q[read file from DIR. use with --input option.]){|v|
+  @options[:source_dir] = v
+}
+>>>>>>> master
 psr.on('-l', '--log[=FILE]', %q[log to FILE. default is 'ppost.log'.]){|v|
   @options[:log] = v || "ppost.log"
 }
@@ -76,10 +83,17 @@ sources = if @options[:input]
   end
   src
 else
-  [ { "file"     => ARGV.shift,
+  files = if ARGV.size == 1 && File.directory?(ARGV[0])
+    Dir.glob("#{ARGV.shift}/**/*").select{|f| File.file?(f)}.sort
+  else
+    ARGV
+  end
+  files.map do |file|
+    { "file"     => file,
       "url"      => @options[:url],
       "page_url" => @options[:page_url],
-      "tags"     => @options[:tags] } ]
+      "tags"     => @options[:tags] }
+  end
 end
 
 @counter = {:accepted => 0, :rejected => 0, :error => 0}

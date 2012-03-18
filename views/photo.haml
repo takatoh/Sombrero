@@ -34,6 +34,7 @@
             - @posts.each do |post|
               %li
                 %a{:href => post.url}= h post.url
+                = post.page_url.nil? || post.page_url.empty? ? "" : "[#{link_to_hostname(post.page_url)}]"
       %tr
         %th
           Tags:

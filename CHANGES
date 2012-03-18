@@ -8,6 +8,12 @@
 * [bug] lib/model/photo.rb: in Photo#add_tags.
 * [change] ppost.rb: add --log option. show statistics.
 * [new] lib/plogger.rb
+* [change] photo_registrar.rb: Support URL with query string.
+* [change] pcrawl.rb v0.4.1. Show statistics.
+* [change] 'already exist' page.
+
+== v0.3.1    2010-08-31
+
 * [bug] ppost.rb v0.3.1. Using yaml file.
 * [bug] Showing photo with md5.
 
