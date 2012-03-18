@@ -249,8 +249,8 @@ class SombreroApp < Sinatra::Base
   put '/tags/edit/:id' do
     @tag = ::Tag.find(:id => params[:id])
     @styles = %w( css/base css/tag_list )
-    @tag.name = params[:name] unless params[:name].empty?
-    @tag.description = params[:description] unless params[:description].empty?
+    @tag.name = params[:name]
+    @tag.description = params[:description]
     unless params[:tagtype].empty?
       tag_type = ::TagType.find(:name => params[:tagtype])
       @tag.tag_type_id = tag_type.id if tag_type
