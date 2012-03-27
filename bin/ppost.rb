@@ -36,6 +36,28 @@ def register_photo(photo)
   end
 end
 
+IMAGES = %w( .jpg .jpeg .png .bmp .gif )
+
+def search_dir(dir, options = {})
+  dir = Pathname.new(dir)
+  sbr_info = dir + "sbr.info"
+  opts = if sbr_info.exist?
+    info = {}
+    YAML.load_file(sbr_info).each{|k, v| info[k.intern] = v }
+    options.dup.update(info)
+  else
+    options.dup
+  end
+  files = dir.children.select{|f| f.file? && IMAGES.include?(f.extname.downcase)}.map do |f|
+    { "file"     => f.to_s,
+      "url"      => opts[:url],
+      "page_url" => opts[:page_url],
+      "tags"     => opts[:tags] }
+  end
+  dirs = dir.children.select{|d| d.directory?}.map{|d| search_dir(d, opts)}.flatten
+  files.concat(dirs)
+end
+
 
 @options = {
   :dryrun => false,
@@ -79,15 +101,14 @@ sources = if @options[:input]
   src
 else
   files = if ARGV.size == 1 && File.directory?(ARGV[0])
-    Dir.glob("#{ARGV.shift}/**/*").select{|f| File.file?(f)}.sort
+    search_dir(ARGV.shift, @options)
   else
-    ARGV
-  end
-  files.map do |file|
-    { "file"     => file,
-      "url"      => @options[:url],
-      "page_url" => @options[:page_url],
-      "tags"     => @options[:tags] }
+    ARGV.map do |file|
+      { "file"     => file,
+        "url"      => @options[:url],
+        "page_url" => @options[:page_url],
+        "tags"     => @options[:tags] }
+    end
   end
 end
 
