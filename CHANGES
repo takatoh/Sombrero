@@ -1,6 +1,10 @@
 = Sombrero
 
 
+== HEAD
+
+* [change] bin/ppost.rb: Support sbr.info file for post options.
+
 == v0.3.2    2012-03-18
 
 * [new] TagType.
