@@ -40,7 +40,7 @@ IMAGES = %w( .jpg .jpeg .png .bmp .gif )
 
 def search_dir(dir, options = {})
   dir = Pathname.new(dir)
-  sbr_info = dir + "sbr.info"
+  sbr_info = dir + "sbrinfo"
   opts = if sbr_info.exist?
     info = {}
     YAML.load_file(sbr_info).each{|k, v| info[k.intern] = v }
