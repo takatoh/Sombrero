@@ -8,7 +8,7 @@ photos.each do |p|
   if p[:sample_path].nil? or p[:thumbnail_path].nil?
     puts "#{p[:id]}:"
     puts "  url:         #{p[:url]}"
-    puts "  pate url:    #{p[:page_url]}"
+    puts "  page url:    #{p[:page_url]}"
     puts "  size:        #{p[:width]}x#{p[:height]}"
     puts "  file size:   #{p[:filesize]}"
     puts "  md5:         #{p[:md5]}"
