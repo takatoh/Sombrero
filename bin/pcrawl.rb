@@ -9,7 +9,7 @@ require 'photo_registrar'
 require 'optparse'
 
 
-SCRIPT_VERSION = "0.4.1"
+SCRIPT_VERSION = "0.4.2"
 
 
 def err_exit(msg)
@@ -17,13 +17,13 @@ def err_exit(msg)
   exit
 end
 
-def register_photo(image)
+def register_photo(image, options)
   begin
     puts image[:image_url]
     unless @options[:dryrun]
       photo = @ragistrar.clip( { :url      => image[:image_url],
                                  :page_url => image[:page_url],
-                                 :tags     => @options[:tags] } )
+                                 :tags     => options[:tags] } )
       puts "  => Accepted: #{photo.width}x#{photo.height} (#{photo.md5})"
       @counter[:accepted] += 1
     end
@@ -50,7 +50,8 @@ def conv_opt(opt)
     :ignore_media_type => opt["ignore-media-type"],
     :link_only         => opt["link-only"],
     :embed_only        => opt["embed_only"],
-    :include_bg_image  => opt["include-bg-image"]
+    :include_bg_image  => opt["include-bg-image"],
+    :tags              => opt["tags"]
   }
 end
 
@@ -103,19 +104,19 @@ sources.each do |src|
   unless opt[:link_only]
     puts "--- Embeded images:"
     crawler.embeded_images.each do |i|
-      register_photo(i)
+      register_photo(i, opt)
     end
   end
   if opt[:include_bg_image]
     puts "--- Background images:"
     crawler.background_images.each do |i|
-      register_photo(i)
+      register_photo(i, opt)
     end
   end
   unless opt[:embed_only]
     puts "--- Linked images:"
     crawler.linked_images.each do |i|
-      register_photo(i)
+      register_photo(i, opt)
     end
   end
 end
