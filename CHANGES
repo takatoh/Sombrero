@@ -3,7 +3,8 @@
 
 == HEAD
 
-* [change] bin/ppost.rb: v0.3.3. Support sbr.info file for post options.
+* [change] bin/ppost.rb: v0.3.3. Support sbrinfo file for post options.
+* [bug] bin/pcrawl.rb: v0.4.2. Fix tagging.
 
 == v0.3.2    2012-03-18
 
