@@ -8,12 +8,12 @@
 
 
 require 'rubygems'
-require 'rmagick'
+#require 'rmagick'
 require 'fileutils'
 require 'pathname'
 require 'digest/md5'
 
-require 'boot'
+#require 'boot'
 require 'model'
 require 'file_fetcher'
 require 'photo_storage'

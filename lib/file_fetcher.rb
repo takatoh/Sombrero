@@ -5,7 +5,7 @@
 require 'rubygems'
 require 'httpclient'
 
-require 'boot'
+#require 'boot'
 require 'image_types'
 
 

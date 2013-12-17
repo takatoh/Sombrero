@@ -3,16 +3,16 @@
 #
 
 
-require 'rubygems'
 require 'sinatra/base'
+require 'sequel'
 require 'sequel/extensions/pagination'
 require 'haml'
 require 'sass'
 
-require 'boot'
+require './boot'
 require 'model'
 require 'photo_registrar'
-require 'version'
+require './version'
 
 
 class SombreroApp < Sinatra::Base
@@ -35,7 +35,7 @@ class SombreroApp < Sinatra::Base
   set :run, true
 
   enable :static
-  set :public, File.dirname(__FILE__) + "/public"
+  set :public_dir, File.dirname(__FILE__) + "/public"
   enable :methodoverride
   enable :sessions
 
@@ -72,7 +72,7 @@ class SombreroApp < Sinatra::Base
   # Recent posts.
 
   get '/recent/:page' do
-    @page = ::Post.order_by(:id.desc).paginate(params[:page].to_i, 10)
+    @page = ::Post.reverse_order(:id).extension(:pagination).paginate(params[:page].to_i, 10)
     @posts = @page.all
     @styles = %w( css/base css/recent js/highslide/highslide )
     @pg = params[:page]
@@ -88,7 +88,8 @@ class SombreroApp < Sinatra::Base
   end
 
   get '/list/:page' do
-    @page = ::Photo.order_by(:id.desc).paginate(params[:page].to_i, 20)
+#    @page = ::Photo.order_by(:id.desc).extension(:pagination).paginate(params[:page].to_i, 20)
+    @page = ::Photo.reverse_order(:id).extension(:pagination).paginate(params[:page].to_i, 20)
     @photos = @page.all
     @styles = %w( css/base css/list )
     @pg = params[:page]
@@ -246,7 +247,7 @@ class SombreroApp < Sinatra::Base
   # Listing tags.
 
   get '/tags/:page' do
-    @page = ::Tag.order_by(:id.desc).paginate(params[:page].to_i, 25)
+    @page = ::Tag.reverse_order(:id).extension(:pagination).paginate(params[:page].to_i, 25)
     @tags = @page.all
     @styles = %w( css/base css/tag_list )
     session["page"] = params[:page]
@@ -288,7 +289,7 @@ class SombreroApp < Sinatra::Base
   end
 
   get '/tagtypes/:page' do
-    @page = ::TagType.order_by(:id).paginate(params[:page].to_i, 25)
+    @page = ::TagType.order_by(:id).extension(:pagination).paginate(params[:page].to_i, 25)
     @tagtypes = @page.all
     @styles = %w( css/base css/tag_type_list)
     session["page"] = params[:page]

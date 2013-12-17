@@ -3,7 +3,7 @@
 #
 
 require 'rubygems'
-require 'rmagick'
+#require 'rmagick'
 require 'fileutils'
 require 'pathname'
 require 'uri'

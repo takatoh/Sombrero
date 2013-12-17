@@ -1,3 +1,5 @@
+require 'sequel'
+require 'sequel/extensions/pagination'
 require 'model/photo'
 require 'model/post'
 require 'model/tag'

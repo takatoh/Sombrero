@@ -1,4 +1,4 @@
-require 'boot'
+#require 'boot'
 
 class Tagging < Sequel::Model
   many_to_one :tag

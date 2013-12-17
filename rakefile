@@ -3,7 +3,7 @@ require 'rake'
 require 'sequel'
 require 'sequel/extensions/migration'
 
-require 'boot'
+require './boot'
 
 
 namespace :db do

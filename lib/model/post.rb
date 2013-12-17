@@ -1,4 +1,6 @@
-require 'boot'
+#require 'boot'
+require 'sequel'
+require 'sequel/extensions/pagination'
 
 class Post < Sequel::Model
   many_to_one :photo
