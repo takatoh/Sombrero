@@ -3,8 +3,7 @@
 # ppost.rb - Post photos to sombrero.
 #
 
-require File.dirname(__FILE__) + "/../boot"
-require 'pcrawler'
+require "./boot"
 require 'photo_registrar'
 require 'plogger'
 require 'optparse'
@@ -15,6 +14,10 @@ SCRIPT_VERSION = "0.3.3"
 
 at_exit { @log.close if @log }
 
+
+class FileNotExist < StandardError; end
+
+
 def err_exit(msg)
   $stderr.print msg
   exit
@@ -23,6 +26,7 @@ end
 def register_photo(photo)
   begin
     @log.puts photo["file"]
+    raise FileNotExist.new("File not exist") unless File.exist?(photo["file"])
     unless @options[:dryrun]
       p = @ragistrar.post(photo["file"], { :url      => photo["url"],
                                            :page_url => photo["page_url"],
