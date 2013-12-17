@@ -37,13 +37,8 @@ class PhotoRegistrar
 
   def post(file, photo_info)
     file = Pathname.new(file) if file.instance_of?(String)
-#    img = Magick::Image.read(file).first
-#    width = img.columns
-#    height = img.rows
-    width = `identify -format %[width] #{file}`
-    width = width.to_i
-    height = `identify -format %[height] #{file}`
-    height = height.to_i
+    width = `identify -format %[width] #{file}`.to_i
+    height = `identify -format %[height] #{file}`.to_i
     raise Rejection.new("Small photo(#{width}x#{height})") if small_image?(width, height)
 
     content = File.open(file, "rb"){|f| f.read}
