@@ -1,4 +1,5 @@
-config.yaml
+*.yaml
+*.log
 db/sombrero.db
 tmp/
 storage/
