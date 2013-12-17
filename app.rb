@@ -10,9 +10,9 @@ require 'haml'
 require 'sass'
 
 require './boot'
+require './version'
 require 'model'
 require 'photo_registrar'
-require './version'
 
 
 class SombreroApp < Sinatra::Base
@@ -88,7 +88,6 @@ class SombreroApp < Sinatra::Base
   end
 
   get '/list/:page' do
-#    @page = ::Photo.order_by(:id.desc).extension(:pagination).paginate(params[:page].to_i, 20)
     @page = ::Photo.reverse_order(:id).extension(:pagination).paginate(params[:page].to_i, 20)
     @photos = @page.all
     @styles = %w( css/base css/list )
