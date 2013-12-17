@@ -2,8 +2,6 @@
 #  PhotoStorage
 #
 
-require 'rubygems'
-#require 'rmagick'
 require 'fileutils'
 require 'pathname'
 require 'uri'
@@ -42,16 +40,11 @@ class PhotoStorage
 
   private
 
-  def make_thumbnail(photopath, opts = {})
+  def make_thumbnail(photopath, opts)
     thumbpath = thumb_fullpath(opts[:name])
     return thumb_path(opts[:name]) if File.exist?(thumbpath)
     FileUtils.mkdir_p(thumbpath.parent)
-    geometry = Magick::Geometry.from_s(THUMBNAIL_GEOMETRY)
-    img = Magick::Image.read(photopath).first
-    thumbnail = img.change_geometry(geometry) do |cols, rows, i|
-      i.resize!(cols, rows)
-    end
-    thumbnail.write(thumbpath)
+    system("convert -thumbnail #{THUMBNAIL_GEOMETRY} #{photopath} #{thumbpath}")
     thumb_path(opts[:name])
   end
 
@@ -59,16 +52,13 @@ class PhotoStorage
     samplepath = sample_fullpath(opts[:name])
     return sample_path(opts[:name]) if File.exist?(samplepath)
     FileUtils.mkdir_p(samplepath.parent)
-    img = Magick::Image.read(photopath).first
-    if img.columns > SAMPLE_WIDTH or img.rows > SAMPLE_HEIGHT
-      geometry = Magick::Geometry.from_s("#{SAMPLE_WIDTH.to_s}x#{SAMPLE_HEIGHT.to_s}")
-      sample = img.change_geometry(geometry) do |cols, rows, i|
-        i.resize!(cols, rows)
-      end
+    width = `identify -format %[width] #{photopath}`.to_i
+    height = `identify -format %[height] #{photopath}`.to_i
+    if width > SAMPLE_WIDTH or height > SAMPLE_HEIGHT
+      system("convert -scale #{SAMPLE_WIDTH}x#{SAMPLE_HEIGHT} #{photopath} #{samplepath}")
     else
-      sample = img
+      FileUtils.cp(photopath, samplepath)
     end
-    sample.write(samplepath)
     sample_path(opts[:name])
   end
 

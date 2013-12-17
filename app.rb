@@ -163,9 +163,14 @@ class SombreroApp < Sinatra::Base
       end
     rescue PhotoRegistrar::Rejection => e
       @message = e.message
-      @md5 = /\((.+)\)/.match(e.message)[1]
-      @photo = Photo.find(:md5 => @md5)
-      haml :already_exist
+      case @message
+      when /Small photo/
+        redirect '/recent/1'
+      when /Already/
+        @md5 = /\((.+)\)/.match(e.message)[1]
+        @photo = Photo.find(:md5 => @md5)
+        haml :already_exist
+      end
     end
   end
 
