@@ -9,7 +9,7 @@ require 'plogger'
 require 'optparse'
 
 
-SCRIPT_VERSION = "0.3.3"
+SCRIPT_VERSION = "0.4.0"
 
 
 at_exit { @log.close if @log }
