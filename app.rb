@@ -108,7 +108,7 @@ class SombreroApp < Sinatra::Base
     m = /\A(\d+)x(\d+)\z/.match(@size)
     w = m[1].to_i
     h = m[2].to_i
-    @page = ::Photo.filter(:width => w, :height => h).order_by(:id.desc).paginate(params[:page].to_i, 20)
+    @page = ::Photo.filter(:width => w, :height => h).reverse_order(:id).extension(:pagination).paginate(params[:page].to_i, 20)
     @photos = @page.all
     @styles = %w( css/base css/list )
     @pg = params[:page]
