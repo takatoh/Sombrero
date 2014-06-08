@@ -28,7 +28,7 @@ def register_photo(photo)
     @log.puts photo["file"]
     raise FileNotExist.new("File not exist") unless File.exist?(photo["file"])
     unless @options[:dryrun]
-      p = @ragistrar.post(photo["file"], { :url      => photo["url"],
+      p = @registrar.post(photo["file"], { :url      => photo["url"],
                                            :page_url => photo["page_url"],
                                            :tags     => photo["tags"] } )
       @log.puts "  => Accepted: #{p.width}x#{p.height} (#{p.md5})"
@@ -95,7 +95,7 @@ rescue OptionParser::InvalidOption => err
 end
 
 
-@ragistrar = PhotoRegistrar.new(:keep => true, :force => @options[:force])
+@registrar = PhotoRegistrar.new(:keep => true, :force => @options[:force])
 @log = @options[:log] ? PLogger.new(@options[:log]) : $stdout
 sources = if @options[:input]
   src = YAML.load_file(@options[:input])
