@@ -81,7 +81,7 @@ EOB
 psr.on('-u', '--url=URL', %q[photo URL.]){|v| @options[:url] = v}
 psr.on('-p', '--page-url=URL', %q[page URL.]){|v| @options[:page_url] = v}
 psr.on('-t', '--tags=TAGS', %q[set tags.]){|v| @options[:tags] = v}
-psr.on('-a', '--add-tags', %q[add tags even if photo allready exist.]){|v| @options[:add_tags] = true}
+psr.on('-a', '--add-tags', %q[add tags even if photo already exist.]){|v| @options[:add_tags] = true}
 psr.on('-f', '--force', %q[force to register.]){|v| @options[:force] = true}
 psr.on('-i', '--input=YAML', %q[input from YAML file.]){|v| @options[:input] = v}
 psr.on('--source-dir=DIR', %q[read file from DIR. use with --input option.]){|v|
