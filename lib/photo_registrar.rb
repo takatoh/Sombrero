@@ -89,7 +89,7 @@ class PhotoRegistrar
     photo =  Photo.find(:md5 => md5)
     added_tags = photo.add_tags(tags)
     photo.save
-    if added_tags
+    if added_tags && !added_tags.empty?
       added_tags.map(&:name).join(" ")
     else
       nil
