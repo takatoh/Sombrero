@@ -38,8 +38,10 @@ def register_photo(photo)
     @log.puts "  => Rejected: #{err.message}"
     @counter[:rejected] += 1
     if @options[:add_tags]
-      tag_num = @registrar.add_tags(photo["file"], photo["tags"])
-      @log.puts "  => Add tags: #{tag_num}"
+      added_tags = @registrar.add_tags(photo["file"], photo["tags"])
+      if added_tags
+        @log.puts "  => Added tags: #{added_tags}"
+      end
     end
   end
 end
