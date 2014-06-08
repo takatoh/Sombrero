@@ -87,9 +87,13 @@ class PhotoRegistrar
     content = File.open(file, "rb"){|f| f.read}
     md5 = Digest::MD5.hexdigest(content)
     photo =  Photo.find(:md5 => md5)
-    number_of_added_tags = photo.add_tags(tags)
+    added_tags = photo.add_tags(tags)
     photo.save
-    number_of_added_tags
+    if added_tags
+      added_tags.map(&:name).join(" ")
+    else
+      nil
+    end
   end
 
 
