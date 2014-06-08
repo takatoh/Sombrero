@@ -82,6 +82,16 @@ class PhotoRegistrar
   end
 
 
+  def add_tags(file, tags)
+    file = Pathname.new(file) if file.instance_of?(String)
+    content = File.open(file, "rb"){|f| f.read}
+    md5 = Digest::MD5.hexdigest(content)
+    photo =  Photo.find(:md5 => md5)
+    number_of_added_tags = photo.add_tags(tags)
+    photo.save
+    number_of_added_tags
+  end
+
 
   private
 
