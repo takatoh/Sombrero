@@ -37,6 +37,10 @@ def register_photo(photo)
   rescue PhotoRegistrar::Rejection => err
     @log.puts "  => Rejected: #{err.message}"
     @counter[:rejected] += 1
+    if @options[:add_tags]
+      tag_num = @registrar.add_tags(photo["file"], photo["tags"])
+      @log.puts "  => Add tags: #{tag_num}"
+    end
   end
 end
 
@@ -75,6 +79,7 @@ EOB
 psr.on('-u', '--url=URL', %q[photo URL.]){|v| @options[:url] = v}
 psr.on('-p', '--page-url=URL', %q[page URL.]){|v| @options[:page_url] = v}
 psr.on('-t', '--tags=TAGS', %q[set tags.]){|v| @options[:tags] = v}
+psr.on('-a', '--add-tags', %q[add tags even if photo allready exist.]){|v| @options[:add_tags] = true}
 psr.on('-f', '--force', %q[force to register.]){|v| @options[:force] = true}
 psr.on('-i', '--input=YAML', %q[input from YAML file.]){|v| @options[:input] = v}
 psr.on('--source-dir=DIR', %q[read file from DIR. use with --input option.]){|v|
