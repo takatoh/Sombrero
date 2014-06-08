@@ -28,9 +28,9 @@ class Photo < Sequel::Model
   end
 
   def add_tags(tagnames)
-    return 0 if tagnames.nil? || /\A *\z/ =~ tagnames
+    return nil if tagnames.nil? || /\A *\z/ =~ tagnames
     tags = tagnames.split(/ +/)
-    tags.map{|tag| add_tag(tag)}.compact.size
+    tags.map{|tag| add_tag(tag)}.compact
   end
 
   def delete_tag(tagname)
