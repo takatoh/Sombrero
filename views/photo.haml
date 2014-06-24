@@ -1,3 +1,13 @@
+%script{:type => "text/javascript", :src => "/js/jquery-1.11.1.min.js"}
+:javascript
+  $(function (){
+    $('#editLink').click(function (){
+      $('#tagList').hide();
+      $('#editLink').hide();
+      $('#updateTags').show();
+    })
+  });
+
 %div#main
   %div#photo
     %a{:href => '/images/' + @photo.path, :target => '_brank'}
@@ -43,7 +53,7 @@
             - @tags.sort_by{|t| t.name}.each do |tag|
               %li
                 = h tag.name
-          %span#editLink
+          %a#editLink{ :href => "javascript:void();" }
             = "(Edit)"
           %form#updateTags{ :action => "/photo/update-tags", :method => "POST", :enctype => "multipart/form-data" }
             %input{ :type => "text", :name => "tags", :size => "80", :value => "#{@tags.map{|t| t.name}.join(' ')}"}
