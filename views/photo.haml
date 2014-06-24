@@ -39,7 +39,13 @@
         %th
           Tags:
         %td
-          %ul
+          %ul#tagList
             - @tags.sort_by{|t| t.name}.each do |tag|
               %li
                 = h tag.name
+          %span#editLink
+            = "(Edit)"
+          %form#updateTags{ :action => "/photo/update-tags", :method => "POST", :enctype => "multipart/form-data" }
+            %input{ :type => "text", :name => "tags", :size => "80", :value => "#{@tags.map{|t| t.name}.join(' ')}"}
+            %input{ :type => "hidden", :name => "id", :value => "#{@photo.id}"}
+            %input{ :type => "submit", :value => "Update"}

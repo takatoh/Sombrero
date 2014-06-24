@@ -202,6 +202,12 @@ class SombreroApp < Sinatra::Base
     redirect "/recent/#{session["page"]}"
   end
 
+  post '/photo/update-tags' do
+    @photo = Photo.find(:id => params[:id])
+    @photo.update_tags(params[:tags])
+    redirect "/photo/#{@photo.id}"
+  end
+
 
   # Edit and delete post.
 
