@@ -4,3 +4,4 @@ db/sombrero.db
 tmp/
 storage/
 test/
+.sass-cache/
