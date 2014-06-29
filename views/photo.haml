@@ -5,6 +5,7 @@
       $('#tagList').hide();
       $('#editLink').hide();
       $('#updateTags').show();
+      $('#tags').focus();
     })
   });
 
@@ -56,6 +57,6 @@
           %a#editLink{ :href => "javascript:void();" }
             = "(Edit)"
           %form#updateTags{ :action => "/photo/update-tags", :method => "POST", :enctype => "multipart/form-data" }
-            %input{ :type => "text", :name => "tags", :size => "80", :value => "#{@tags.map{|t| t.name}.join(' ')}"}
+            %input#tags{ :type => "text", :name => "tags", :size => "80", :value => "#{@tags.map{|t| t.name}.join(' ')}"}
             %input{ :type => "hidden", :name => "id", :value => "#{@photo.id}"}
             %input{ :type => "submit", :value => "Update"}
