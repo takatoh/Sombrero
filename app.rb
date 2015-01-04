@@ -257,7 +257,7 @@ class SombreroApp < Sinatra::Base
   # Listing tags.
 
   get '/tags/:page' do
-    @page = ::Tag.reverse_order(:id).extension(:pagination).paginate(params[:page].to_i, 25)
+    @page = ::Tag.order(:name).extension(:pagination).paginate(params[:page].to_i, 25)
     @tags = @page.all
     @styles = %w( css/base css/tag_list )
     session["page"] = params[:page]
