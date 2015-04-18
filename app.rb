@@ -340,5 +340,23 @@ class SombreroApp < Sinatra::Base
     data.to_json
   end
 
+  get '/api/photos' do
+    limit = params[:limit] ? params[:limit].to_i : 20
+    offset = params[:offset] ? params[:offset].to_i : 0
+    @photos = Photo.dataset.limit(limit).offset(offset)
+    data = @photos.map do |p|
+      {
+        "id"       => p.id,
+        "width"    => p.width,
+        "height"   => p.height,
+        "fileSize" => p.filesize,
+        "md5"      => p.md5,
+        "fileName" => File.basename(p.path)
+      }
+    end
+    content_type :json
+    data.to_json
+  end
+
 
 end
