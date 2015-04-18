@@ -371,5 +371,23 @@ class SombreroApp < Sinatra::Base
     data.to_json
   end
 
+  get '/api/posts' do
+    limit = params[:limit] ? params[:limit].to_i : 20
+    offset = params[:offset] ? params[:offset].to_i : 0
+    @posts = Post.dataset.limit(limit).offset(offset)
+    data = @posts.map do |p|
+      {
+        "id"         => p.id,
+        "source"     => p.url,
+        "webPage"    => p.page_url,
+        "title"      => p.title,
+        "photoId"    => p.photo_id,
+        "postedDate" => p.posted_date
+      }
+    end
+    content_type :json
+    data.to_json
+  end
+
 
 end
