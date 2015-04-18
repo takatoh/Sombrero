@@ -389,5 +389,56 @@ class SombreroApp < Sinatra::Base
     data.to_json
   end
 
+  post '/api/post' do
+    begin
+      if params[:file]
+        new_filename = params[:file][:filename]
+        save_file = './tmp/' + new_filename
+        File.open(save_file, 'wb'){ |f| f.write(params[:file][:tempfile].read) }
+        registrar = PhotoRegistrar.new( :force => params[:force] )
+        photo = registrar.post(save_file, { :url      => params[:url],
+                                            :page_url => params[:page_url],
+                                            :tags     => params[:tags] })
+        data = {
+          "status" => "Accepted",
+          "photo" => {
+            "id"       => photo.id,
+            "width"    => photo.width,
+            "height"   => photo.height,
+            "fileSize" => photo.filesize,
+            "md5"      => photo.md5,
+            "fileName" => File.basename(photo.path)
+          }
+        }
+      end
+    rescue PhotoRegistrar::Rejection => e
+      message = e.message
+      case message
+      when /Small photo/
+        data = {
+          "status" => "Rejected",
+          "reason" => "Small photo"
+        }
+      when /Already/
+        md5 = /\((.+)\)/.match(e.message)[1]
+        photo = Photo.find(:md5 => md5)
+        data = {
+          "status" => "Rejected",
+          "reason" => "Already exist",
+          "photo" => {
+            "id"       => photo.id,
+            "width"    => photo.width,
+            "height"   => photo.height,
+            "fileSize" => photo.filesize,
+            "md5"      => photo.md5,
+            "fileName" => File.basename(photo.path)
+          }
+        }
+      end
+    end
+    content_type :json
+    data.to_json
+  end
+
 
 end
