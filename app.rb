@@ -358,5 +358,18 @@ class SombreroApp < Sinatra::Base
     data.to_json
   end
 
+  get '/api/post/:id' do
+    @post = Post.find(:id => params[:id].to_i)
+    data = {
+      "id"      => @post.id,
+      "source"  => @post.url,
+      "webPage" => @post.page_url,
+      "title"   => @post.title,
+      "photoId" => @post.photo_id
+    }
+    content_type :json
+    data.to_json
+  end
+
 
 end
