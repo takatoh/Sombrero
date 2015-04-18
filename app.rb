@@ -8,6 +8,7 @@ require 'sequel'
 require 'sequel/extensions/pagination'
 require 'haml'
 require 'sass'
+require 'json'
 
 require './boot'
 require './version'
@@ -321,5 +322,23 @@ class SombreroApp < Sinatra::Base
     pg = session["page"]
     redirect "/tagtypes/#{pg}"
   end
+
+
+  # Web API
+
+  get '/api/photo/:id' do
+    @photo = Photo.find(:id => params[:id].to_i)
+    data = {
+      "id"       => @photo.id,
+      "width"    => @photo.width,
+      "height"   => @photo.height,
+      "fileSize" => @photo.filesize,
+      "md5"      => @photo.md5,
+      "fileName" => File.basename(@photo.path)
+    }
+    content_type :json
+    data.to_json
+  end
+
 
 end
