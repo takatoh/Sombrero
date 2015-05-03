@@ -422,18 +422,38 @@ class SombreroApp < Sinatra::Base
       when /Already/
         md5 = /\((.+)\)/.match(e.message)[1]
         photo = Photo.find(:md5 => md5)
-        data = {
-          "status" => "Rejected",
-          "reason" => "Already exist",
-          "photo" => {
-            "id"       => photo.id,
-            "width"    => photo.width,
-            "height"   => photo.height,
-            "fileSize" => photo.filesize,
-            "md5"      => photo.md5,
-            "fileName" => File.basename(photo.path)
+        tags = if params[:add_tags]
+          photo.add_tags(params[:tags]).map{|t| t.name}
+        else
+          []
+        end
+        if tags.empty?
+          data = {
+            "status" => "Rejected",
+            "reason" => "Already exist",
+            "photo" => {
+              "id"       => photo.id,
+              "width"    => photo.width,
+              "height"   => photo.height,
+              "filesizeileSize" => photo.filesize,
+              "md5"      => photo.md5,
+              "fileName" => File.basename(photo.path)
+            }
           }
-        }
+        else
+          data = {
+            "status" => "Add tags",
+            "photo" => {
+              "id"        => photo.id,
+              "width"     => photo.width,
+              "height"    => photo.height,
+              "fileSize"  => photo.filesize,
+              "md5"       => photo.md5,
+              "fileName"  => File.basename(photo.path),
+              "addedTags" => tags
+            }
+          }
+        end
       end
     end
     content_type :json
