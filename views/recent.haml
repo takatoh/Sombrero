@@ -66,7 +66,7 @@
               %th
                 Tags:
               %td
-                = h post.photo.taggings.map{|t| t.tag.name}.sort.join(' ')
+                = h post.photo.taggings.map{|t| t.tag.name.to_s}.sort.join(' ')
             %tr
               %th
                 Posted:
