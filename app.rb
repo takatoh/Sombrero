@@ -460,5 +460,71 @@ class SombreroApp < Sinatra::Base
     data.to_json
   end
 
+  post '/api/clip' do
+    begin
+      registrar = PhotoRegistrar.new( :force => params[:force] )
+      photo = registrar.clip({ :url      => params[:url],
+                               :page_url => params[:page_url],
+                               :tags     => params[:tags] })
+      data = {
+        "status" => "Accepted",
+        "photo" => {
+          "id"       => photo.id,
+          "width"    => photo.width,
+          "height"   => photo.height,
+          "fileSize" => photo.filesize,
+          "md5"      => photo.md5,
+          "fileName" => File.basename(photo.path)
+        }
+      }
+      end
+    rescue PhotoRegistrar::Rejection => e
+      message = e.message
+      case message
+      when /Small photo/
+        data = {
+          "status" => "Rejected",
+          "reason" => "Small photo"
+        }
+      when /Already/
+        md5 = /\((.+)\)/.match(e.message)[1]
+        photo = Photo.find(:md5 => md5)
+        tags = if params[:add_tags]
+          photo.add_tags(params[:tags]).map{|t| t.name}
+        else
+          []
+        end
+        if tags.empty?
+          data = {
+            "status" => "Rejected",
+            "reason" => "Already exist",
+            "photo" => {
+              "id"       => photo.id,
+              "width"    => photo.width,
+              "height"   => photo.height,
+              "filesizeileSize" => photo.filesize,
+              "md5"      => photo.md5,
+              "fileName" => File.basename(photo.path)
+            }
+          }
+        else
+          data = {
+            "status" => "Add tags",
+            "photo" => {
+              "id"        => photo.id,
+              "width"     => photo.width,
+              "height"    => photo.height,
+              "fileSize"  => photo.filesize,
+              "md5"       => photo.md5,
+              "fileName"  => File.basename(photo.path),
+              "addedTags" => tags
+            }
+          }
+        end
+      end
+    end
+    content_type :json
+    data.to_json
+  end
 
 end
