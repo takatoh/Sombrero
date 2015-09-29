@@ -435,7 +435,7 @@ class SombreroApp < Sinatra::Base
               "id"       => photo.id,
               "width"    => photo.width,
               "height"   => photo.height,
-              "filesizeileSize" => photo.filesize,
+              "fileSize" => photo.filesize,
               "md5"      => photo.md5,
               "fileName" => File.basename(photo.path)
             }
@@ -502,7 +502,7 @@ class SombreroApp < Sinatra::Base
               "id"       => photo.id,
               "width"    => photo.width,
               "height"   => photo.height,
-              "filesizeileSize" => photo.filesize,
+              "fileSize" => photo.filesize,
               "md5"      => photo.md5,
               "fileName" => File.basename(photo.path)
             }
