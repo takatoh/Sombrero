@@ -477,7 +477,6 @@ class SombreroApp < Sinatra::Base
           "fileName" => File.basename(photo.path)
         }
       }
-      end
     rescue PhotoRegistrar::Rejection => e
       message = e.message
       case message
