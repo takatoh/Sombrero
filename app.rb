@@ -442,7 +442,7 @@ class SombreroApp < Sinatra::Base
           }
         else
           data = {
-            "status" => "Add tags",
+            "status" => "Added tags",
             "photo" => {
               "id"        => photo.id,
               "width"     => photo.width,
@@ -508,7 +508,7 @@ class SombreroApp < Sinatra::Base
           }
         else
           data = {
-            "status" => "Add tags",
+            "status" => "Added tags",
             "photo" => {
               "id"        => photo.id,
               "width"     => photo.width,
