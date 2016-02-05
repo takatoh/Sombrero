@@ -6,8 +6,8 @@
 require 'sinatra/base'
 require 'sequel'
 require 'sequel/extensions/pagination'
-require 'haml'
-require 'sass'
+require 'tilt/haml'
+require 'tilt/sass'
 require 'json'
 
 require './boot'
