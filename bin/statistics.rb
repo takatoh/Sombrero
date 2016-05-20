@@ -1,7 +1,8 @@
-#! ruby -Ku
+#!/user/env ruby
+# encoding: utf-8
 
-require 'boot'
+require './boot'
 require 'model'
 
-puts "#{Photo.all.size} photos."
-puts "#{Post.all.size} posts."
+puts "#{Photo.count} photos."
+puts "#{Post.count} posts."
