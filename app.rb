@@ -530,4 +530,17 @@ class SombreroApp < Sinatra::Base
     data.to_json
   end
 
+  get '/api/statistics' do
+    photo_count = Photo.count
+    post_count = Post.count
+    data = {
+      "statistics" => {
+        "photos" => photo_count,
+        "posts"  => post_count
+      }
+    }
+    content_type :json
+    data.to_json
+  end
+
 end
