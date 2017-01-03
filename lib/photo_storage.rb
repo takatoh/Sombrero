@@ -44,7 +44,7 @@ class PhotoStorage
     thumbpath = thumb_fullpath(opts[:name])
     return thumb_path(opts[:name]) if File.exist?(thumbpath)
     FileUtils.mkdir_p(thumbpath.parent)
-    system("convert -thumbnail #{THUMBNAIL_GEOMETRY} #{photopath} #{thumbpath}")
+    system("convert -thumbnail #{THUMBNAIL_GEOMETRY} -flatten #{photopath} #{thumbpath}")
     thumb_path(opts[:name])
   end
 
@@ -55,7 +55,7 @@ class PhotoStorage
     width = `identify -format %[width] #{photopath}`.to_i
     height = `identify -format %[height] #{photopath}`.to_i
     if width > SAMPLE_WIDTH or height > SAMPLE_HEIGHT
-      system("convert -scale #{SAMPLE_WIDTH}x#{SAMPLE_HEIGHT} #{photopath} #{samplepath}")
+      system("convert -scale #{SAMPLE_WIDTH}x#{SAMPLE_HEIGHT} -flatten #{photopath} #{samplepath}")
     else
       FileUtils.cp(photopath, samplepath)
     end
