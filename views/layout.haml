@@ -3,7 +3,7 @@
 
 %html
   %head
-    %title Sombrero
+    %title #{SOMBRERO_CONFIG["site_title"]}
     %meta{:"http-equiv" => "Content-Type", :comment => "text/html", :charset => "utf-8"}
     - @styles.each do |style|
       %link{:rel => "stylesheet", :type => "text/css", :href => "/#{style}.css"}
@@ -13,7 +13,7 @@
     %div#container
       %div#header
         %h1
-          %a{:href => "/"} Sombrero
+          %a{:href => "/"} #{SOMBRERO_CONFIG["site_title"]}
         %div#menu
           %ul
             %li
