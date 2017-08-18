@@ -348,7 +348,6 @@ class SombreroApp < Sinatra::Base
     limit = params[:limit] ? params[:limit].to_i : 20
     offset = params[:offset] ? params[:offset].to_i : 0
     @photos = Photo.dataset.limit(limit).offset(offset)
-    @sources = @photo.posts.map{|p| p.url }
     photo_endpoint = SOMBRERO_CONFIG["hosturl"] + "images"
     data = @photos.map do |p|
       {
@@ -359,7 +358,7 @@ class SombreroApp < Sinatra::Base
         "md5"      => p.md5,
         "fileName" => File.basename(p.path),
         "fileUrl"  => "#{photo_endpoint}/#{p.path}",
-        "sources"  => @sources
+        "sources"  => p.posts.map{|post| post.url }
       }
     end
     content_type :json
