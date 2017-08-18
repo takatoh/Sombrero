@@ -328,6 +328,7 @@ class SombreroApp < Sinatra::Base
 
   get '/api/photo/:id' do
     @photo = Photo.find(:id => params[:id].to_i)
+    @sources = @photo.posts.map{|p| p.url }
     photo_endpoint = SOMBRERO_CONFIG["hosturl"] + "images"
     data = [{
       "id"       => @photo.id,
@@ -336,7 +337,8 @@ class SombreroApp < Sinatra::Base
       "fileSize" => @photo.filesize,
       "md5"      => @photo.md5,
       "fileName" => File.basename(@photo.path),
-      "fileUrl"  => "#{photo_endpoint}/#{@photo.path}"
+      "fileUrl"  => "#{photo_endpoint}/#{@photo.path}",
+      "sources"  => @sources
     }]
     content_type :json
     data.to_json
@@ -346,6 +348,7 @@ class SombreroApp < Sinatra::Base
     limit = params[:limit] ? params[:limit].to_i : 20
     offset = params[:offset] ? params[:offset].to_i : 0
     @photos = Photo.dataset.limit(limit).offset(offset)
+    @sources = @photo.posts.map{|p| p.url }
     photo_endpoint = SOMBRERO_CONFIG["hosturl"] + "images"
     data = @photos.map do |p|
       {
@@ -355,7 +358,8 @@ class SombreroApp < Sinatra::Base
         "fileSize" => p.filesize,
         "md5"      => p.md5,
         "fileName" => File.basename(p.path),
-        "fileUrl"  => "#{photo_endpoint}/#{p.path}"
+        "fileUrl"  => "#{photo_endpoint}/#{p.path}",
+        "sources"  => @sources
       }
     end
     content_type :json
