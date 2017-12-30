@@ -359,7 +359,7 @@ class SombreroApp < Sinatra::Base
         "fileName" => File.basename(p.path),
         "fileUrl"  => "#{photo_endpoint}/#{p.path}",
         "sources"  => p.posts.map{|post| post.url },
-	    "tags"     => p.taggings.map{|t| t.tag.name }
+        "tags"     => p.taggings.map{|t| t.tag.name }
       }
     end
     content_type :json
