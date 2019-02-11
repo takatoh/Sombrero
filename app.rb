@@ -366,6 +366,24 @@ class SombreroApp < Sinatra::Base
     data.to_json
   end
 
+  get '/api/photo/md5/:md5' do
+    @photo = Photo.find(:md5 => params[:md5])
+    photo_endpoint = SOMBRERO_CONFIG["hosturl"] + "images"
+    data = [{
+      "id"       => @photo.id,
+      "width"    => @photo.width,
+      "height"   => @photo.height,
+      "fileSize" => @photo.filesize,
+      "md5"      => @photo.md5,
+      "fileName" => File.basename(@photo.path),
+      "fileUrl"  => "#{photo_endpoint}/#{@photo.path}",
+      "sources"  => @photo.posts.map{|p| p.url },
+      "tags"     => @photo.taggings.map{|t| t.tag.name }
+    }]
+    content_type :json
+    data.to_json
+  end
+
   get '/api/post/:id' do
     @post = Post.find(:id => params[:id].to_i)
     data = [{
