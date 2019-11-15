@@ -5,3 +5,5 @@ tmp/
 storage/
 test/
 .sass-cache/
+.bundle/
+vendor/
