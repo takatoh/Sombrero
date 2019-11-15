@@ -1,33 +1,33 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    ffi (1.10.0)
-    ffi (1.10.0-x64-mingw32)
-    haml (5.0.4)
+    ffi (1.11.2)
+    ffi (1.11.2-x64-mingw32)
+    haml (5.1.2)
       temple (>= 0.8.0)
       tilt
     httpclient (2.8.3)
     mustermann (1.0.3)
-    rack (2.0.6)
-    rack-protection (2.0.5)
+    rack (2.0.7)
+    rack-protection (2.0.7)
       rack
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
-    sass (3.7.3)
+    sass (3.7.4)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
-    sequel (5.17.0)
-    sinatra (2.0.5)
+    sequel (5.26.0)
+    sinatra (2.0.7)
       mustermann (~> 1.0)
       rack (~> 2.0)
-      rack-protection (= 2.0.5)
+      rack-protection (= 2.0.7)
       tilt (~> 2.0)
-    sqlite3 (1.4.0)
-    temple (0.8.0)
-    tilt (2.0.9)
+    sqlite3 (1.4.1)
+    temple (0.8.2)
+    tilt (2.0.10)
 
 PLATFORMS
   ruby
