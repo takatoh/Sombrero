@@ -11,7 +11,7 @@ require 'tilt/sass'
 require 'json'
 
 require './boot'
-require './version'
+require 'version'
 require 'model'
 require 'photo_registrar'
 
