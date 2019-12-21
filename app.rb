@@ -241,6 +241,10 @@ class SombreroApp < Sinatra::Base
   get '/photo/:id' do
     @photo = Photo.find(:id => params[:id])
     @posts = @photo.posts
+    unless @photo.has_ext?
+      extname = @posts.map{|p| p.extname }.first
+      @photo.put_ext(extname)
+    end
     @tags = @photo.taggings.map{|t| t.tag}
     @styles = %w( css/base css/photo )
     haml :photo

@@ -37,6 +37,14 @@ class PhotoStorage
   end
 
 
+  def put_ext(path, extname)
+    fullpath = @storage_dir + path
+    fullpath_new = fullpath.sub_ext("." + extname)
+    FileUtils.mv(fullpath, fullpath_new)
+    path + "." + extname
+  end
+
+
 
   private
 

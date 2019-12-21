@@ -13,5 +13,13 @@ class Post < Sequel::Model
   def date
     self.posted_date.strftime("%Y-%m-%d %H:%M:%S")
   end
+
+  def extname
+    ext = File.extname(self.url)
+    if ext.empty?
+      ext = /format=([a-z]+)/.match(self.url)[1]
+    end
+    ext
+  end
 end
 

@@ -49,5 +49,17 @@ class Photo < Sequel::Model
     taggings.map{|t| t.tag}
   end
 
+  def has_ext?
+    !(File.extname(self.path).empty?)
+  end
+
+  def put_ext(extname)
+    storage = PhotoStorage.new(SOMBRERO_CONFIG["storage"])
+    path = storage.put_ext(self.path, extname)
+    self.path = path
+    self.save
+    path
+  end
+
 end
 
