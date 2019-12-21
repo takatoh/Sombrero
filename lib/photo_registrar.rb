@@ -29,6 +29,10 @@ class PhotoRegistrar
   def clip(photo_info)
     c = FileFetcher.fetch(photo_info[:url], :ignore_media_type => @options[:ignore_media_type])
     fname = Pathname.new("./tmp") + c[:filename].sub(/[\?\:].+\z/, "")
+    if File.extname(fname).empty?
+      ext = /format=([a-z]+)/.match(c[:filename])[1]
+      fname = fname.sub_ext("." + ext)
+    end
     File.open(fname, "wb"){|f| f.write(c[:body])}
 
     post(fname, photo_info)
