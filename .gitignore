@@ -1,6 +1,6 @@
 *.yaml
 *.log
-db/sombrero.db
+sombrero.db
 tmp/
 storage/
 test/
