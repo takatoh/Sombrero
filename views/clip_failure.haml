@@ -1,0 +1,25 @@
+%div#main
+  %p Oops! Failed to fetch the file. Retry?
+  %form{ :action => "/clip", :method => "POST" }
+    %table
+      %tr
+        %td URL:
+        %td
+          %input{ :type => "text", :name => "url", :size => 100, :readonly => true, :value => @url }
+      %tr
+        %td Page URL:
+        %td
+          %input{ :type => "text", :name => "page_url", :size => 100, :readonly => true, :value => @page_url }
+      %tr
+        %td Tags:
+        %td
+          %input{ :type => "text", :name => "tags", :size => 100, :readonly => true, :value => @tags }
+      %tr
+        %td Force:
+        %td
+          %input{ :type => "checkbox", :name => "force", :readonly => true, :value => @force }
+      %tr
+        %td
+        %td
+          %input{ :type => "submit", :value => "Retry" }
+
