@@ -133,6 +133,12 @@ class SombreroApp < Sinatra::Base
                        :page_url => params[:page_url],
                        :tags     => params[:tags] })
       redirect '/'
+    rescue FileFetcher::FetchError => e
+      @url = params[:url]
+      @page_url = params[:page_url]
+      @tags = params[:tags]
+      @force = params[:force]
+      haml :clip_failure
     rescue PhotoRegistrar::Rejection => e
       @message = e.message
       @md5 = /\((.+)\)/.match(e.message)[1]
