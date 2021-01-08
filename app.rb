@@ -128,9 +128,13 @@ class SombreroApp < Sinatra::Base
   post '/clip' do
     @styles = %w( css/base css/mini_photo )
     registrar = PhotoRegistrar.new( :force => params[:force] )
-    registrar.clip({ :url      => params[:url],
-                     :page_url => params[:page_url],
-                     :tags     => params[:tags] })
+    registrar.clip(
+      {
+        :url      => params[:url],
+        :page_url => params[:page_url],
+        :tags     => params[:tags]
+      }
+    )
     redirect '/'
   rescue FileFetcher::FetchError => e
     @url = params[:url]
@@ -160,9 +164,14 @@ class SombreroApp < Sinatra::Base
       save_file = './tmp/' + new_filename
       File.open(save_file, 'wb'){ |f| f.write(params[:file][:tempfile].read) }
       registrar = PhotoRegistrar.new( :force => params[:force] )
-      registrar.post(save_file, { :url      => params[:url],
-                                  :page_url => params[:page_url],
-                                  :tags     => params[:tags] })
+      registrar.post(
+        save_file,
+        {
+          :url      => params[:url],
+          :page_url => params[:page_url],
+          :tags     => params[:tags]
+        }
+      )
       redirect '/'
     end
   rescue PhotoRegistrar::Rejection => e
@@ -428,9 +437,14 @@ class SombreroApp < Sinatra::Base
         save_file = './tmp/' + new_filename
         File.open(save_file, 'wb'){ |f| f.write(params[:file][:tempfile].read) }
         registrar = PhotoRegistrar.new( :force => params[:force] )
-        photo = registrar.post(save_file, { :url      => params[:url],
-                                            :page_url => params[:page_url],
-                                            :tags     => params[:tags] })
+        photo = registrar.post(
+          save_file,
+          {
+            :url      => params[:url],
+            :page_url => params[:page_url],
+            :tags     => params[:tags]
+          }
+        )
         data = {
           "status" => "Accepted",
           "photo" => {
@@ -495,9 +509,13 @@ class SombreroApp < Sinatra::Base
   post '/api/clip' do
     begin
       registrar = PhotoRegistrar.new( :force => params[:force] )
-      photo = registrar.clip({ :url      => params[:url],
-                               :page_url => params[:page_url],
-                               :tags     => params[:tags] })
+      photo = registrar.clip(
+        {
+          :url      => params[:url],
+          :page_url => params[:page_url],
+          :tags     => params[:tags]
+        }
+      )
       data = {
         "status" => "Accepted",
         "photo" => {
