@@ -10,9 +10,13 @@ class Photo < Sequel::Model
     end
   end
 
-
   def delete_if_no_posts
     self.destroy if posts.empty?
+  end
+
+
+  def url_posted?(url)
+    posts.map{|p| p.url }.include?(url)
   end
 
   def add_tag(tagname)
