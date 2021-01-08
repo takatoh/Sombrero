@@ -69,8 +69,9 @@ class PhotoRegistrar
         raise Rejection.new(
           "Already exist: #{md5}",
           {
-            :url => photo_info[:url],
-            :md5 => md5
+            :url   => photo_info[:url],
+            :md5   => md5,
+            :photo => photo
           }
         )
       end

@@ -145,7 +145,7 @@ class SombreroApp < Sinatra::Base
   rescue PhotoRegistrar::Rejection => e
     @message = e.message
     @md5 = e.details[:md5]
-    @photo = Photo.find(:md5 => @md5)
+    @photo = e.details[:photo]
     haml :already_exist
   end
 
@@ -181,7 +181,7 @@ class SombreroApp < Sinatra::Base
       redirect '/recent/1'
     when /Already/
       @md5 = e.details[:md5]
-      @photo = Photo.find(:md5 => @md5)
+      @photo = e.details[:photo]
       haml :already_exist
     end
   end
