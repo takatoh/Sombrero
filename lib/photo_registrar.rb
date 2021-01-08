@@ -21,7 +21,7 @@ class PhotoRegistrar
   class Rejection < StandardError
     attr_reader :details
 
-    def initialice(mes = nil, opt = {})
+    def initialize(mes = nil, opt = {})
       super(mes)
       @details = opt
     end
