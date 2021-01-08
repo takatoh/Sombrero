@@ -50,7 +50,15 @@ class PhotoRegistrar
     file = Pathname.new(file) if file.instance_of?(String)
     width = `identify -format %[width] #{file}`.to_i
     height = `identify -format %[height] #{file}`.to_i
-    raise Rejection.new("Small photo(#{width}x#{height})") if small_image?(width, height)
+    if small_image?(width, height)
+      raise Rejection.new(
+        "Small photo(#{width}x#{height})",
+        {
+          :url  => photo_info[:url],
+          :size => "#{width}x#{height}"
+        }
+      )
+    end
 
     content = File.open(file, "rb"){|f| f.read}
     md5 = Digest::MD5.hexdigest(content)
@@ -58,7 +66,13 @@ class PhotoRegistrar
     photo =  Photo.find(:md5 => md5)
     if photo
       if !(@options[:force]) || photo.posts.map{|p| p.url}.include?(photo_info[:url])
-        raise Rejection.new("Already exist(#{md5})")
+        raise Rejection.new(
+          "Already exist(#{md5})",
+          {
+            :url => photo_info[:url],
+            :md5 => md5
+          }
+        )
       end
     else
       storage = PhotoStorage.new(SOMBRERO_CONFIG["storage"])
