@@ -93,9 +93,9 @@ class PhotoRegistrar
     photo.save
 
     post = Post.create({
-      :url            => photo_info[:url],
-      :page_url       => photo_info[:page_url],
-      :posted_date    => Time.now
+      :url         => photo_info[:url],
+      :page_url    => photo_info[:page_url],
+      :posted_date => Time.now
     })
     post.photo = photo
     post.save
