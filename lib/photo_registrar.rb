@@ -18,7 +18,14 @@ require 'photo_storage'
 
 class PhotoRegistrar
 
-  class Rejection < StandardError; end
+  class Rejection < StandardError
+    attr_reader :details
+
+    def initialice(mes = nil, opt = {})
+      super(mes)
+      @details = opt
+    end
+  end
 
 
   def initialize(options = {})
