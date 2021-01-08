@@ -52,7 +52,7 @@ class PhotoRegistrar
     height = `identify -format %[height] #{file}`.to_i
     if small_image?(width, height)
       raise Rejection.new(
-        "Small photo(#{width}x#{height})",
+        "Small photo: #{width}x#{height}",
         {
           :url  => photo_info[:url],
           :size => "#{width}x#{height}"
@@ -67,7 +67,7 @@ class PhotoRegistrar
     if photo
       if !(@options[:force]) || photo.posts.map{|p| p.url}.include?(photo_info[:url])
         raise Rejection.new(
-          "Already exist(#{md5})",
+          "Already exist: #{md5}",
           {
             :url => photo_info[:url],
             :md5 => md5
