@@ -127,24 +127,22 @@ class SombreroApp < Sinatra::Base
 
   post '/clip' do
     @styles = %w( css/base css/mini_photo )
-    begin
-      registrar = PhotoRegistrar.new( :force => params[:force] )
-      registrar.clip({ :url      => params[:url],
-                       :page_url => params[:page_url],
-                       :tags     => params[:tags] })
-      redirect '/'
-    rescue FileFetcher::FetchError => e
-      @url = params[:url]
-      @page_url = params[:page_url]
-      @tags = params[:tags]
-      @force = params[:force]
-      haml :clip_failure
-    rescue PhotoRegistrar::Rejection => e
-      @message = e.message
-      @md5 = e.details[:md5]
-      @photo = Photo.find(:md5 => @md5)
-      haml :already_exist
-    end
+    registrar = PhotoRegistrar.new( :force => params[:force] )
+    registrar.clip({ :url      => params[:url],
+                     :page_url => params[:page_url],
+                     :tags     => params[:tags] })
+    redirect '/'
+  rescue FileFetcher::FetchError => e
+    @url = params[:url]
+    @page_url = params[:page_url]
+    @tags = params[:tags]
+    @force = params[:force]
+    haml :clip_failure
+  rescue PhotoRegistrar::Rejection => e
+    @message = e.message
+    @md5 = e.details[:md5]
+    @photo = Photo.find(:md5 => @md5)
+    haml :already_exist
   end
 
 
@@ -157,27 +155,25 @@ class SombreroApp < Sinatra::Base
 
   post '/post' do
     @styles = %w( css/base css/mini_photo )
-    begin
-      if params[:file]
-        new_filename = params[:file][:filename]
-        save_file = './tmp/' + new_filename
-        File.open(save_file, 'wb'){ |f| f.write(params[:file][:tempfile].read) }
-        registrar = PhotoRegistrar.new( :force => params[:force] )
-        registrar.post(save_file, { :url      => params[:url],
-                                    :page_url => params[:page_url],
-                                    :tags     => params[:tags] })
-        redirect '/'
-      end
-    rescue PhotoRegistrar::Rejection => e
-      @message = e.message
-      case @message
-      when /Small photo/
-        redirect '/recent/1'
-      when /Already/
-        @md5 = e.details[:md5]
-        @photo = Photo.find(:md5 => @md5)
-        haml :already_exist
-      end
+    if params[:file]
+      new_filename = params[:file][:filename]
+      save_file = './tmp/' + new_filename
+      File.open(save_file, 'wb'){ |f| f.write(params[:file][:tempfile].read) }
+      registrar = PhotoRegistrar.new( :force => params[:force] )
+      registrar.post(save_file, { :url      => params[:url],
+                                  :page_url => params[:page_url],
+                                  :tags     => params[:tags] })
+      redirect '/'
+    end
+  rescue PhotoRegistrar::Rejection => e
+    @message = e.message
+    case @message
+    when /Small photo/
+      redirect '/recent/1'
+    when /Already/
+      @md5 = e.details[:md5]
+      @photo = Photo.find(:md5 => @md5)
+      haml :already_exist
     end
   end
 
