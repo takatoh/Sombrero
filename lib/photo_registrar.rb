@@ -78,11 +78,9 @@ class PhotoRegistrar
     post.photo = photo
     post.save
     img = nil
-    FileUtils.rm(file) unless @options[:keep]
     photo
-  rescue Rejection
+  ensure
     FileUtils.rm(file) if file.exist? && !@options[:keep]
-    raise
   end
 
 
@@ -109,4 +107,3 @@ class PhotoRegistrar
 
 
 end   # of class PhotoRegistrar
-
