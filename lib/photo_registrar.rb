@@ -5,6 +5,7 @@
 #    :ignore_media_type
 #    :keep
 #    :force
+#
 
 
 require 'fileutils'
@@ -34,7 +35,10 @@ class PhotoRegistrar
 
 
   def clip(photo_info)
-    c = FileFetcher.fetch(photo_info[:url], :ignore_media_type => @options[:ignore_media_type])
+    c = FileFetcher.fetch(
+      photo_info[:url],
+      :ignore_media_type => @options[:ignore_media_type]
+    )
     fname = Pathname.new("./tmp") + c[:filename].sub(/[\?\:].+\z/, "")
     if File.extname(fname).empty?
       ext = /format=([a-z]+)/.match(c[:filename])[1]
@@ -77,7 +81,8 @@ class PhotoRegistrar
       end
     else
       storage = PhotoStorage.new(SOMBRERO_CONFIG["storage"])
-      path, thumbnail_path, sample_path = storage.store(content, md5 + File.extname(file))
+      filename = md5 + File.extname(file)
+      path, thumbnail_path, sample_path = storage.store(content, filename)
       photo = Photo.create({
         :width          => width,
         :height         => height,
@@ -124,7 +129,9 @@ class PhotoRegistrar
   private
 
   def small_image?(w, h)
-    w < SOMBRERO_CONFIG["minimum_photo_width"] or h < SOMBRERO_CONFIG["minimum_photo_height"]
+    min_width = SOMBRERO_CONFIG["minimum_photo_width"]
+    min_height = SOMBRERO_CONFIG["minimum_photo_height"]
+    w < min_width || h < min_height
   end
 
 
