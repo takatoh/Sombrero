@@ -69,7 +69,7 @@ class PhotoRegistrar
 
     photo =  Photo.find(:md5 => md5)
     if photo
-      if !(@options[:force]) || photo.url_posted?(photo_info[:url])
+      if photo.url_posted?(photo_info[:url]) || !(@options[:force])
         raise Rejection.new(
           "Already exist: #{md5}",
           {
