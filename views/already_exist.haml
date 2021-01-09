@@ -41,3 +41,12 @@
               - @photo.posts.each do |post|
                 %li
                   %a{:href => post.url}= h post.url
+  %div
+    %form{ :action => "/clip", :method => "POST" }
+      %input{ :type => "hidden", :name => "url", :value => @url }
+      %input{ :type => "hidden", :name => "page_url", :value => @page_url }
+      %input{ :type => "hidden", :name => "tags", :value => @tags }
+      %input{ :type => "hidden", :name => "force", :value => true }
+      %input{ :type => "submit", :value => "Force to clip/post" }
+      OR
+      %a{ :href => "/" }= h "Back to recent"
