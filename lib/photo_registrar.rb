@@ -83,25 +83,29 @@ class PhotoRegistrar
       storage = PhotoStorage.new(SOMBRERO_CONFIG["storage"])
       filename = md5 + File.extname(file)
       path, thumbnail_path, sample_path = storage.store(content, filename)
-      photo = Photo.create({
-        :width          => width,
-        :height         => height,
-        :filesize       => content.size,
-        :md5            => md5,
-        :path           => path,
-        :sample_path    => sample_path,
-        :thumbnail_path => thumbnail_path,
-        :posted_date    => Time.now
-      })
+      photo = Photo.create(
+        {
+          :width          => width,
+          :height         => height,
+          :filesize       => content.size,
+          :md5            => md5,
+          :path           => path,
+          :sample_path    => sample_path,
+          :thumbnail_path => thumbnail_path,
+          :posted_date    => Time.now
+        }
+      )
     end
     photo.add_tags(photo_info[:tags])
     photo.save
 
-    post = Post.create({
-      :url         => photo_info[:url],
-      :page_url    => photo_info[:page_url],
-      :posted_date => Time.now
-    })
+    post = Post.create(
+      {
+        :url         => photo_info[:url],
+        :page_url    => photo_info[:page_url],
+        :posted_date => Time.now
+      }
+    )
     post.photo = photo
     post.save
     img = nil
