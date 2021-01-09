@@ -11,7 +11,7 @@
 
 %div#main
   %div#photo
-    %a{:href => '/images/' + @photo.path, :target => '_blank'}
+    %a{:href => '/images/' + @photo.path, :target => '_blank', :rel => "noopener noreferrer"}
       %img{:src => '/images/' + @photo.sample_path}
   %div#photoInfo
     %table
