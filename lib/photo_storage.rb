@@ -73,7 +73,7 @@ class PhotoStorage
 
 
   def photo_path(filename)
-    File.join(@photo_dir, filename.slice(0,2), filename.slice(2,2), filename)
+    build_path(@photo_dir, filename)
   end
 
 
@@ -83,7 +83,7 @@ class PhotoStorage
 
 
   def thumb_path(filename)
-    File.join(@thumbnail_dir, filename.slice(0,2), filename.slice(2,2), filename)
+    build_path(@thumbnail_dir, filename)
   end
 
 
@@ -93,7 +93,12 @@ class PhotoStorage
 
 
   def sample_path(filename)
-    File.join(@sample_dir, filename.slice(0,2), filename.slice(2,2), filename)
+    build_path(@sample_dir, filename)
+  end
+
+
+  def build_path(dir, filename)
+    File.join(dir, filename.slice(0,2), filename.slice(2,2), filename)
   end
 
 
