@@ -52,8 +52,7 @@ class PhotoRegistrar
 
   def post(file, photo_info)
     file = Pathname.new(file) if file.instance_of?(String)
-    width = `identify -format %[width] #{file}`.to_i
-    height = `identify -format %[height] #{file}`.to_i
+    width, height = image_size(file)
     if small_image?(width, height)
       raise Rejection.new(
         "Small photo: #{width}x#{height}",
@@ -145,6 +144,11 @@ class PhotoRegistrar
 
   def chop_query(url)
     url.sub(/[\?\:].+\z/, "")
+  end
+
+
+  def image_size(file)
+    `identify -format "%[width] %[height]" #{file}`.split(" ").map(&:to_i)
   end
 
 end   # of class PhotoRegistrar
