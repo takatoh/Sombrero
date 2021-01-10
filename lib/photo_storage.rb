@@ -21,7 +21,7 @@ class PhotoStorage
     @photo_dir     = "photos"
     @thumbnail_dir = "thumbs"
     @sample_dir    = "samples"
-    @format = "jpg"
+    @format        = "jpg"
   end
 
 
