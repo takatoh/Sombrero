@@ -2,10 +2,9 @@
 #  File fetcher
 #
 
-require 'rubygems'
+
 require 'httpclient'
 
-#require 'boot'
 require 'image_types'
 
 
