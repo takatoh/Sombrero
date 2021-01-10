@@ -39,7 +39,7 @@ class PhotoRegistrar
       photo_info[:url],
       :ignore_media_type => @options[:ignore_media_type]
     )
-    fname = Pathname.new("./tmp") + c[:filename].sub(/[\?\:].+\z/, "")
+    fname = Pathname.new("./tmp") + chop_query(c[:filename])
     if File.extname(fname).empty?
       ext = /format=([a-z]+)/.match(c[:filename])[1]
       fname = fname.sub_ext("." + ext)
@@ -142,5 +142,9 @@ class PhotoRegistrar
     w < min_width || h < min_height
   end
 
+
+  def chop_query(url)
+    url.sub(/[\?\:].+\z/, "")
+  end
 
 end   # of class PhotoRegistrar
