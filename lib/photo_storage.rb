@@ -2,6 +2,7 @@
 #  PhotoStorage
 #
 
+
 require 'fileutils'
 require 'pathname'
 require 'uri'
@@ -45,7 +46,6 @@ class PhotoStorage
   end
 
 
-
   private
 
   def make_thumbnail(photopath, opts)
@@ -55,6 +55,7 @@ class PhotoStorage
     system("convert -thumbnail #{THUMBNAIL_GEOMETRY} -flatten #{photopath} #{thumbpath}")
     thumb_path(opts[:name])
   end
+
 
   def make_sample(photopath, opts = {})
     samplepath = sample_fullpath(opts[:name])
@@ -70,29 +71,34 @@ class PhotoStorage
     sample_path(opts[:name])
   end
 
+
   def photo_path(filename)
     File.join(@photo_dir, filename.slice(0,2), filename.slice(2,2), filename)
   end
+
 
   def photo_fullpath(filename)
     @storage_dir + photo_path(filename)
   end
 
+
   def thumb_path(filename)
     File.join(@thumbnail_dir, filename.slice(0,2), filename.slice(2,2), filename)
   end
+
 
   def thumb_fullpath(filename)
     @storage_dir + thumb_path(filename)
   end
 
+
   def sample_path(filename)
     File.join(@sample_dir, filename.slice(0,2), filename.slice(2,2), filename)
   end
+
 
   def sample_fullpath(filename)
     @storage_dir + sample_path(filename)
   end
 
 end   # of class PhotoStorage
-
