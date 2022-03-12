@@ -46,11 +46,16 @@ class PhotoRegistrar
     end
     File.open(fname, "wb"){|f| f.write(c[:body])}
 
-    post(fname, photo_info)
+    register(fname, photo_info)
   end
 
 
-  def post(file, photo_info)
+  def post(fname, photo_info)
+    register(fname, photo_info)
+  end
+
+
+  def register(file, photo_info)
     file = Pathname.new(file) if file.instance_of?(String)
     width, height = image_size(file)
     if small_image?(width, height)
