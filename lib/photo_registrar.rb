@@ -50,8 +50,8 @@ class PhotoRegistrar
   end
 
 
-  def post(fname, photo_info)
-    register(fname, photo_info)
+  def post(file, photo_info)
+    register(file, photo_info)
   end
 
 
