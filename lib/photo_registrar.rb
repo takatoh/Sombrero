@@ -55,6 +55,23 @@ class PhotoRegistrar
   end
 
 
+  def add_tags(file, tags)
+    file = Pathname.new(file) if file.instance_of?(String)
+    content = File.open(file, "rb"){|f| f.read}
+    md5 = Digest::MD5.hexdigest(content)
+    photo =  Photo.find(:md5 => md5)
+    added_tags = photo.add_tags(tags)
+    photo.save
+    if added_tags && !added_tags.empty?
+      added_tags.map(&:name).join(" ")
+    else
+      nil
+    end
+  end
+
+
+  private
+
   def register(file, photo_info)
     file = Pathname.new(file) if file.instance_of?(String)
     width, height = image_size(file)
@@ -122,23 +139,6 @@ class PhotoRegistrar
     FileUtils.rm(file) if file.exist? && !@options[:keep]
   end
 
-
-  def add_tags(file, tags)
-    file = Pathname.new(file) if file.instance_of?(String)
-    content = File.open(file, "rb"){|f| f.read}
-    md5 = Digest::MD5.hexdigest(content)
-    photo =  Photo.find(:md5 => md5)
-    added_tags = photo.add_tags(tags)
-    photo.save
-    if added_tags && !added_tags.empty?
-      added_tags.map(&:name).join(" ")
-    else
-      nil
-    end
-  end
-
-
-  private
 
   def small_image?(w, h)
     min_width = SOMBRERO_CONFIG["minimum_photo_width"]
