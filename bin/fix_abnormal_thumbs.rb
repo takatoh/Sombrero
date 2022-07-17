@@ -1,8 +1,11 @@
 require "./boot"
 require "model/photo"
+require "optparse"
 
 
 def main
+  options = parse_options
+
   photos = Photo.order_by("id").where(Sequel.like(:thumbnail_path, "thumbs/.j%")).all
 
   count = 0
@@ -23,6 +26,18 @@ def main
   end
 
 #  puts "#{count} thubmnails and samples are fixed."
+end
+
+
+def parse_options
+  options = {}
+
+  parser = OptionParser.new
+  parser.on("-d", "--dry-run", "Dry running"){|v| options[:dry_run] = True }
+  parser.on_tail("-h", "--help", "Show this message"){ puts parser.help; exit(0) }
+  parser.parse!
+
+  options
 end
 
 
