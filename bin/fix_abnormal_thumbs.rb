@@ -11,14 +11,14 @@ def main
   count = 0
   photos.each do |photo|
     md5 = photo[:md5]
+    filename = md5 + ".jpg"
+    subdir = "#{md5[0, 2]}/#{md5[2, 2]}"
 
-    thumb_filename = md5 + ".jpg"
-    thumb_path = ["thumbs", md5[0, 2], md5[2, 2], thumb_filename].join("/")
+    thumb_path = ["thumbs", subdir, filename].join("/")
     puts "#{photo[:id]}: #{photo[:thumbnail_path]}"
     puts "    =>  #{thumb_path}"
 
-    sample_filename = md5 + ".jpg"
-    sample_path = ["samples", md5[0, 2], md5[2, 2], sample_filename].join("/")
+    sample_path = ["samples", subdir, filename].join("/")
     puts "        #{photo[:sample_path]}"
     puts "    =>  #{sample_path}"
 
