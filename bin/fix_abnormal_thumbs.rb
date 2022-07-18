@@ -1,5 +1,6 @@
 require "./boot"
 require "model/photo"
+require "fileutils"
 require "optparse"
 
 
@@ -20,6 +21,10 @@ def main
     if options[:dry_run]
       puts "    =>  #{thumb_path}"
     else
+      FileUtils.mkdir_p("thumbs/#{subdir}")
+      FileUtils.cp(photo[:thumbnail_path], thumb_path, :preserve => true)
+      photo[:thumbnail_path] = thumb_path
+      photo.save
       puts "copied  #{thumb_path}"
     end
 
@@ -28,6 +33,10 @@ def main
     if options[:dry_run]
       puts "    =>  #{sample_path}"
     else
+      FileUtils.mkdir_p("samples/#{subdir}")
+      FileUtils.cp(photo[:sample_path], sample_path, :preserve => true)
+      photo[:sample_path] = sample_path
+      photo.save
       puts "copied  #{sample_path}"
     end
 
