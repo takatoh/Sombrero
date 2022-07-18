@@ -15,26 +15,32 @@ def main
     filename = md5 + ".jpg"
     subdir = "#{md5[0, 2]}/#{md5[2, 2]}"
 
-    thumb_path = ["thumbs", subdir, filename].join("/")
     puts "ID:  #{photo[:id]}"
-    puts "        #{photo[:thumbnail_path]}"
+    thumb_path = ["thumbs", subdir, filename].join("/")
+    src_thumb_path = photo[:thumbnail_path]
+    puts "        #{src_thumb_path}"
     if options[:dry_run]
       puts "    =>  #{thumb_path}"
     else
-      FileUtils.mkdir_p("thumbs/#{subdir}")
-      FileUtils.cp(photo[:thumbnail_path], thumb_path, :preserve => true)
+      src = [SOMBRERO_CONFIG["storage"], src_thumb_path].join("/")
+      dest = [SOMBRERO_CONFIG["storage"], thumb_path].join("/")
+      FileUtils.mkdir_p(File.dirname(dest))
+      FileUtils.cp(src, dest, :preserve => true)
       photo[:thumbnail_path] = thumb_path
       photo.save
       puts "copied  #{thumb_path}"
     end
 
     sample_path = ["samples", subdir, filename].join("/")
-    puts "        #{photo[:sample_path]}"
+    src_sample_path = photo[:sample_path]
+    puts "        #{src_sample_path}"
     if options[:dry_run]
       puts "    =>  #{sample_path}"
     else
-      FileUtils.mkdir_p("samples/#{subdir}")
-      FileUtils.cp(photo[:sample_path], sample_path, :preserve => true)
+      src = [SOMBRERO_CONFIG["storage"], src_sample_path].join("/")
+      dest = [SOMBRERO_CONFIG["storage"], sample_path].join("/")
+      FileUtils.mkdir_p(File.basename(dest))
+      FileUtils.cp(src, dest, :preserve => true)
       photo[:sample_path] = sample_path
       photo.save
       puts "copied  #{sample_path}"
