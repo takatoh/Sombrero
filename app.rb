@@ -47,13 +47,6 @@ class SombreroApp < Sinatra::Base
     redirect '/recent/1'
   end
 
-  # Style sheet
-
-  get '/css/:style.css' do
-    content_type 'text/css', :charset => 'utf-8'
-    sass params[:style].intern
-  end
-
   #
 
   get '/images/photos/*' do
