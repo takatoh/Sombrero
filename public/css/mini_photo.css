@@ -1,0 +1,42 @@
+#main {
+    width: 800px;
+}
+
+#main  .miniPhoto {
+    border: 1px solid gray;
+    margin: 10px;
+    width: 798px;
+    min-height: 170px;
+    background-color: #ffffff;
+    position: relative;
+    margin-left: 0px;
+}
+
+#main .thumbnailBox {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    text-align: center;
+}
+
+#main .thumbnailBox img {
+    border: none;
+    margin: 0;
+}
+
+#main .miniPhoto .photoInfo {
+    margin: 20px 10px 20px 175px;
+}
+
+#main .miniPhoto .photoInfoth {
+    font-weight: normal;
+    width: 80px;
+    text-align: left;
+    vertical-align: top;
+}
+
+#main  .miniPhoto .photoInfo ul {
+    list-style-type: none;
+}

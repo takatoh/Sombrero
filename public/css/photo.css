@@ -1,0 +1,40 @@
+#main #photo {
+    width: 900px;
+    margin: 10px auto;
+    text-align: center;
+}
+
+#main #photo img {
+    border: 1px solid #dddddd;
+}
+
+#main #photo #photoInfo {
+    width: 900px;
+    margin: 10px 0px 10px 0px;
+    text-align: center;
+}
+
+#main #photo table {
+    width: 600px;
+    margin-left: 150px;
+}
+
+#main #photo table th {
+    width: 80px;
+    padding-right: 5px;
+    font-style: bold;
+    text-align: right;
+}
+
+#main #photo table td {
+    padding-left: 5px;
+    text-align: left;
+}
+
+#main #photo table ul {
+    list-style-type: none;
+}
+
+#main #photo table form#updateTags {
+    display: none;
+}

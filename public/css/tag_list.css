@@ -1,0 +1,65 @@
+#sidebar {
+    position: absolute;
+    width: 150px;
+    margin-left: 0px;
+}
+
+#sidebar ul {
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+#main {
+    margin-left: 160px;
+}
+
+#main table {
+    border-style: solid;
+    border-width: 1px 0px 1px 0px;
+    background-color: white;
+}
+
+#main table th {
+    border-style: solid;
+    border-width: 1px 0px 1px 0px;
+}
+
+#main table tr {
+    border-width: 1px 0px 1px 0px;
+    border-style: dashed;
+    font-weight: normal;
+    text-align: left;
+    vertical-align: top;
+}
+
+#main table td {
+    border-width: 1px 0px 1px 0px;
+}
+
+#tagList {
+    width: 640px;
+}
+
+#tagList th.tagId {
+    width: 30px;
+}
+
+#tagList th.tagName {
+    width: 180px;
+    }
+
+#tagList th.tagType {
+    width: 100px;
+}
+
+#tagList th.tagDescription {
+    width: 300px;
+}
+
+#tagList th.tagAliasFor {
+    width: 180px;
+}
+
+#tagList th.tagEdit {
+    width: 50px;
+}

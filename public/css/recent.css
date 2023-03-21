@@ -1,0 +1,70 @@
+#main {
+    width: 600px;
+}
+
+#main .recentPhoto {
+    border: 1px solid gray;
+    margin: 10px;
+    width: 598px;
+    min-height: 170px;
+    background-color: #ffffff;
+    position: relative;
+    margin-left: 0px;
+}
+
+#main .postId {
+    width: 150px;
+    height: 20px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+#main .thumbnailBox {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    top: 30px;
+    left: 10px;
+    text-align: center;
+}
+
+#main img {
+    border: 1px solid #dddddd;
+    margin: 0;
+}
+
+#main .control {
+    text-align: right;
+    margin: 10px 10px 0 175px;
+    padding: 0px 20px;
+}
+
+#main li {
+    display: inline;
+    font-weight: bold;
+}
+
+#main .photoTitle {
+    margin: 0 10px 5px 175px;
+}
+
+#main .photoInfo {
+    margin: 0 10px 0 175px;
+    border-top: 1px dashed gray;
+}
+
+#main dt {
+    width: 70px;
+    float: left;
+}
+
+#main dd {
+    margin-left: 60px;
+}
+
+#main th {
+    font-weight: normal;
+    text-align: left;
+    vertical-align: top;
+}
