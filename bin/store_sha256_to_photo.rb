@@ -1,0 +1,49 @@
+require "./boot"
+require "model/photo"
+require "digest"
+require "optparse"
+
+
+def main
+  options = parse_options
+
+  photos = Photo.order_by("id").all
+
+  count = 0
+  photos.each do |photo|
+    next unless photo.sha256.nil?
+
+    file = [SOMBRERO_CONFIG["storage"], photo.path].join("/")
+    content = File.open(file, "rb"){|f| f.read }
+    sha256 = Digest::SHA256.hexdigest(content)
+
+    puts "ID:  #{photo[:id]}"
+    if options[:dry_run]
+      puts "  SHA256 = #{sha256}"
+    else
+      photo[:sha256] = sha256
+      photo.save
+      puts "  SHA256 stored = #{sha256}"
+    end
+
+    count += 1
+  end
+
+  puts "\n\n#{count} photos are fixed."
+end
+
+
+def parse_options
+  options = {}
+
+  parser = OptionParser.new
+  parser.on("-d", "--dry-run", "Dry running"){|v| options[:dry_run] = true }
+  parser.on_tail("-h", "--help", "Show this message"){ puts parser.help; exit(0) }
+  parser.parse!
+
+  options
+end
+
+
+
+main
