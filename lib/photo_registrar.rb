@@ -72,6 +72,7 @@ class PhotoRegistrar
 
     content = File.open(file, "rb"){|f| f.read}
     md5 = Digest::MD5.hexdigest(content)
+    sha256 = Digest::SHA256.hexdigest(content)
 
     photo =  Photo.find(:md5 => md5)
     if photo
@@ -85,6 +86,7 @@ class PhotoRegistrar
             :tags       => photo_info[:tags],
             :url_posted => url_posted,
             :md5        => md5,
+            :sha256     => sha256,
             :photo      => photo
           }
         )
@@ -99,6 +101,7 @@ class PhotoRegistrar
           :height         => height,
           :filesize       => content.size,
           :md5            => md5,
+          :sha256         => sha256,
           :path           => path,
           :sample_path    => sample_path,
           :thumbnail_path => thumbnail_path,
