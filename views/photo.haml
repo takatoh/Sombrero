@@ -50,7 +50,7 @@
             - @posts.each do |post|
               %li
                 %a{:href => post.url}= post.url
-                - unless post.page_url.nil? && post.page_url.empty?
+                - unless post.page_url.nil? || post.page_url.empty?
                   [
                   %a{:href => post.page_url}= hostname(post.page_url)
                   ]
