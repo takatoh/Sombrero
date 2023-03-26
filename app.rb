@@ -31,6 +31,14 @@ class SombreroApp < Sinatra::Base
       end
     end
 
+    def hostname(url)
+      unless url.nil? || url.empty?
+        URI.parse(url).host
+      else
+        ""
+      end
+    end
+
   end
 
   set :run, true
