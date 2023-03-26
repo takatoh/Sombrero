@@ -64,6 +64,11 @@
                 = h post.photo.md5
             %tr
               %th
+                SHA256:
+              %td
+                = h post.photo.sha256
+            %tr
+              %th
                 Tags:
               %td
                 = h post.photo.taggings.map{|t| t.tag.name.to_s}.sort.join(' ')
