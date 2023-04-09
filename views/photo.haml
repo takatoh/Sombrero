@@ -1,14 +1,3 @@
-%script{:type => "text/javascript", :src => "/js/jquery-1.11.1.min.js"}
-:javascript
-  $(function (){
-    $('#editLink').click(function (){
-      $('#tagList').hide();
-      $('#editLink').hide();
-      $('#updateTags').show();
-      $('#tags').focus();
-    });
-  });
-
 %div#main
   %div#photo
     %a{:href => '/images/' + @photo.path, :target => '_blank', :rel => "noopener noreferrer"}
@@ -62,9 +51,19 @@
             - @tags.sort_by{|t| t.name.to_s}.each do |tag|
               %li
                 = h tag.name
-          %a#editLink{ :href => "javascript:void();" }
+          %a#editLink
             = "(Edit)"
           %form#updateTags{ :action => "/photo/update-tags", :method => "POST", :enctype => "multipart/form-data" }
             %input#tags{ :type => "text", :name => "tags", :size => "80", :value => "#{@tags.map{|t| t.name}.join(' ')}"}
             %input{ :type => "hidden", :name => "id", :value => "#{@photo.id}"}
             %input{ :type => "submit", :value => "Update"}
+
+:javascript
+  const editTags = (event) => {
+    event.stopPropagation();
+    document.getElementById("tagList").style.display = "none";
+    document.getElementById("editLink").style.display = "none";
+    document.getElementById("updateTags").style.display = "block";
+    document.getElementById("tags").focus();
+  };
+  document.getElementById("editLink").addEventListener("click", editTags, false);
