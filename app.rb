@@ -350,7 +350,7 @@ class SombreroApp < Sinatra::Base
 
   # Web API
 
-  get '/api/photo/:id' do
+  get "/api/photo/:id" do
     @photo = Photo.find(:id => params[:id].to_i)
     photo_endpoint = SOMBRERO_CONFIG["hosturl"] + "images"
     data = [{
@@ -368,7 +368,7 @@ class SombreroApp < Sinatra::Base
     data.to_json
   end
 
-  get '/api/photos' do
+  get "/api/photos" do
     limit = params[:limit] ? params[:limit].to_i : 20
     offset = params[:offset] ? params[:offset].to_i : 0
     @photos = Photo.dataset.limit(limit).offset(offset)
@@ -390,7 +390,7 @@ class SombreroApp < Sinatra::Base
     data.to_json
   end
 
-  get '/api/photo/md5/:md5' do
+  get "/api/photo/md5/:md5" do
     @photo = Photo.find(:md5 => params[:md5])
     photo_endpoint = SOMBRERO_CONFIG["hosturl"] + "images"
     data = [{
@@ -408,7 +408,7 @@ class SombreroApp < Sinatra::Base
     data.to_json
   end
 
-  get '/api/post/:id' do
+  get "/api/post/:id" do
     @post = Post.find(:id => params[:id].to_i)
     data = [{
       "id"      => @post.id,
@@ -421,7 +421,7 @@ class SombreroApp < Sinatra::Base
     data.to_json
   end
 
-  get '/api/posts' do
+  get "/api/posts" do
     limit = params[:limit] ? params[:limit].to_i : 20
     offset = params[:offset] ? params[:offset].to_i : 0
     @posts = Post.dataset.limit(limit).offset(offset)
@@ -439,12 +439,12 @@ class SombreroApp < Sinatra::Base
     data.to_json
   end
 
-  post '/api/post' do
+  post "/api/post" do
     begin
       if params[:file]
         new_filename = params[:file][:filename]
-        save_file = './tmp/' + new_filename
-        File.open(save_file, 'wb'){ |f| f.write(params[:file][:tempfile].read) }
+        save_file = "./tmp/" + new_filename
+        File.open(save_file, "wb"){ |f| f.write(params[:file][:tempfile].read) }
         registrar = PhotoRegistrar.new( :force => params[:force] )
         photo = registrar.post(
           save_file,
@@ -515,7 +515,7 @@ class SombreroApp < Sinatra::Base
     data.to_json
   end
 
-  post '/api/clip' do
+  post "/api/clip" do
     begin
       registrar = PhotoRegistrar.new( :force => params[:force] )
       photo = registrar.clip(
@@ -585,7 +585,7 @@ class SombreroApp < Sinatra::Base
     data.to_json
   end
 
-  get '/api/statistics' do
+  get "/api/statistics" do
     photo_count = Photo.count
     post_count = Post.count
     data = {
