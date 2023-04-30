@@ -367,6 +367,7 @@ class SombreroApp < Sinatra::Base
       "height"   => @photo.height,
       "fileSize" => @photo.filesize,
       "md5"      => @photo.md5,
+      "sha256"   => @photo.sha256,
       "fileName" => File.basename(@photo.path),
       "fileUrl"  => "#{photo_endpoint}/#{@photo.path}",
       "sources"  => @photo.posts.map{|p| p.url },
@@ -388,6 +389,7 @@ class SombreroApp < Sinatra::Base
         "height"   => p.height,
         "fileSize" => p.filesize,
         "md5"      => p.md5,
+        "sha256"   => p.sha256,
         "fileName" => File.basename(p.path),
         "fileUrl"  => "#{photo_endpoint}/#{p.path}",
         "sources"  => p.posts.map{|post| post.url },
@@ -407,6 +409,7 @@ class SombreroApp < Sinatra::Base
       "height"   => @photo.height,
       "fileSize" => @photo.filesize,
       "md5"      => @photo.md5,
+      "sha256"   => @photo.sha256,
       "fileName" => File.basename(@photo.path),
       "fileUrl"  => "#{photo_endpoint}/#{@photo.path}",
       "sources"  => @photo.posts.map{|p| p.url },
@@ -470,6 +473,7 @@ class SombreroApp < Sinatra::Base
             "height"   => photo.height,
             "fileSize" => photo.filesize,
             "md5"      => photo.md5,
+            "sha256"   => photo.sha256,
             "fileName" => File.basename(photo.path)
           }
         }
@@ -500,6 +504,7 @@ class SombreroApp < Sinatra::Base
               "height"   => photo.height,
               "fileSize" => photo.filesize,
               "md5"      => photo.md5,
+              "sha256"   => photo.sha256,
               "fileName" => File.basename(photo.path)
             }
           }
@@ -512,6 +517,7 @@ class SombreroApp < Sinatra::Base
               "height"    => photo.height,
               "fileSize"  => photo.filesize,
               "md5"       => photo.md5,
+              "sha256"    => photo.sha256,
               "fileName"  => File.basename(photo.path),
               "addedTags" => tags
             }
@@ -541,6 +547,7 @@ class SombreroApp < Sinatra::Base
           "height"   => photo.height,
           "fileSize" => photo.filesize,
           "md5"      => photo.md5,
+          "sha256"   => photo.sha256,
           "fileName" => File.basename(photo.path)
         }
       }
@@ -570,6 +577,7 @@ class SombreroApp < Sinatra::Base
               "height"   => photo.height,
               "fileSize" => photo.filesize,
               "md5"      => photo.md5,
+              "sha256"   => photo.sha256,
               "fileName" => File.basename(photo.path)
             }
           }
@@ -582,6 +590,7 @@ class SombreroApp < Sinatra::Base
               "height"    => photo.height,
               "fileSize"  => photo.filesize,
               "md5"       => photo.md5,
+              "sha256"    => photo.sha256,
               "fileName"  => File.basename(photo.path),
               "addedTags" => tags
             }
