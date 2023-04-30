@@ -1,14 +1,14 @@
-require 'rake'
-require 'sequel'
-require 'sequel/extensions/migration'
+require "rake"
+require "sequel"
+require "sequel/extensions/migration"
 
-require './boot'
+require "./boot"
 
 
 namespace :db do
   desc "Migrate database."
   task :migrate do
-    Sequel::Migrator.apply(DB, './db/migration')
+    Sequel::Migrator.apply(DB, "./db/migration")
   end
 end
 
