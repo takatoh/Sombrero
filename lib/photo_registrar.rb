@@ -10,7 +10,7 @@
 
 require "fileutils"
 require "pathname"
-require "digest/md5"
+require "digest"
 
 require "model"
 require "file_fetcher"
