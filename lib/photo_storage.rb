@@ -3,10 +3,10 @@
 #
 
 
-require 'fileutils'
-require 'pathname'
-require 'uri'
-require 'digest/md5'
+require "fileutils"
+require "pathname"
+require "uri"
+require "digest/md5"
 
 
 class PhotoStorage

@@ -8,13 +8,13 @@
 #
 
 
-require 'fileutils'
-require 'pathname'
-require 'digest/md5'
+require "fileutils"
+require "pathname"
+require "digest/md5"
 
-require 'model'
-require 'file_fetcher'
-require 'photo_storage'
+require "model"
+require "file_fetcher"
+require "photo_storage"
 
 
 class PhotoRegistrar

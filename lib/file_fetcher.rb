@@ -3,9 +3,9 @@
 #
 
 
-require 'httpclient'
+require "httpclient"
 
-require 'image_types'
+require "image_types"
 
 
 class FileFetcher

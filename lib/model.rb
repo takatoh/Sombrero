@@ -1,7 +1,7 @@
-require 'sequel'
-require 'sequel/extensions/pagination'
-require 'model/photo'
-require 'model/post'
-require 'model/tag'
-require 'model/tagging'
-require 'model/tag_type'
+require "sequel"
+require "sequel/extensions/pagination"
+require "model/photo"
+require "model/post"
+require "model/tag"
+require "model/tagging"
+require "model/tag_type"
