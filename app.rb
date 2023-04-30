@@ -3,17 +3,17 @@
 #
 
 
-require 'sinatra/base'
-require 'sequel'
-require 'sequel/extensions/pagination'
-require 'tilt/haml'
-require 'tilt/sass'
-require 'json'
+require "sinatra/base"
+require "sequel"
+require "sequel/extensions/pagination"
+require "tilt/haml"
+require "tilt/sass"
+require "json"
 
-require './boot'
-require 'version'
-require 'model'
-require 'photo_registrar'
+require "./boot"
+require "version"
+require "model"
+require "photo_registrar"
 
 
 class SombreroApp < Sinatra::Base
@@ -51,21 +51,21 @@ class SombreroApp < Sinatra::Base
 
   # Root
 
-  get '/' do
-    redirect '/recent/1'
+  get "/" do
+    redirect "/recent/1"
   end
 
   #
 
-  get '/images/photos/*' do
+  get "/images/photos/*" do
     send_file "#{SOMBRERO_CONFIG["storage"]}/photos/#{params[:splat][0]}"
   end
 
-  get '/images/samples/*' do
+  get "/images/samples/*" do
     send_file "#{SOMBRERO_CONFIG["storage"]}/samples/#{params[:splat][0]}"
   end
 
-  get '/images/thumbs/*' do
+  get "/images/thumbs/*" do
   #   content_type "image/jpeg"
     send_file "#{SOMBRERO_CONFIG["storage"]}/thumbs/#{params[:splat][0]}"
   end
@@ -73,7 +73,7 @@ class SombreroApp < Sinatra::Base
 
   # Recent posts.
 
-  get '/recent/:page' do
+  get "/recent/:page" do
     @page = ::Post.reverse_order(:id).extension(:pagination).paginate(params[:page].to_i, 10)
     @posts = @page.all
     @styles = %w( css/base css/recent js/highslide/highslide )
@@ -85,11 +85,11 @@ class SombreroApp < Sinatra::Base
 
   # List posts.
 
-  get '/list' do
-    redirect '/list/1'
+  get "/list" do
+    redirect "/list/1"
   end
 
-  get '/list/:page' do
+  get "/list/:page" do
     @page = ::Photo.reverse_order(:id).extension(:pagination).paginate(params[:page].to_i, 20)
     @photos = @page.all
     @styles = %w( css/base css/list )
@@ -101,11 +101,11 @@ class SombreroApp < Sinatra::Base
 
   # List photos with size.
 
-  get '/wallpapers/:size' do
+  get "/wallpapers/:size" do
     redirect "/wallpapers/#{params[:size]}/1"
   end
 
-  get '/wallpapers/:size/:page' do
+  get "/wallpapers/:size/:page" do
     @size = params[:size]
     m = /\A(\d+)x(\d+)\z/.match(@size)
     w = m[1].to_i
@@ -121,12 +121,12 @@ class SombreroApp < Sinatra::Base
 
   # Clip a new photo.
 
-  get '/clip/new' do
+  get "/clip/new" do
     @styles = %w( css/base )
     haml :newclip
   end
 
-  post '/clip' do
+  post "/clip" do
     @styles = %w( css/base css/mini_photo )
     registrar = PhotoRegistrar.new( :force => params[:force] )
     registrar.clip(
@@ -136,7 +136,7 @@ class SombreroApp < Sinatra::Base
         :tags     => params[:tags]
       }
     )
-    redirect '/'
+    redirect "/"
   rescue FileFetcher::FetchError => e
     @url = params[:url]
     @page_url = params[:page_url]
@@ -157,17 +157,17 @@ class SombreroApp < Sinatra::Base
 
   # Post a new photo.
 
-  get '/post/new' do
+  get "/post/new" do
     @styles = %w( css/base )
     haml :newpost
   end
 
-  post '/post' do
+  post "/post" do
     @styles = %w( css/base css/mini_photo )
     if params[:file]
       new_filename = params[:file][:filename]
-      save_file = './tmp/' + new_filename
-      File.open(save_file, 'wb'){ |f| f.write(params[:file][:tempfile].read) }
+      save_file = "./tmp/" + new_filename
+      File.open(save_file, "wb"){ |f| f.write(params[:file][:tempfile].read) }
       registrar = PhotoRegistrar.new( :force => params[:force] )
       registrar.post(
         save_file,
@@ -177,13 +177,13 @@ class SombreroApp < Sinatra::Base
           :tags     => params[:tags]
         }
       )
-      redirect '/'
+      redirect "/"
     end
   rescue PhotoRegistrar::Rejection => e
     @message = e.message
     case @message
     when /Small photo/
-      redirect '/recent/1'
+      redirect "/recent/1"
     when /Already/
       @url = e.details[:url]
       @page_url = e.details[:page_url]
@@ -198,18 +198,18 @@ class SombreroApp < Sinatra::Base
 
   # Edit photo information.
 
-#  get '/photo/:id.edit' do
+#  get "/photo/:id.edit" do
 #    @post = Post.find(:id => params[:id])
 #    haml :editphoto
 #  end
 
-  post '/photo/:id.edit' do
+  post "/photo/:id.edit" do
     @post = Post.find(:id => params[:id])
     @styles = %w( css/base )
     haml :editphoto, :layout => false
   end
 
-  put '/photo/:id' do
+  put "/photo/:id" do
     @post = Post.find(:id => params[:id])
     @post.title = params[:title]
     @post.note = params[:note]
@@ -217,13 +217,13 @@ class SombreroApp < Sinatra::Base
     redirect "/recent/#{session["page"]}"
   end
 
-  get '/photo/:id.delete' do
+  get "/photo/:id.delete" do
     @post = Post.find(:id => params[:id])
     @post.destroy
     redirect "/recent/#{session["page"]}"
   end
 
-  post '/photo/update-tags' do
+  post "/photo/update-tags" do
     @photo = Photo.find(:id => params[:id])
     @photo.update_tags(params[:tags])
     redirect "/photo/#{@photo.id}"
@@ -232,13 +232,13 @@ class SombreroApp < Sinatra::Base
 
   # Edit and delete post.
 
-  post '/post/:id.edit' do
+  post "/post/:id.edit" do
     @post = Post.find(:id => params[:id])
     @styles = %w( css/base )
     haml :editpost, :layout => false
   end
 
-  put '/post/:id' do
+  put "/post/:id" do
     @post = Post.find(:id => params[:id])
     @post.title = params[:title]
     @post.note = params[:note]
@@ -249,7 +249,7 @@ class SombreroApp < Sinatra::Base
     redirect "/recent/#{session["page"]}"
   end
 
-  get '/post/:id.delete' do
+  get "/post/:id.delete" do
     @post = Post.find(:id => params[:id])
     @post.destroy
     redirect "/recent/#{session["page"]}"
@@ -258,7 +258,7 @@ class SombreroApp < Sinatra::Base
 
   # Show photo.
 
-  get '/photo/:id' do
+  get "/photo/:id" do
     @photo = Photo.find(:id => params[:id])
     @posts = @photo.posts
     unless @photo.has_ext?
@@ -270,7 +270,7 @@ class SombreroApp < Sinatra::Base
     haml :photo
   end
 
-  get '/photo/md5/:md5' do
+  get "/photo/md5/:md5" do
     @photo = Photo.find(:md5 => params[:md5])
     @posts = @photo.posts
     @tags = @photo.taggings.map{|t| t.tag}
@@ -281,7 +281,7 @@ class SombreroApp < Sinatra::Base
 
   # Listing tags.
 
-  get '/tags/:page' do
+  get "/tags/:page" do
     @page = ::Tag.order(:name).extension(:pagination).paginate(params[:page].to_i, 25)
     @tags = @page.all
     @styles = %w( css/base css/tag_list )
@@ -289,14 +289,14 @@ class SombreroApp < Sinatra::Base
     haml :tag_list
   end
 
-  get '/tags/edit/:id' do
+  get "/tags/edit/:id" do
     @tag = ::Tag.find(:id => params[:id])
     @styles = %w( css/base css/tag_list )
     @tag_type_name = if @tag.tag_type then @tag.tag_type.name else "" end
     haml :tag_edit
   end
 
-  put '/tags/edit/:id' do
+  put "/tags/edit/:id" do
     @tag = ::Tag.find(:id => params[:id])
     @styles = %w( css/base css/tag_list )
     @tag.name = params[:name]
@@ -312,18 +312,18 @@ class SombreroApp < Sinatra::Base
 
   # Listing tag types.
 
-  get '/tagtypes/new' do
+  get "/tagtypes/new" do
     @styles = %w( css/base css/tag_type_list )
     haml :tag_type_new
   end
 
-  post '/tagtypes/new' do
+  post "/tagtypes/new" do
     @styles = %w( css/base css/tag_type_list )
     ::TagType.create(:name => params[:name], :description => params[:description])
     redirect "/tagtypes/1"
   end
 
-  get '/tagtypes/:page' do
+  get "/tagtypes/:page" do
     @page = ::TagType.order_by(:id).extension(:pagination).paginate(params[:page].to_i, 25)
     @tagtypes = @page.all
     @styles = %w( css/base css/tag_type_list)
@@ -331,13 +331,13 @@ class SombreroApp < Sinatra::Base
     haml :tag_type_list
   end
 
-  get '/tagtypes/edit/:id' do
+  get "/tagtypes/edit/:id" do
     @tag_type = ::TagType.find(:id => params[:id])
     @styles = %w( css/base css/tag_type_list )
     haml :tag_type_edit
   end
 
-  put '/tagtypes/edit/:id' do
+  put "/tagtypes/edit/:id" do
     @tag_type = ::TagType.find(:id => params[:id])
     @styles = %w( css/base css/tag_type_list )
     @tag_type.name = params[:name]
