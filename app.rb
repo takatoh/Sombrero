@@ -278,6 +278,14 @@ class SombreroApp < Sinatra::Base
     haml :photo
   end
 
+  get "/photo/sha256/:sha256" do
+    @photo = Photo.find(:sha256 => params[:sha256])
+    @posts = @photo.posts
+    @tags = @photo.taggings.map{|t| t.tag}
+    @styles = %w( css/base css/photo )
+    haml :photo
+  end
+
 
   # Listing tags.
 
