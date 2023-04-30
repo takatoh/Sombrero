@@ -1,5 +1,5 @@
-require 'sequel'
-require 'yaml'
+require "sequel"
+require "yaml"
 
 SOMBRERO_ROOT = File.dirname(__FILE__)
 $LOAD_PATH.unshift(SOMBRERO_ROOT + "/lib")
