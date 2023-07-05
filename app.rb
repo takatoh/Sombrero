@@ -22,15 +22,6 @@ class SombreroApp < Sinatra::Base
     include Rack::Utils
     alias_method :h, :escape_html
 
-    def link_to_hostname(url)
-      unless url.nil? || url.empty?
-        hostname = URI.parse(url).host
-        %Q[<a href="#{url}">#{hostname}</a>]
-      else
-        ""
-      end
-    end
-
     def hostname(url)
       unless url.nil? || url.empty?
         URI.parse(url).host
