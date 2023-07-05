@@ -8,3 +8,5 @@ gem "haml"
 gem "sassc"
 gem "httpclient"
 gem "rake"
+
+gem "webrick", "~> 1.8"
