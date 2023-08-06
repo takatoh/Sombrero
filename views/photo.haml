@@ -42,8 +42,8 @@
                 - unless post.page_url.nil? || post.page_url.empty?
                   [
                   %a{:href => post.page_url}= hostname(post.page_url)
-                  ] posted at
-                  = post.date
+                  ]
+                = " (#{post.date})"
       %tr
         %th
           Tags:
