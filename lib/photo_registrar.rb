@@ -40,9 +40,13 @@ class PhotoRegistrar
       :ignore_media_type => @options[:ignore_media_type]
     )
     fname = Pathname.new("./tmp") + chop_query(c[:filename])
-    # X (Twitter)
     if photo_info[:url].start_with?("https://pbs.twimg.com/")
+      # X (Twitter)
       ext = /format=([a-z]+)/.match(c[:filename])[1]
+      fname = fname.sub_ext("." + ext)
+    elsif photo_info[:url].start_with?("https://cdn.bsky.app/img/")
+      # Bluesky
+      ext = /@([a-z]+)\z/.match(c[:filename])[1]
       fname = fname.sub_ext("." + ext)
     end
     File.open(fname, "wb"){|f| f.write(c[:body])}
