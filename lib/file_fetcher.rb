@@ -3,7 +3,7 @@
 #
 
 
-require "httpclient"
+require "http"
 
 require "image_types"
 
@@ -16,19 +16,18 @@ class FileFetcher
   class FetchError < StandardError; end
 
   def self.fetch(url, opts = {})
-    client = HTTPClient.new
-    h = client.head(url)
+    h = HTTP.head(url)
     case h.status
     when 200     # OK
-      if opts[:ignore_media_type] || IMAGE_CONTENT_TYPES.member?(h.contenttype)
-        c = client.get(url)
+      if opts[:ignore_media_type] || IMAGE_CONTENT_TYPES.member?(h["Content-Type"])
+        c = HTTP.get(url)
         filename = File.basename(url)
-        { :filename => filename, :body => c.content }
+        { :filename => filename, :body => c.body }
       else
-        raise NotImage.new("Content-Type: #{h.contenttype}")
+        raise NotImage.new("Content-Type: #{h["Content-Type"]}")
       end
     when 302     # Moved Temporarily
-      location = h.header["Location"].first
+      location = h["Location"].first
       fetch(location, opts)
     else
       raise FetchError.new("Status: #{h.status}: #{url}")
