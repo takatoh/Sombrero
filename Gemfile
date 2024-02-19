@@ -6,7 +6,7 @@ gem "rack"
 gem "sinatra"
 gem "haml"
 gem "sassc"
-gem "httpclient"
+gem "http"
 gem "rake"
 
 gem "webrick", "~> 1.8"
