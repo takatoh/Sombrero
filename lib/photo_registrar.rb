@@ -40,7 +40,8 @@ class PhotoRegistrar
       :ignore_media_type => @options[:ignore_media_type]
     )
     fname = Pathname.new("./tmp") + chop_query(c[:filename])
-    if File.extname(fname).empty?
+    # X (Twitter)
+    if photo_info[:url].start_with?("https://pbs.twimg.com/")
       ext = /format=([a-z]+)/.match(c[:filename])[1]
       fname = fname.sub_ext("." + ext)
     end
