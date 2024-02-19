@@ -1,16 +1,35 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    addressable (2.8.6)
+      public_suffix (>= 2.0.2, < 6.0)
+    base64 (0.2.0)
+    domain_name (0.6.20240107)
     ffi (1.15.5)
     ffi (1.15.5-x64-mingw32)
+    ffi-compiler (1.0.1)
+      ffi (>= 1.0.0)
+      rake
     haml (6.1.1)
       temple (>= 0.8.2)
       thor
       tilt
-    httpclient (2.8.3)
+    http (5.2.0)
+      addressable (~> 2.8)
+      base64 (~> 0.1)
+      http-cookie (~> 1.0)
+      http-form_data (~> 2.2)
+      llhttp-ffi (~> 0.5.0)
+    http-cookie (1.0.5)
+      domain_name (~> 0.5)
+    http-form_data (2.3.0)
+    llhttp-ffi (0.5.0)
+      ffi-compiler (~> 1.0)
+      rake (~> 13.0)
     mini_portile2 (2.8.0)
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
+    public_suffix (5.0.4)
     rack (2.2.6.4)
     rack-protection (3.0.4)
       rack
@@ -40,7 +59,7 @@ PLATFORMS
 
 DEPENDENCIES
   haml
-  httpclient
+  http
   rack
   rake
   sassc
