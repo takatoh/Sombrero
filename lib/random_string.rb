@@ -6,7 +6,7 @@
 class RandomString
 
   def initialize(pool = nil)
-    @pool = pool || "abcdefghijklmnopqrstuvwxyz0123456789"
+    @pool = pool || ("a".."z").to_a + ("0".."9").to_a
   end
 
   def generate(length)
