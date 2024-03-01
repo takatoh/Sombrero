@@ -6,6 +6,7 @@
 require "fileutils"
 require "pathname"
 require "uri"
+require "random_string"
 
 
 class PhotoStorage
@@ -15,17 +16,28 @@ class PhotoStorage
   SAMPLE_HEIGHT      = 800
 
 
-  def initialize(base_dir)
+  def initialize(base_dir, randomize = false)
     @storage_dir   = Pathname.new(base_dir).expand_path
     @photo_dir     = "photos"
     @thumbnail_dir = "thumbs"
     @sample_dir    = "samples"
     @format        = "jpg"
+    @randomize     = randomize
   end
 
 
   def store(content, filename)
-    fullpath = photo_fullpath(filename)
+    if @randomize
+      random_string = RandomString.new
+      filename = random_string.generate(12) + File.extname(filename)
+      fullpath = photo_fullpath(filename)
+      while File.exist?(fullpath)
+        filename = random_string.generate(12) + File.extname(filename)
+        fullpath = photo_fullpath(filename)
+      end
+    else
+      fullpath = photo_fullpath(filename)
+    end
     unless File.exist?(fullpath)
       FileUtils.mkdir_p(fullpath.parent)
       File.open(fullpath, "wb"){|f| f.write(content)}
