@@ -24,12 +24,12 @@ class PhotoStorage
     @thumbnail_dir = "thumbs"
     @sample_dir    = "samples"
     @format        = "jpg"
-    @randomize     = randomize
+    @random_string = randomize ? RandomString.new(FILE_NAME_LETTERS) : nil
   end
 
 
   def store(content, filename)
-    if @randomize
+    if @random_string
       filename, fullpath = generate_random_filename_and_fullpath(filename)
       while check_file_exist?(fullpath)
         filename, fullpath = generate_random_filename_and_fullpath(filename)
@@ -118,8 +118,7 @@ class PhotoStorage
 
 
   def generate_random_filename_and_fullpath(filename)
-    random_string = RandomString.new(FILE_NAME_LETTERS)
-    filename = random_string.generate(12) + File.extname(filename)
+    filename = @random_string.generate(12) + File.extname(filename)
     fullpath = photo_fullpath(filename)
     [filename, fullpath]
   end
