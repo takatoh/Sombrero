@@ -5,11 +5,12 @@ require "model"
 def main
   posts = Post.order_by("id").all
 
-  posts.each do |p|
-    puts "- url: #{p.url}"
-    puts "  page_url: #{p.page_url}"
-    puts "  file: #{p.photo.path}"
-    puts "  tags: #{p.photo.taggings.map{|t| t.tag.name}.join(' ').inspect}"
+  posts.each do |post|
+    puts "#{post.id}"
+    puts "  url:      #{post.url}"
+    puts "  page url: #{post.page_url}"
+    puts "  file:     #{post.photo.path}"
+    puts "  tags:     #{post.photo.taggings.map{|t| t.tag.name}.join(' ')}"
   end
 end
 
