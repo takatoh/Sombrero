@@ -7,25 +7,36 @@ require "fileutils"
 require "pathname"
 require "uri"
 
+require "random_string"
+
 
 class PhotoStorage
 
   THUMBNAIL_GEOMETRY = "150x150"
   SAMPLE_WIDTH       = 600
   SAMPLE_HEIGHT      = 800
+  FILE_NAME_LETTERS  = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
 
 
-  def initialize(base_dir)
+  def initialize(base_dir, randomize = false)
     @storage_dir   = Pathname.new(base_dir).expand_path
     @photo_dir     = "photos"
     @thumbnail_dir = "thumbs"
     @sample_dir    = "samples"
     @format        = "jpg"
+    @randomize     = randomize
   end
 
 
   def store(content, filename)
-    fullpath = photo_fullpath(filename)
+    if @randomize
+      filename, fullpath = generate_random_filename_and_fullpath(filename)
+      while check_file_exist?(fullpath)
+        filename, fullpath = generate_random_filename_and_fullpath(filename)
+      end
+    else
+      fullpath = photo_fullpath(filename)
+    end
     unless File.exist?(fullpath)
       FileUtils.mkdir_p(fullpath.parent)
       File.open(fullpath, "wb"){|f| f.write(content)}
@@ -96,13 +107,33 @@ class PhotoStorage
   end
 
 
-  def build_path(dir, filename)
-    File.join(dir, filename.slice(0,2), filename.slice(2,2), filename)
+  def sample_fullpath(filename)
+    @storage_dir + sample_path(filename)
   end
 
 
-  def sample_fullpath(filename)
-    @storage_dir + sample_path(filename)
+  def build_path(dir, filename)
+    File.join(dir, filename.slice(0,2).downcase, filename.slice(2,2).downcase, filename)
+  end
+
+
+  def generate_random_filename_and_fullpath(filename)
+    random_string = RandomString.new(FILE_NAME_LETTERS)
+    filename = random_string.generate(12) + File.extname(filename)
+    fullpath = photo_fullpath(filename)
+    [filename, fullpath]
+  end
+
+
+  def check_file_exist?(fullpath)
+    filename = fullpath.basename.to_s.downcase
+    parent = fullpath.parent
+    if parent.exist?
+      files = fullpath.parent.children.select{|c| c.file? }.map{|c| c.basename.to_s.downcase }
+      files.include?(filename)
+    else
+      false
+    end
   end
 
 end   # of class PhotoStorage

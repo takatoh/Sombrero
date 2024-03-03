@@ -97,7 +97,7 @@ class PhotoRegistrar
         )
       end
     else
-      storage = PhotoStorage.new(SOMBRERO_CONFIG["storage"])
+      storage = PhotoStorage.new(SOMBRERO_CONFIG["storage"], true)
       filename = md5 + File.extname(file)
       path, thumbnail_path, sample_path = storage.store(content, filename)
       photo = Photo.create(
