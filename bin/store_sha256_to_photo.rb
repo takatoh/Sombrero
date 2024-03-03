@@ -27,6 +27,7 @@ def main
     end
 
     count += 1
+    break if count == options[:max_count]
   end
 
   puts "\n\n#{count} photos are fixed."
@@ -38,6 +39,7 @@ def parse_options
 
   parser = OptionParser.new
   parser.on("-d", "--dry-run", "Dry running"){|v| options[:dry_run] = true }
+  parser.on("-m", "--max", "Maximum count to store"){|v| options[:max_count] = v.to_i }
   parser.on_tail("-h", "--help", "Show this message"){ puts parser.help; exit(0) }
   parser.parse!
 
