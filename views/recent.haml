@@ -14,7 +14,7 @@
         %div.postId
           = h('#' + post.id.to_s)
         %div.thumbnailBox
-          %a.highslide{:href => '/images/' + post.photo.path, :onclick => "return hs.expand(this)"}
+          %a{:href => '/images/' + post.photo.path, :target => '_blank', :rel => 'noopener noreferrer'}
             %img{:src => '/images/' + post.photo.thumbnail_path}
         %div.control
           %ul
