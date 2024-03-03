@@ -5,10 +5,12 @@ require "optparse"
 
 
 def main
-  options = parse_options
+  default_options = {
+    max: 100
+  }
+  options = parse_options(default_options)
 
-  ds = Photo.order_by("id")
-  photos = ds.all
+  photos = Photo.dataset.order_by("id").limit(options[:max])
 
   photos.each do |photo|
     puts "#{photo[:id]}:"
@@ -27,10 +29,11 @@ def main
 end
 
 
-def parse_options
-  options = {}
+def parse_options(default_options)
+  options = default_options
 
   parser = OptionParser.new
+  parser.on("-m", "--max=MAX", "Maximum count for phots"){|v| options[:max] = v.to_i }
   parser.on_tail("-h", "--help", "Show this message"){ puts parser.help; exit(0) }
   parser.parse!
 
