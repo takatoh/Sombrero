@@ -11,7 +11,7 @@ def main
   }
   options = parse_options(default_options)
 
-  photos = Photo.dataset.order_by("id").limit(options[:max]).offset(options[:offset])
+  photos = Photo.order_by("id").limit(options[:max]).offset(options[:offset])
 
   photos.each do |photo|
     puts "#{photo[:id]}:"
