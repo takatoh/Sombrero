@@ -129,7 +129,7 @@ class PhotoStorage
     filename = fullpath.basename.to_s.downcase
     parent = fullpath.parent
     if parent.exist?
-      files = fullpath.parent.children.select{|c| c.file? }.map{|c| c.basename.to_s.downcase }
+      files = parent.children.select{|c| c.file? }.map{|c| c.basename.to_s.downcase }
       files.include?(filename)
     else
       false
