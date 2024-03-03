@@ -4,14 +4,14 @@ require "model/photo"
 ds = Photo.order_by("id")
 photos = ds.all
 
-photos.each do |p|
-  puts "#{p[:id]}:"
-  puts "  size:        #{p[:width]}x#{p[:height]}"
-  puts "  file size:   #{p[:filesize]}"
-  puts "  md5:         #{p[:md5]}"
-  puts "  sha256:      #{p[:sha256]}"
-  puts "  path:        #{p[:path]}"
-  puts "  sample path: #{p[:sample_path]}"
-  puts "  thumb path:  #{p[:thumbnail_path]}"
+photos.each do |photo|
+  puts "#{photo[:id]}:"
+  puts "  size:        #{photo[:width]}x#{photo[:height]}"
+  puts "  file size:   #{photo[:filesize]}"
+  puts "  md5:         #{photo[:md5]}"
+  puts "  sha256:      #{photo[:sha256]}"
+  puts "  path:        #{photo[:path]}"
+  puts "  sample path: #{photo[:sample_path]}"
+  puts "  thumb path:  #{photo[:thumbnail_path]}"
 end
 
