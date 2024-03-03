@@ -1,9 +1,12 @@
 require "./boot"
 require "model/photo"
 require "model/post"
+require "optparse"
 
 
 def main
+  options = parse_options
+
   ds = Photo.order_by("id")
   photos = ds.all
 
@@ -21,6 +24,17 @@ def main
       puts "    [#{post.id}]  #{post.url}"
     end
   end
+end
+
+
+def parse_options
+  options = {}
+
+  parser = OptionParser.new
+  parser.on_tail("-h", "--help", "Show this message"){ puts parser.help; exit(0) }
+  parser.parse!
+
+  options
 end
 
 
