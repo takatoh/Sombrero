@@ -15,6 +15,7 @@ class PhotoStorage
   THUMBNAIL_GEOMETRY = "150x150"
   SAMPLE_WIDTH       = 600
   SAMPLE_HEIGHT      = 800
+  FILE_NAME_LETTERS  = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
 
 
   def initialize(base_dir, randomize = false)
@@ -29,7 +30,7 @@ class PhotoStorage
 
   def store(content, filename)
     if @randomize
-      random_string = RandomString.new(("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a)
+      random_string = RandomString.new(FILE_NAME_LETTERS)
       filename = random_string.generate(12) + File.extname(filename)
       fullpath = photo_fullpath(filename)
       while check_file_exist?(fullpath)
