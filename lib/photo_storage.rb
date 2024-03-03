@@ -107,6 +107,11 @@ class PhotoStorage
   end
 
 
+  def sample_fullpath(filename)
+    @storage_dir + sample_path(filename)
+  end
+
+
   def build_path(dir, filename)
     File.join(dir, filename.slice(0,2).downcase, filename.slice(2,2).downcase, filename)
   end
@@ -129,11 +134,6 @@ class PhotoStorage
     else
       false
     end
-  end
-
-
-  def sample_fullpath(filename)
-    @storage_dir + sample_path(filename)
   end
 
 end   # of class PhotoStorage
