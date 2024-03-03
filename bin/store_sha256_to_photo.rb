@@ -13,7 +13,7 @@ def main
   photos.each do |photo|
     next unless photo.sha256.nil?
 
-    file = [SOMBRERO_CONFIG["storage"], photo.path].join("/")
+    file = File.join(SOMBRERO_CONFIG["storage"], photo.path)
     content = File.open(file, "rb"){|f| f.read }
     sha256 = Digest::SHA256.hexdigest(content)
 
