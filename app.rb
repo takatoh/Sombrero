@@ -67,7 +67,7 @@ class SombreroApp < Sinatra::Base
   get "/recent/:page" do
     @page = ::Post.reverse_order(:id).extension(:pagination).paginate(params[:page].to_i, 10)
     @posts = @page.all
-    @styles = %w( css/base css/recent js/highslide/highslide )
+    @styles = %w( css/base css/recent )
     @pg = params[:page]
     session["page"] = params[:page]
     haml :recent
