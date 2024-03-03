@@ -29,10 +29,10 @@ class PhotoStorage
 
   def store(content, filename)
     if @randomize
-      random_string = RandomString.new
+      random_string = RandomString.new(("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a)
       filename = random_string.generate(12) + File.extname(filename)
       fullpath = photo_fullpath(filename)
-      while File.exist?(fullpath)
+      while check_file_exist?(fullpath)
         filename = random_string.generate(12) + File.extname(filename)
         fullpath = photo_fullpath(filename)
       end
@@ -110,7 +110,19 @@ class PhotoStorage
 
 
   def build_path(dir, filename)
-    File.join(dir, filename.slice(0,2), filename.slice(2,2), filename)
+    File.join(dir, filename.slice(0,2).downcase, filename.slice(2,2).downcase, filename)
+  end
+
+
+  def check_file_exist?(fullpath)
+    filename = fullpath.basename.to_s.downcase
+    parent = fullpath.parent
+    if parent.exist?
+      files = fullpath.parent.children.select{|c| c.file? }.map{|c| c.basename.to_s.downcase }
+      files.include?(filename)
+    else
+      false
+    end
   end
 
 
