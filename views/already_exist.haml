@@ -40,7 +40,7 @@
             %ul
               - @photo.posts.each do |post|
                 %li
-                  %a{:href => post.url}= h post.url
+                  %a{:href => post.url}= post.url
   - if @url_posted
     %div
       %a{ :href => "/" }= h "Back to recent"
