@@ -1,4 +1,5 @@
 #require 'boot'
+require "digest"
 
 class Photo < Sequel::Model
   one_to_many :posts
@@ -51,6 +52,19 @@ class Photo < Sequel::Model
     (tagnames - tagnames0).each{|t| add_tag(t)}
     (tagnames0 - tagnames).each{|t| delete_tag(t)}
     taggings.map{|t| t.tag}
+  end
+
+  def calc_sha256
+    if self.sha256.nil?
+      photo_path = File.join(SOMBRERO_CONFIG["storage"], self.path)
+      content = File.open(photo_path){|f| f.read }
+      sha256 = Digest::SHA256.hexdigest(content)
+      self.sha256 = sha256
+      self.save
+      sha256
+    else
+      nil
+    end
   end
 
   def has_ext?
