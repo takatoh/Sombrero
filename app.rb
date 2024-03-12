@@ -258,6 +258,7 @@ class SombreroApp < Sinatra::Base
     end
     @tags = @photo.taggings.map{|t| t.tag}
     @styles = %w( css/base css/photo )
+    @photo.calc_sha256
     haml :photo
   end
 
