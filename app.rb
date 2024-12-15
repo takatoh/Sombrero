@@ -480,8 +480,7 @@ class SombreroApp < Sinatra::Base
           "reason" => "Small photo"
         }
       when /Already/
-        md5 = /\((.+)\)/.match(e.message)[1]
-        photo = Photo.find(:md5 => md5)
+        photo = e.details[:photo]
         tags = if params[:add_tags]
           photo.add_tags(params[:tags]).map{|t| t.name}
         else
