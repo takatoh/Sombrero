@@ -30,10 +30,9 @@ class PhotoStorage
 
   def store(content, filename)
     if @random_string
-      filename, fullpath = generate_random_filename_and_fullpath(filename)
-      while check_file_exist?(fullpath)
+      begin
         filename, fullpath = generate_random_filename_and_fullpath(filename)
-      end
+      end while check_file_exist?(fullpath)
     else
       fullpath = photo_fullpath(filename)
     end
