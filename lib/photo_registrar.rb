@@ -56,6 +56,10 @@ class PhotoRegistrar
 
 
   def post(file, photo_info)
+    if photo_info[:page_url].start_with?("https://www.pixiv.net/")
+      # Pixiv
+      photo_info[:page_url] = chop_anchor(photo_info[:page_url])
+    end
     register(file, photo_info)
   end
 
@@ -142,6 +146,11 @@ class PhotoRegistrar
 
   def chop_query(url)
     url.sub(/[\?\:].+\z/, "")
+  end
+
+
+  def chop_anchor(url)
+    url.sub(/#.+\z/, "")
   end
 
 
