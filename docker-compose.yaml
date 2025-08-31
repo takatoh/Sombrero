@@ -3,7 +3,7 @@ services:
     image: "sombrero:${TAG-latest}"
     build:
       context: .
-      dockerfile: dockerfile
+      dockerfile: Dockerfile
     ports:
       - 9292:9292
     environment:
