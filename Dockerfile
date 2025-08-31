@@ -14,3 +14,5 @@ ENV LANG=ja_JP.UTF-8
 
 RUN cp config.yaml.example config.yaml
 RUN bundle exec rake setup
+
+CMD [ "./start.sh" ]
