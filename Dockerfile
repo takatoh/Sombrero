@@ -1,4 +1,4 @@
-FROM ruby:3.2.9-bookworm
+FROM ruby:3.3.9-bookworm
 
 WORKDIR /app
 
