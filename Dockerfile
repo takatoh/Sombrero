@@ -5,7 +5,7 @@ WORKDIR /app
 COPY ./ ./
 
 RUN apt-get update \
-  && apt-get install \
+  && apt-get upgrade -y \
   && bundle install \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
