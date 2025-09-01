@@ -1,0 +1,15 @@
+services:
+  sombrero:
+    image: "sombrero:${TAG-latest}"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 9292:9292
+    volumes:
+      - .:/app:cached
+    environment:
+      HOST: 0.0.0.0
+      PORT: 9292
+    tty: true
+    restart: unless-stopped
