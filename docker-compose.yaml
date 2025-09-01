@@ -6,6 +6,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - 9292:9292
+    volumes:
+      - .:/app:cached
     environment:
       HOST: 0.0.0.0
       PORT: 9292
