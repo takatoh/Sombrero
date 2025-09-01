@@ -1,4 +1,4 @@
-FROM ruby:3.4.5-bookworm
+FROM ruby:3.4.5-slim-bookworm
 
 WORKDIR /app
 
@@ -6,6 +6,10 @@ COPY ./ ./
 
 RUN apt-get update \
   && apt-get upgrade -y \
+  && apt-get install -y \
+    build-essential \
+    pkg-config \
+    imagemagick \
   && bundle install \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
