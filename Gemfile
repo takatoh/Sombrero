@@ -9,6 +9,6 @@ gem "sassc"
 gem "http"
 gem "rake"
 
-gem "webrick"
+gem "puma"
 
 gem "rackup"

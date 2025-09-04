@@ -29,7 +29,10 @@ GEM
     mini_portile2 (2.8.9)
     mustermann (3.0.4)
       ruby2_keywords (~> 0.0.1)
+    nio4r (2.7.4)
     public_suffix (6.0.2)
+    puma (7.0.0)
+      nio4r (~> 2.0)
     rack (3.2.1)
     rack-protection (4.1.1)
       base64 (>= 0.1.0)
@@ -60,7 +63,6 @@ GEM
     temple (0.10.4)
     thor (1.4.0)
     tilt (2.6.1)
-    webrick (1.9.1)
 
 PLATFORMS
   ruby
@@ -69,6 +71,7 @@ PLATFORMS
 DEPENDENCIES
   haml
   http
+  puma
   rack
   rackup
   rake
@@ -76,7 +79,6 @@ DEPENDENCIES
   sequel
   sinatra
   sqlite3
-  webrick
 
 BUNDLED WITH
    2.4.12
