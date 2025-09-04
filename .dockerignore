@@ -1,0 +1,14 @@
+.ruby-version
+test
+.sass-cache
+.bundle
+vendor
+
+.git
+.gitignore
+
+Dockerfile
+.dockerignore
+docker-env
+
+*.md
