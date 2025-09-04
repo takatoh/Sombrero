@@ -9,6 +9,6 @@ gem "sassc"
 gem "http"
 gem "rake"
 
-gem "webrick", "~> 1.8"
+gem "webrick"
 
-gem "rackup", "~> 2.1"
+gem "rackup"
