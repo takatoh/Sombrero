@@ -61,7 +61,9 @@ class PhotoRegistrar
       photo_info[:page_url] = chop_anchor(photo_info[:page_url])
     elsif photo_info[:page_url].start_with?("https://konachan.com/")
       # Konachan.com
-      photo_info[:page_url] = photo_info[:page_url].sub(/[^\/]+\z/, "")
+      unless /\d+\z/.match?(photo_info[:page_url])
+        photo_info[:page_url] = photo_info[:page_url].sub(/\/[^\/]+\z/, "")
+      end
     end
     register(file, photo_info)
   end
