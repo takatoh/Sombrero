@@ -34,7 +34,7 @@ class FileFetcher
           filename = filename.sub_ext("." + ext)
         end
         File.open(filename, "wb"){|f| f.write(c.body)}
-        { :filename => filename }
+        filename
       else
         raise NotImage.new("Content-Type: #{h["Content-Type"]}")
       end

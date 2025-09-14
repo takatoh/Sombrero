@@ -35,11 +35,10 @@ class PhotoRegistrar
 
 
   def clip(photo_info)
-    c = FileFetcher.fetch(
+    fname = FileFetcher.fetch(
       photo_info[:url],
       :ignore_media_type => @options[:ignore_media_type]
     )
-    fname = c[:filename]
     register(fname, photo_info)
   end
 
