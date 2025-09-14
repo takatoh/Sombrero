@@ -56,15 +56,6 @@ class PhotoRegistrar
 
 
   def post(file, photo_info)
-    if photo_info[:page_url].start_with?("https://www.pixiv.net/")
-      # Pixiv
-      photo_info[:page_url] = chop_anchor(photo_info[:page_url])
-    elsif photo_info[:page_url].start_with?("https://konachan.com/")
-      # Konachan.com
-      unless /\d+\z/.match?(photo_info[:page_url])
-        photo_info[:page_url] = photo_info[:page_url].sub(/\/[^\/]+\z/, "")
-      end
-    end
     register(file, photo_info)
   end
 
@@ -72,6 +63,17 @@ class PhotoRegistrar
   private
 
   def register(file, photo_info)
+    # Pixiv
+    if photo_info[:page_url].start_with?("https://www.pixiv.net/")
+      photo_info[:page_url] = chop_anchor(photo_info[:page_url])
+    end
+    # Konachan.com
+    if photo_info[:page_url].start_with?("https://konachan.com/")
+      unless /\d+\z/.match?(photo_info[:page_url])
+        photo_info[:page_url] = photo_info[:page_url].sub(/\/[^\/]+\z/, "")
+      end
+    end
+
     file = Pathname.new(file) if file.instance_of?(String)
     width, height = image_size(file)
     if small_image?(width, height)
