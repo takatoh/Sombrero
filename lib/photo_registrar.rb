@@ -139,11 +139,6 @@ class PhotoRegistrar
   end
 
 
-  def chop_query(url)
-    url.sub(/[\?\:].+\z/, "")
-  end
-
-
   def chop_anchor(url)
     url.sub(/#.+\z/, "")
   end
