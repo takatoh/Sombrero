@@ -1,5 +1,4 @@
-site_title: Sombrero
-hosturl: http://localhost:9292/
+site_title: Sombrero-dev
 database: sqlite://db/sombrero.db
 storage: ./storage
 minimum_photo_width: 200
