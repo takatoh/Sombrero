@@ -6,10 +6,10 @@ require "sinatra/base"
 require "sequel"
 require "json"
 
-require "./boot"
 require "version"
 require "model"
 require "photo_registrar"
+require_relative "../boot"
 
 
 class SombreroAPI < Sinatra::Base
