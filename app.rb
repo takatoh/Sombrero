@@ -20,20 +20,6 @@ require_relative "routes/api"
 
 class SombreroApp < Sinatra::Base
 
-  helpers do
-    include Rack::Utils
-    alias_method :h, :escape_html
-
-    def hostname(url)
-      unless url.nil? || url.empty?
-        URI.parse(url).host
-      else
-        ""
-      end
-    end
-
-  end
-
   set :run, true
 
   enable :static
