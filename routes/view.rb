@@ -254,6 +254,16 @@ class SombreroView < Sinatra::Base
     haml :photo
   end
 
+  get "/photo/name/:name" do
+    filename = params[:name] + ".jpg"
+    thumb_path = ["thumbs", filename[0,2].downcase, filename[2,2].downcase, filename].join("/")
+    @photo = Photo.find(:thumbnail_path => thumb_path)
+    @posts = @photo.posts
+    @tags = @photo.taggings.map{|t| t.tag}
+    @styles = %w( css/base css/photo )
+    haml :photo
+  end
+
 
   # Listing tags.
 
