@@ -4,16 +4,8 @@
 
 
 require "sinatra/base"
-require "sequel"
-require "sequel/extensions/pagination"
-require "tilt/haml"
-require "tilt/sass"
-require "json"
 
 require "./boot"
-require "version"
-require "model"
-require "photo_registrar"
 require_relative "routes/view"
 require_relative "routes/api"
 
