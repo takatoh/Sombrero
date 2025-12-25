@@ -134,15 +134,16 @@ class SombreroAPI < Sinatra::Base
           }
         }
       end
-    rescue PhotoRegistrar::Rejection => e
-      message = e.message
-      case message
-      when /Small photo/
+    rescue PhotoRegistrar::TooSmall => e
+      #message = e.message
+      #case message
+      #when /Small photo/
         data = {
           "status" => "Rejected",
           "reason" => "Small photo"
         }
-      when /Already/
+    rescue PhotoRegistrar::PhotoExists => e
+      #when /Already/
         photo = e.details[:photo]
         tags = if params[:add_tags]
           photo.add_tags(params[:tags]).map{|t| t.name}
@@ -178,7 +179,7 @@ class SombreroAPI < Sinatra::Base
             }
           }
         end
-      end
+      #end
     end
     content_type :json
     data.to_json
