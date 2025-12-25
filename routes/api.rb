@@ -202,15 +202,16 @@ class SombreroAPI < Sinatra::Base
           "fileName" => File.basename(photo.path)
         }
       }
-    rescue PhotoRegistrar::Rejection => e
-      message = e.message
-      case message
-      when /Small photo/
+    rescue PhotoRegistrar::TooSmall => e
+      #message = e.message
+      #case message
+      #when /Small photo/
         data = {
           "status" => "Rejected",
           "reason" => "Small photo"
         }
-      when /Already/
+    rescue PhotoRegistrar::PhotoExists => e
+      #when /Already/
         md5 = /\((.+)\)/.match(e.message)[1]
         photo = Photo.find(:md5 => md5)
         tags = if params[:add_tags]
@@ -247,7 +248,7 @@ class SombreroAPI < Sinatra::Base
             }
           }
         end
-      end
+      #end
     end
     content_type :json
     data.to_json
