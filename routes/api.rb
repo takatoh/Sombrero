@@ -203,52 +203,47 @@ class SombreroAPI < Sinatra::Base
         }
       }
     rescue PhotoRegistrar::TooSmall => e
-      #message = e.message
-      #case message
-      #when /Small photo/
+      data = {
+        "status" => "Rejected",
+        "reason" => "Small photo"
+      }
+    rescue PhotoRegistrar::PhotoExists => e
+      md5 = /\((.+)\)/.match(e.message)[1]
+      photo = Photo.find(:md5 => md5)
+      tags = if params[:add_tags]
+        photo.add_tags(params[:tags]).map{|t| t.name}
+      else
+        []
+      end
+      if tags.empty?
         data = {
           "status" => "Rejected",
-          "reason" => "Small photo"
+          "reason" => "Already exist",
+          "photo" => {
+            "id"       => photo.id,
+            "width"    => photo.width,
+            "height"   => photo.height,
+            "fileSize" => photo.filesize,
+            "md5"      => photo.md5,
+            "sha256"   => photo.sha256,
+            "fileName" => File.basename(photo.path)
+          }
         }
-    rescue PhotoRegistrar::PhotoExists => e
-      #when /Already/
-        md5 = /\((.+)\)/.match(e.message)[1]
-        photo = Photo.find(:md5 => md5)
-        tags = if params[:add_tags]
-          photo.add_tags(params[:tags]).map{|t| t.name}
-        else
-          []
-        end
-        if tags.empty?
-          data = {
-            "status" => "Rejected",
-            "reason" => "Already exist",
-            "photo" => {
-              "id"       => photo.id,
-              "width"    => photo.width,
-              "height"   => photo.height,
-              "fileSize" => photo.filesize,
-              "md5"      => photo.md5,
-              "sha256"   => photo.sha256,
-              "fileName" => File.basename(photo.path)
-            }
+      else
+        data = {
+          "status" => "Added tags",
+          "photo" => {
+            "id"        => photo.id,
+            "width"     => photo.width,
+            "height"    => photo.height,
+            "fileSize"  => photo.filesize,
+            "md5"       => photo.md5,
+            "sha256"    => photo.sha256,
+            "fileName"  => File.basename(photo.path),
+            "addedTags" => tags
           }
-        else
-          data = {
-            "status" => "Added tags",
-            "photo" => {
-              "id"        => photo.id,
-              "width"     => photo.width,
-              "height"    => photo.height,
-              "fileSize"  => photo.filesize,
-              "md5"       => photo.md5,
-              "sha256"    => photo.sha256,
-              "fileName"  => File.basename(photo.path),
-              "addedTags" => tags
-            }
-          }
-        end
-      #end
+        }
+      end
     end
     content_type :json
     data.to_json
