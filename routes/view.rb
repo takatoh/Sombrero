@@ -109,8 +109,9 @@ class SombreroView < Sinatra::Base
     @tags = params[:tags]
     @force = params[:force]
     haml :clip_failure
-  rescue PhotoRegistrar::Rejection => e
-    @message = e.message
+  rescue PhotoRegistrar::TooSmall => e
+    redirect "/recent/1"
+  rescue PhotoRegistrar::PhotoExists => e
     @url = e.details[:url]
     @page_url = e.details[:page_url]
     @tags = e.details[:tags]
@@ -145,20 +146,16 @@ class SombreroView < Sinatra::Base
       )
       redirect "/"
     end
-  rescue PhotoRegistrar::Rejection => e
-    @message = e.message
-    case @message
-    when /Small photo/
-      redirect "/recent/1"
-    when /Already/
-      @url = e.details[:url]
-      @page_url = e.details[:page_url]
-      @tags = e.details[:tags]
-      @url_posted = e.details[:url_posted]
-      @md5 = e.details[:md5]
-      @photo = e.details[:photo]
-      haml :already_exist
-    end
+  rescue PhotoRegistrar::TooSmall => e
+    redirect "/recent/1"
+  rescue PhotoRegistrar::PhotoExists => e
+    @url = e.details[:url]
+    @page_url = e.details[:page_url]
+    @tags = e.details[:tags]
+    @url_posted = e.details[:url_posted]
+    @md5 = e.details[:md5]
+    @photo = e.details[:photo]
+    haml :already_exist
   end
 
 
