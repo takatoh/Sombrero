@@ -29,6 +29,11 @@ class PhotoRegistrar
   end
 
 
+  class TooSmall < Rejection; end
+
+  class PhotoExists < Rejection; end
+
+
   def initialize(options = {})
     @options = options
   end
@@ -65,7 +70,7 @@ class PhotoRegistrar
     file = Pathname.new(file) if file.instance_of?(String)
     width, height = image_size(file)
     if small_image?(width, height)
-      raise Rejection.new(
+      raise TooSmall.new(
         "Small photo: #{width}x#{height}",
         {
           :url  => photo_info[:url],
@@ -82,7 +87,7 @@ class PhotoRegistrar
     if photo
       url_posted = photo.url_posted?(photo_info[:url])
       if url_posted || !(@options[:force])
-        raise Rejection.new(
+        raise PhotoExists.new(
           "Already exist: #{md5}",
           {
             :url        => photo_info[:url],

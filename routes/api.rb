@@ -134,50 +134,46 @@ class SombreroAPI < Sinatra::Base
           }
         }
       end
-    rescue PhotoRegistrar::Rejection => e
-      message = e.message
-      case message
-      when /Small photo/
+    rescue PhotoRegistrar::TooSmall => e
+      data = {
+        "status" => "Rejected",
+        "reason" => "Small photo"
+      }
+    rescue PhotoRegistrar::PhotoExists => e
+      photo = e.details[:photo]
+      tags = if params[:add_tags]
+        photo.add_tags(params[:tags]).map{|t| t.name}
+      else
+        []
+      end
+      if tags.empty?
         data = {
           "status" => "Rejected",
-          "reason" => "Small photo"
+          "reason" => "Already exist",
+          "photo" => {
+            "id"       => photo.id,
+            "width"    => photo.width,
+            "height"   => photo.height,
+            "fileSize" => photo.filesize,
+            "md5"      => photo.md5,
+            "sha256"   => photo.sha256,
+            "fileName" => File.basename(photo.path)
+          }
         }
-      when /Already/
-        photo = e.details[:photo]
-        tags = if params[:add_tags]
-          photo.add_tags(params[:tags]).map{|t| t.name}
-        else
-          []
-        end
-        if tags.empty?
-          data = {
-            "status" => "Rejected",
-            "reason" => "Already exist",
-            "photo" => {
-              "id"       => photo.id,
-              "width"    => photo.width,
-              "height"   => photo.height,
-              "fileSize" => photo.filesize,
-              "md5"      => photo.md5,
-              "sha256"   => photo.sha256,
-              "fileName" => File.basename(photo.path)
-            }
+      else
+        data = {
+          "status" => "Added tags",
+          "photo" => {
+            "id"        => photo.id,
+            "width"     => photo.width,
+            "height"    => photo.height,
+            "fileSize"  => photo.filesize,
+            "md5"       => photo.md5,
+            "sha256"    => photo.sha256,
+            "fileName"  => File.basename(photo.path),
+            "addedTags" => tags
           }
-        else
-          data = {
-            "status" => "Added tags",
-            "photo" => {
-              "id"        => photo.id,
-              "width"     => photo.width,
-              "height"    => photo.height,
-              "fileSize"  => photo.filesize,
-              "md5"       => photo.md5,
-              "sha256"    => photo.sha256,
-              "fileName"  => File.basename(photo.path),
-              "addedTags" => tags
-            }
-          }
-        end
+        }
       end
     end
     content_type :json
@@ -206,51 +202,46 @@ class SombreroAPI < Sinatra::Base
           "fileName" => File.basename(photo.path)
         }
       }
-    rescue PhotoRegistrar::Rejection => e
-      message = e.message
-      case message
-      when /Small photo/
+    rescue PhotoRegistrar::TooSmall => e
+      data = {
+        "status" => "Rejected",
+        "reason" => "Small photo"
+      }
+    rescue PhotoRegistrar::PhotoExists => e
+      photo = e.details[:photo]
+      tags = if params[:add_tags]
+        photo.add_tags(params[:tags]).map{|t| t.name}
+      else
+        []
+      end
+      if tags.empty?
         data = {
           "status" => "Rejected",
-          "reason" => "Small photo"
+          "reason" => "Already exist",
+          "photo" => {
+            "id"       => photo.id,
+            "width"    => photo.width,
+            "height"   => photo.height,
+            "fileSize" => photo.filesize,
+            "md5"      => photo.md5,
+            "sha256"   => photo.sha256,
+            "fileName" => File.basename(photo.path)
+          }
         }
-      when /Already/
-        md5 = /\((.+)\)/.match(e.message)[1]
-        photo = Photo.find(:md5 => md5)
-        tags = if params[:add_tags]
-          photo.add_tags(params[:tags]).map{|t| t.name}
-        else
-          []
-        end
-        if tags.empty?
-          data = {
-            "status" => "Rejected",
-            "reason" => "Already exist",
-            "photo" => {
-              "id"       => photo.id,
-              "width"    => photo.width,
-              "height"   => photo.height,
-              "fileSize" => photo.filesize,
-              "md5"      => photo.md5,
-              "sha256"   => photo.sha256,
-              "fileName" => File.basename(photo.path)
-            }
+      else
+        data = {
+          "status" => "Added tags",
+          "photo" => {
+            "id"        => photo.id,
+            "width"     => photo.width,
+            "height"    => photo.height,
+            "fileSize"  => photo.filesize,
+            "md5"       => photo.md5,
+            "sha256"    => photo.sha256,
+            "fileName"  => File.basename(photo.path),
+            "addedTags" => tags
           }
-        else
-          data = {
-            "status" => "Added tags",
-            "photo" => {
-              "id"        => photo.id,
-              "width"     => photo.width,
-              "height"    => photo.height,
-              "fileSize"  => photo.filesize,
-              "md5"       => photo.md5,
-              "sha256"    => photo.sha256,
-              "fileName"  => File.basename(photo.path),
-              "addedTags" => tags
-            }
-          }
-        end
+        }
       end
     end
     content_type :json
