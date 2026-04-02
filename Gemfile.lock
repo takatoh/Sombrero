@@ -33,7 +33,7 @@ GEM
     public_suffix (6.0.2)
     puma (7.0.0)
       nio4r (~> 2.0)
-    rack (3.2.3)
+    rack (3.2.6)
     rack-protection (4.2.0)
       base64 (>= 0.1.0)
       logger (>= 1.6.0)
@@ -46,8 +46,6 @@ GEM
     rake (13.3.0)
     ruby2_keywords (0.0.5)
     sassc (2.4.0)
-      ffi (~> 1.9)
-    sassc (2.4.0-x64-mingw32)
       ffi (~> 1.9)
     sequel (5.96.0)
       bigdecimal
@@ -66,7 +64,7 @@ GEM
 
 PLATFORMS
   ruby
-  x64-mingw32
+  x64-mingw-ucrt
 
 DEPENDENCIES
   haml
