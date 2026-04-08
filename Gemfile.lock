@@ -38,7 +38,7 @@ GEM
       base64 (>= 0.1.0)
       logger (>= 1.6.0)
       rack (>= 3.0.0, < 4)
-    rack-session (2.1.1)
+    rack-session (2.1.2)
       base64 (>= 0.1.0)
       rack (>= 3.0.0)
     rackup (2.2.1)
@@ -46,8 +46,6 @@ GEM
     rake (13.3.0)
     ruby2_keywords (0.0.5)
     sassc (2.4.0)
-      ffi (~> 1.9)
-    sassc (2.4.0-x64-mingw32)
       ffi (~> 1.9)
     sequel (5.96.0)
       bigdecimal
@@ -66,7 +64,7 @@ GEM
 
 PLATFORMS
   ruby
-  x64-mingw32
+  x64-mingw-ucrt
 
 DEPENDENCIES
   haml
