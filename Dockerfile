@@ -1,8 +1,6 @@
-FROM ruby:3.4.5-slim-bookworm
+FROM ruby:3.4.9-slim-bookworm
 
-WORKDIR /app
-
-COPY ./ ./
+LABEL maintainer="takatoh"
 
 RUN apt-get update \
   && apt-get upgrade -y \
@@ -10,13 +8,22 @@ RUN apt-get update \
     build-essential \
     pkg-config \
     imagemagick \
-  && bundle install \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
+RUN groupadd -g 1000 sombrero \
+  && useradd -u 1000 -g sombrero -s /bin/bash sombrero
+USER sombrero
+
 ENV LANG=ja_JP.UTF-8
 
-RUN cp config.yaml.example config.yaml
+WORKDIR /app
+
+COPY ./Gemfile ./Gemfile.lock ./
+RUN bundle install
+COPY ./ ./
+
+COPY ./config.yaml.example ./config.yaml
 RUN bundle exec rake setup
 
 CMD [ "./start.sh" ]
