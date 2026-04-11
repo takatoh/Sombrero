@@ -18,8 +18,10 @@ USER sombrero
 ENV LANG=ja_JP.UTF-8
 
 WORKDIR /app
-COPY ./ ./
+
+COPY ./Gemfile ./Gemfile.lock ./
 RUN bundle install
+COPY ./ ./
 
 COPY ./config.yaml.example ./config.yaml
 RUN bundle exec rake setup
