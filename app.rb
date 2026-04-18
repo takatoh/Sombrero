@@ -19,6 +19,11 @@ class SombreroApp < Sinatra::Base
   enable :methodoverride
   enable :sessions
 
+  configure :production do
+    #set :host_authorization, { permitted_hosts: [".example.com"] }
+    set :host_authorization, { permitted_hosts: [] }
+  end
+
 
   # Static files
 
