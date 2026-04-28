@@ -21,9 +21,8 @@ WORKDIR /app
 
 COPY ./Gemfile ./Gemfile.lock ./
 RUN bundle install
-COPY ./ ./
 
-COPY ./config.yaml.example ./config.yaml
-RUN bundle exec rake setup
+#COPY ./config.yaml.example ./config.yaml
+#RUN bundle exec rake setup
 
 CMD [ "./start.sh" ]
