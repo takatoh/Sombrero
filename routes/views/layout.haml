@@ -8,17 +8,16 @@
       %link{:rel => "stylesheet", :type => "text/css", :href => "/#{style}.css"}
 
 
-  %body
-    %div#container
-      %div#header
-        %h1
-          %a{:href => "/"} #{SOMBRERO_CONFIG["site_title"]}
-        %div#menu
-          %ul
-            %li
-              %a{:href => "/clip/new"} Clip a photo
-            %li
-              %a{:href => "/post/new"} Post a photo
+  %body{class: "flex justify-center bg-olive-100 text-slate-700"}
+    %div{id: "container", class: "w-[900px]"}
+      %div{id: "header", class: "h-24 mt-8 px-4 bg-olive-300 border-2 rounded-xl content-center grid grid-cols-10 gap-1"}
+        %div{class: "col-span-8"}
+          %h1.text-3xl
+            %a{:href => "/"} #{SOMBRERO_CONFIG["site_title"]}
+        %div{class: "h-8 w-20 bg-olive-600 rounded-full text-slate-300 flex justify-center items-center"}
+          %a{:href => "/clip/new"} Clip
+        %div{class: "h-8 w-20 bg-olive-600 rounded-full text-slate-300 flex justify-center items-center"}
+          %a{:href => "/post/new"} Post
       %div#menuBar
         %ul
           %li
