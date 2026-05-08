@@ -1,4 +1,4 @@
-FROM ruby:3.4.9-slim-bookworm
+FROM ruby:3.4.9-slim-trixie
 
 LABEL maintainer="takatoh"
 
@@ -8,11 +8,13 @@ RUN apt-get update \
     build-essential \
     pkg-config \
     imagemagick \
+    nodejs \
+    npm \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
 RUN groupadd -g 1000 sombrero \
-  && useradd -u 1000 -g sombrero -s /bin/bash sombrero
+  && useradd -u 1000 -g sombrero -s /bin/bash -m sombrero
 USER sombrero
 
 ENV LANG=ja_JP.UTF-8
