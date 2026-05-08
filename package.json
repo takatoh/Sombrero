@@ -19,5 +19,9 @@
   "bugs": {
     "url": "https://github.com/takatoh/Sombrero/issues"
   },
-  "homepage": "https://github.com/takatoh/Sombrero#readme"
+  "homepage": "https://github.com/takatoh/Sombrero#readme",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.0",
+    "tailwindcss": "^4.3.0"
+  }
 }
