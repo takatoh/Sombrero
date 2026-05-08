@@ -12,3 +12,5 @@ Dockerfile
 docker-env
 
 *.md
+
+node_modules
