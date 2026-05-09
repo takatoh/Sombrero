@@ -21,28 +21,30 @@
 
     %div#tagList
       %table
-        %tr
-          %th.tagName
-            Tag name
-          %th.tagType
-            Tag type
-          %th.tagDescription
-            Description
-          %th.tagAliasFor
-            Alias for
-          %th.tagEdit
-        - @tags.each do |tag|
+        %thead
           %tr
-            %td
-              = h tag.name
-            %td
-              = h(tag.tag_type ? tag.tag_type.name : "")
-            %td
-              = h tag.description
-            %td
-              = h tag.alias_for || ""
-            %td
-              %a{:href => "/tags/edit/#{tag.id}"} (edit)
+            %th.tagName
+              Tag name
+            %th.tagType
+              Tag type
+            %th.tagDescription
+              Description
+            %th.tagAliasFor
+              Alias for
+            %th.tagEdit
+        %tbody
+          - @tags.each do |tag|
+            %tr
+              %td
+                = h tag.name
+              %td
+                = h(tag.tag_type ? tag.tag_type.name : "")
+              %td
+                = h tag.description
+              %td
+                = h tag.alias_for || ""
+              %td
+                %a{:href => "/tags/edit/#{tag.id}"} (edit)
 
     %div{class: "pageNavi flex flex-row justify-center gap-2"}
       - unless @page.first_page?
