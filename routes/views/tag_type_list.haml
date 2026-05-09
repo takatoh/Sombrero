@@ -10,7 +10,9 @@
     %h2{class: "text-2xl"}
       Tag types
 
-    %a{:href => "/tagtypes/new"} Add new tag type.
+    %div{class: "flex flex-row justify-end"}
+      %div{class: "w-40 bg-olive-600 rounded-full text-slate-300 flex justify-center items-center"}
+        %a{:href => "/tagtypes/new"} Add new tag type
 
     %div{class: "pageNavi flex flex-row justify-center gap-2"}
       - unless @page.first_page?
