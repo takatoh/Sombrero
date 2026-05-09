@@ -11,9 +11,9 @@
 
   %div#photoList{class: "grid grid-cols-4"}
     - @photos.each do |photo|
-      %div.photoBox
+      %div{class: "photoBox w-[170px] h-[170px] border border-solid rounded-md border-olive-500 bg-white flex justify-center items-center"}
         %a{:href => '/photo/' + photo.id.to_s}
-          %img.thumbnail{:src => '/images/' + photo.thumbnail_path}
+          %img.thumbnail{:src => '/images/' + photo.thumbnail_path, :class => "border border-solid border-gray-200"}
 
   %div.pageNavi
     %div{class: "flex flex-row justify-center gap-2"}
