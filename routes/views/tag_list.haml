@@ -19,31 +19,31 @@
         %span
           %a{:href => "/tags/#{@page.next_page}"} Next &#187;
 
-    %div#tagList
-      %table
+    %div{id: "tagList", class: "py-2"}
+      %table{class: "table-fixed border-collapse border-t-2 border-b-2 border-olive-400"}
         %thead
-          %tr
-            %th.tagName
+          %tr{class: "border-b-2 border-olive-400 bg-slate-200"}
+            %th{class: "tagName w-36"}
               Tag name
-            %th.tagType
+            %th{class: "tagType w-24"}
               Tag type
-            %th.tagDescription
+            %th{class: "tagDescription w-66"}
               Description
-            %th.tagAliasFor
+            %th{class: "tagAliasFor w-36"}
               Alias for
-            %th.tagEdit
+            %th{class: "tagEdit w-16"}
         %tbody
           - @tags.each do |tag|
-            %tr
-              %td
+            %tr{class: "border-b border-olive-400 bg-white"}
+              %td{class: "px-2"}
                 = h tag.name
-              %td
+              %td{class: "px-2"}
                 = h(tag.tag_type ? tag.tag_type.name : "")
-              %td
+              %td{class: "px-2"}
                 = h tag.description
-              %td
+              %td{class: "px-2"}
                 = h tag.alias_for || ""
-              %td
+              %td{class: "px-2"}
                 %a{:href => "/tags/edit/#{tag.id}"} (edit)
 
     %div{class: "pageNavi flex flex-row justify-center gap-2"}
