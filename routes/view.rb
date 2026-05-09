@@ -267,21 +267,21 @@ class SombreroView < Sinatra::Base
   get "/tags/:page" do
     @page = ::Tag.order(:name).extension(:pagination).paginate(params[:page].to_i, 25)
     @tags = @page.all
-    @styles = %w( css/style css/tag_list )
+    @styles = %w( css/style )
     session["page"] = params[:page]
     haml :tag_list
   end
 
   get "/tags/edit/:id" do
     @tag = ::Tag.find(:id => params[:id])
-    @styles = %w( css/style css/tag_list )
+    @styles = %w( css/style )
     @tag_type_name = if @tag.tag_type then @tag.tag_type.name else "" end
     haml :tag_edit
   end
 
   put "/tags/edit/:id" do
     @tag = ::Tag.find(:id => params[:id])
-    @styles = %w( css/style css/tag_list )
+    @styles = %w( css/style )
     @tag.name = params[:name]
     @tag.description = params[:description]
     unless params[:tagtype].empty?
