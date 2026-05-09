@@ -93,7 +93,7 @@ class SombreroView < Sinatra::Base
   end
 
   post "/clip" do
-    @styles = %w( css/style css/mini_photo )
+    @styles = %w( css/style )
     registrar = PhotoRegistrar.new( :force => params[:force] )
     registrar.clip(
       {
@@ -130,7 +130,7 @@ class SombreroView < Sinatra::Base
   end
 
   post "/post" do
-    @styles = %w( css/style css/mini_photo )
+    @styles = %w( css/style )
     if params[:file]
       new_filename = params[:file][:filename]
       save_file = "./tmp/" + new_filename
