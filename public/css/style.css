@@ -7,6 +7,7 @@
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
+    --color-slate-100: oklch(96.8% 0.007 247.896);
     --color-slate-300: oklch(86.9% 0.022 252.894);
     --color-slate-700: oklch(37.2% 0.044 257.287);
     --color-olive-100: oklch(96.6% 0.005 106.5);
@@ -15,6 +16,7 @@
     --spacing: 0.25rem;
     --text-3xl: 1.875rem;
     --text-3xl--line-height: calc(2.25 / 1.875);
+    --radius-sm: 0.25rem;
     --radius-xl: 0.75rem;
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
@@ -220,6 +222,9 @@
   .w-\[900px\] {
     width: 900px;
   }
+  .basis-24 {
+    flex-basis: calc(var(--spacing) * 24);
+  }
   .border-collapse {
     border-collapse: collapse;
   }
@@ -228,6 +233,9 @@
   }
   .grid-cols-10 {
     grid-template-columns: repeat(10, minmax(0, 1fr));
+  }
+  .flex-row {
+    flex-direction: row;
   }
   .content-center {
     align-content: center;
@@ -241,13 +249,23 @@
   .gap-1 {
     gap: calc(var(--spacing) * 1);
   }
+  .gap-12 {
+    gap: calc(var(--spacing) * 12);
+  }
   .rounded-full {
     border-radius: calc(infinity * 1px);
+  }
+  .rounded-sm {
+    border-radius: var(--radius-sm);
   }
   .rounded-xl {
     border-radius: var(--radius-xl);
   }
   .border {
+    border-style: var(--tw-border-style);
+    border-width: 1px;
+  }
+  .border-1 {
     border-style: var(--tw-border-style);
     border-width: 1px;
   }
@@ -264,8 +282,17 @@
   .bg-olive-600 {
     background-color: var(--color-olive-600);
   }
+  .bg-slate-100 {
+    background-color: var(--color-slate-100);
+  }
   .px-4 {
     padding-inline: calc(var(--spacing) * 4);
+  }
+  .py-4 {
+    padding-block: calc(var(--spacing) * 4);
+  }
+  .text-center {
+    text-align: center;
   }
   .text-3xl {
     font-size: var(--text-3xl);

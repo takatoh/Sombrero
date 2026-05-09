@@ -18,18 +18,17 @@
           %a{:href => "/clip/new"} Clip
         %div{class: "h-8 w-20 bg-olive-600 rounded-full text-slate-300 flex justify-center items-center"}
           %a{:href => "/post/new"} Post
-      %div#menuBar
-        %ul
-          %li
-            %a{:href => "/recent/1"} Recent
-          %li
-            %a{:href => "/list/1"} List
-          %li
-            Gallery
-          %li
-            Directory
-          %li
-            %a{:href => "/tags/1"} Setting
+      %div{id: "menuBar", class: "py-4 flex flex-row justify-center gap-12"}
+        %div{class: "basis-24 bg-slate-100 border-1 rounded-sm text-center"}
+          %a{:href => "/recent/1"} Recent
+        %div{class: "basis-24 bg-slate-100 border-1 rounded-sm text-center"}
+          %a{:href => "/list/1"} List
+        %div{class: "basis-24 bg-slate-100 border-1 rounded-sm text-center"}
+          Gallery
+        %div{class: "basis-24 bg-slate-100 border-1 rounded-sm text-center"}
+          Directory
+        %div{class: "basis-24 bg-slate-100 border-1 rounded-sm text-center"}
+          %a{:href => "/tags/1"} Setting
       %div#content
         != yield
       %div#footer
