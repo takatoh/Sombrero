@@ -7,9 +7,10 @@
         %a{:href => "/tagtypes/1"} Tag types
 
   %div#main
-    %h2 Tags
+    %h2{class: "text-2xl"}
+      Tags
 
-    %div.pageNavi
+    %div{class: "pageNavi flex flex-row justify-center gap-2"}
       - unless @page.first_page?
         %span
           %a{:href => "/tags/#{@page.prev_page}"} &#171; Prev
@@ -43,7 +44,7 @@
             %td
               %a{:href => "/tags/edit/#{tag.id}"} (edit)
 
-    %div.pageNavi
+    %div{class: "pageNavi flex flex-row justify-center gap-2"}
       - unless @page.first_page?
         %span
           %a{:href => "/tags/#{@page.prev_page}"} &#171; Prev
