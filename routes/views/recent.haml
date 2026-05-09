@@ -16,9 +16,9 @@
           %div{class: "postId col-span-6 font-bold"}
             = h('#' + post.id.to_s)
           %div{class: "control"}
-            %a{ :href => ('/post/' + post.id.to_s + '.edit'), :onclick => "return hs.htmlExpand(this, { objectType: 'ajax', width: 500, height: 300 } )" } edit
+            %a{ :href => ('/post/' + post.id.to_s + '.edit'), :onclick => "return hs.htmlExpand(this, { objectType: 'ajax', width: 500, height: 300 } )", :class => "hover:underline" } edit
           %div.control
-            %a{ :href => ('/post/' + post.id.to_s + '.delete') } delete
+            %a{ :href => ('/post/' + post.id.to_s + '.delete'), :class => "hover:underline" } delete
         %div{class: "flex flex-row gap-2"}
           %div{class: "thumbnailBox p-2 min-w-[160px] min-h-[16]px flex justify-center"}
             %a{:href => '/images/' + post.photo.path, :target => '_blank', :rel => 'noopener noreferrer'}
@@ -32,15 +32,15 @@
               %dt{class: "w-[15%]"}
                 Source:
               %dd{class: "w-[85%]"}
-                %a{:href => post.url}= post.url
+                %a{:href => post.url, class: "hover:underline"}= post.url
               %dt{class: "w-[15%]"}
                 Webpage:
               %dd{class: "w-[85%]"}
-                %a{:href => post.page_url}= post.page_url
+                %a{:href => post.page_url, class: "hover:underline"}= post.page_url
               %dt{class: "w-[15%]"}
                 Photo Id:
               %dd{class: "w-[85%]"}
-                %a{:href => "/photo/#{post.photo.id.to_s}"}= h post.photo.id
+                %a{:href => "/photo/#{post.photo.id.to_s}", class: "hover:underline"}= h post.photo.id
               %dt{class: "w-[15%]"}
                 Size:
               %dd{class: "w-[85%]"}
