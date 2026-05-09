@@ -33,10 +33,10 @@
           %ul
             - @posts.each do |post|
               %li
-                %a{:href => post.url}= post.url
+                %a{:href => post.url, :class => "hover:underline"}= post.url
                 - unless post.page_url.nil? || post.page_url.empty?
                   [
-                  %a{:href => post.page_url}= hostname(post.page_url)
+                  %a{:href => post.page_url, :class => "hover:underline"}= hostname(post.page_url)
                   ]
                 = " (#{post.date})"
         %dt{class: "w-[15%] font-bold text-right"}
@@ -46,7 +46,7 @@
             - @tags.sort_by{|t| t.name.to_s}.each do |tag|
               %li
                 = h tag.name
-          %a#editLink
+          %a#editLink{class: "hover:underline"}
             = "(Edit)"
           %form#updateTags{ :class => "hidden", :action => "/photo/update-tags", :method => "POST", :enctype => "multipart/form-data" }
             %input#tags{ :type => "text", :name => "tags", :size => "80", :value => "#{@tags.map{|t| t.name}.join(' ')}"}
