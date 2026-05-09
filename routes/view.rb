@@ -58,7 +58,7 @@ class SombreroView < Sinatra::Base
   get "/list/:page" do
     @page = ::Photo.reverse_order(:id).extension(:pagination).paginate(params[:page].to_i, 20)
     @photos = @page.all
-    @styles = %w( css/style css/list )
+    @styles = %w( css/style )
     @pg = params[:page]
     session["page"] = params[:page]
     haml :list
@@ -78,7 +78,7 @@ class SombreroView < Sinatra::Base
     h = m[2].to_i
     @page = ::Photo.filter(:width => w, :height => h).reverse_order(:id).extension(:pagination).paginate(params[:page].to_i, 20)
     @photos = @page.all
-    @styles = %w( css/style css/list )
+    @styles = %w( css/style )
     @pg = params[:page]
     session["page"] = params[:page]
     haml :wallpapers
