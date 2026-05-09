@@ -7,11 +7,12 @@
         %a{:href => "/tagtypes/1"} Tag types
 
   %div#main
-    %h2 Tag types
+    %h2{class: "text-2xl"}
+      Tag types
 
     %a{:href => "/tagtypes/new"} Add new tag type.
 
-    %div.pageNavi
+    %div{class: "pageNavi flex flex-row justify-center gap-2"}
       - unless @page.first_page?
         %span
           %a{:href => "/tagtypes/#{@page.prev_page}"} &#171; Prev
@@ -37,7 +38,7 @@
             %td
               %a{:href => "/tagtypes/edit/#{tagtype.id}"} (edit)
 
-    %div.pageNavi
+    %div{class: "pageNavi flex flex-row justify-center gap-2"}
       - unless @page.first_page?
         %span
           %a{:href => "/tagtypes/#{@page.prev_page}"} &#171; Prev
