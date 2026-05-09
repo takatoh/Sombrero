@@ -296,6 +296,9 @@
   .gap-12 {
     gap: calc(var(--spacing) * 12);
   }
+  .gap-y-4 {
+    row-gap: calc(var(--spacing) * 4);
+  }
   .rounded-full {
     border-radius: calc(infinity * 1px);
   }
