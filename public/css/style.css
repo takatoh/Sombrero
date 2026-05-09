@@ -264,6 +264,9 @@
   .border-collapse {
     border-collapse: collapse;
   }
+  .border-separate {
+    border-collapse: separate;
+  }
   .resize {
     resize: both;
   }
