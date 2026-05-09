@@ -9,11 +9,12 @@
         %span
           %a{:href => "/list/#{@page.next_page}"} Next &#187;
 
-  %div#photoList{class: "py-4 grid grid-cols-4 gap-y-4"}
-    - @photos.each do |photo|
-      %div{class: "photoBox w-[170px] h-[170px] border border-solid rounded-md border-olive-500 bg-white flex justify-center items-center"}
-        %a{:href => '/photo/' + photo.id.to_s}
-          %img.thumbnail{:src => '/images/' + photo.thumbnail_path, :class => "border border-solid border-gray-200"}
+  %div#photoList{class: "flex justify-center"}
+    %div{class: "py-4 grid grid-cols-4 gap-x-8 gap-y-4"}
+      - @photos.each do |photo|
+        %div{class: "photoBox w-[170px] h-[170px] border border-solid rounded-md border-olive-500 bg-white flex justify-center items-center"}
+          %a{:href => '/photo/' + photo.id.to_s}
+            %img.thumbnail{:src => '/images/' + photo.thumbnail_path, :class => "border border-solid border-gray-200"}
 
   %div.pageNavi
     %div{class: "flex flex-row justify-center gap-2"}
