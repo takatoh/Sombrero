@@ -229,7 +229,7 @@ class SombreroView < Sinatra::Base
       @photo.put_ext(extname)
     end
     @tags = @photo.taggings.map{|t| t.tag}
-    @styles = %w( css/style css/photo )
+    @styles = %w( css/style )
     @photo.calc_sha256
     haml :photo
   end
@@ -238,7 +238,7 @@ class SombreroView < Sinatra::Base
     @photo = Photo.find(:md5 => params[:md5])
     @posts = @photo.posts
     @tags = @photo.taggings.map{|t| t.tag}
-    @styles = %w( css/style css/photo )
+    @styles = %w( css/style )
     @photo.calc_sha256
     haml :photo
   end
@@ -247,7 +247,7 @@ class SombreroView < Sinatra::Base
     @photo = Photo.find(:sha256 => params[:sha256])
     @posts = @photo.posts
     @tags = @photo.taggings.map{|t| t.tag}
-    @styles = %w( css/style css/photo )
+    @styles = %w( css/style )
     haml :photo
   end
 
@@ -257,7 +257,7 @@ class SombreroView < Sinatra::Base
     @photo = Photo.find(:thumbnail_path => thumb_path)
     @posts = @photo.posts
     @tags = @photo.taggings.map{|t| t.tag}
-    @styles = %w( css/style css/photo )
+    @styles = %w( css/style )
     haml :photo
   end
 
