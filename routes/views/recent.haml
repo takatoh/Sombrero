@@ -1,12 +1,13 @@
 %div#main
   %div.pageNavi
-    - unless @page.first_page?
-      %span
-        %a{:href => "/recent/#{@page.prev_page}"} &#171; Prev
-    %span= "[ #{@page.current_page} / #{@page.page_count} ]"
-    - unless @page.last_page?
-      %span
-        %a{:href => "/recent/#{@page.next_page}"} Next &#187;
+    %div{class: "flex flex-row justify-center gap-2"}
+      - unless @page.first_page?
+        %span
+          %a{:href => "/recent/#{@page.prev_page}"} &#171; Prev
+      %span= "[ #{@page.current_page} / #{@page.page_count} ]"
+      - unless @page.last_page?
+        %span
+          %a{:href => "/recent/#{@page.next_page}"} Next &#187;
 
   %div#recentList
     - @posts.each do |post|
@@ -66,10 +67,11 @@
                 = h post.datetime
 
   %div.pageNavi
-    - unless @page.first_page?
-      %span
-        %a{:href => "/recent/#{@page.prev_page}"} &#171; Prev
-    %span= "[ #{@page.current_page} / #{@page.page_count} ]"
-    - unless @page.last_page?
-      %span
-        %a{:href => "/recent/#{@page.next_page}"} Next &#187;
+    %div{class: "flex flex-row justify-center gap-2"}
+      - unless @page.first_page?
+        %span
+          %a{:href => "/recent/#{@page.prev_page}"} &#171; Prev
+      %span= "[ #{@page.current_page} / #{@page.page_count} ]"
+      - unless @page.last_page?
+        %span
+          %a{:href => "/recent/#{@page.next_page}"} Next &#187;
