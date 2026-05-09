@@ -42,7 +42,7 @@ class SombreroView < Sinatra::Base
   get "/recent/:page" do
     @page = ::Post.reverse_order(:id).extension(:pagination).paginate(params[:page].to_i, 10)
     @posts = @page.all
-    @styles = %w( css/base css/recent )
+    @styles = %w( css/style )
     @pg = params[:page]
     session["page"] = params[:page]
     haml :recent
@@ -58,7 +58,7 @@ class SombreroView < Sinatra::Base
   get "/list/:page" do
     @page = ::Photo.reverse_order(:id).extension(:pagination).paginate(params[:page].to_i, 20)
     @photos = @page.all
-    @styles = %w( css/base css/list )
+    @styles = %w( css/style )
     @pg = params[:page]
     session["page"] = params[:page]
     haml :list
@@ -78,7 +78,7 @@ class SombreroView < Sinatra::Base
     h = m[2].to_i
     @page = ::Photo.filter(:width => w, :height => h).reverse_order(:id).extension(:pagination).paginate(params[:page].to_i, 20)
     @photos = @page.all
-    @styles = %w( css/base css/list )
+    @styles = %w( css/style )
     @pg = params[:page]
     session["page"] = params[:page]
     haml :wallpapers
@@ -88,12 +88,12 @@ class SombreroView < Sinatra::Base
   # Clip a new photo.
 
   get "/clip/new" do
-    @styles = %w( css/base )
+    @styles = %w( css/style )
     haml :newclip
   end
 
   post "/clip" do
-    @styles = %w( css/base css/mini_photo )
+    @styles = %w( css/style )
     registrar = PhotoRegistrar.new( :force => params[:force] )
     registrar.clip(
       {
@@ -125,12 +125,12 @@ class SombreroView < Sinatra::Base
   # Post a new photo.
 
   get "/post/new" do
-    @styles = %w( css/base )
+    @styles = %w( css/style )
     haml :newpost
   end
 
   post "/post" do
-    @styles = %w( css/base css/mini_photo )
+    @styles = %w( css/style )
     if params[:file]
       new_filename = params[:file][:filename]
       save_file = "./tmp/" + new_filename
@@ -168,7 +168,7 @@ class SombreroView < Sinatra::Base
 
   post "/photo/:id.edit" do
     @post = Post.find(:id => params[:id])
-    @styles = %w( css/base )
+    @styles = %w( css/style )
     haml :editphoto, :layout => false
   end
 
@@ -197,7 +197,7 @@ class SombreroView < Sinatra::Base
 
   post "/post/:id.edit" do
     @post = Post.find(:id => params[:id])
-    @styles = %w( css/base )
+    @styles = %w( css/style )
     haml :editpost, :layout => false
   end
 
@@ -229,7 +229,7 @@ class SombreroView < Sinatra::Base
       @photo.put_ext(extname)
     end
     @tags = @photo.taggings.map{|t| t.tag}
-    @styles = %w( css/base css/photo )
+    @styles = %w( css/style )
     @photo.calc_sha256
     haml :photo
   end
@@ -238,7 +238,7 @@ class SombreroView < Sinatra::Base
     @photo = Photo.find(:md5 => params[:md5])
     @posts = @photo.posts
     @tags = @photo.taggings.map{|t| t.tag}
-    @styles = %w( css/base css/photo )
+    @styles = %w( css/style )
     @photo.calc_sha256
     haml :photo
   end
@@ -247,7 +247,7 @@ class SombreroView < Sinatra::Base
     @photo = Photo.find(:sha256 => params[:sha256])
     @posts = @photo.posts
     @tags = @photo.taggings.map{|t| t.tag}
-    @styles = %w( css/base css/photo )
+    @styles = %w( css/style )
     haml :photo
   end
 
@@ -257,7 +257,7 @@ class SombreroView < Sinatra::Base
     @photo = Photo.find(:thumbnail_path => thumb_path)
     @posts = @photo.posts
     @tags = @photo.taggings.map{|t| t.tag}
-    @styles = %w( css/base css/photo )
+    @styles = %w( css/style )
     haml :photo
   end
 
@@ -267,21 +267,21 @@ class SombreroView < Sinatra::Base
   get "/tags/:page" do
     @page = ::Tag.order(:name).extension(:pagination).paginate(params[:page].to_i, 25)
     @tags = @page.all
-    @styles = %w( css/base css/tag_list )
+    @styles = %w( css/style css/tag_list )
     session["page"] = params[:page]
     haml :tag_list
   end
 
   get "/tags/edit/:id" do
     @tag = ::Tag.find(:id => params[:id])
-    @styles = %w( css/base css/tag_list )
+    @styles = %w( css/style css/tag_list )
     @tag_type_name = if @tag.tag_type then @tag.tag_type.name else "" end
     haml :tag_edit
   end
 
   put "/tags/edit/:id" do
     @tag = ::Tag.find(:id => params[:id])
-    @styles = %w( css/base css/tag_list )
+    @styles = %w( css/style css/tag_list )
     @tag.name = params[:name]
     @tag.description = params[:description]
     unless params[:tagtype].empty?
@@ -296,12 +296,12 @@ class SombreroView < Sinatra::Base
   # Listing tag types.
 
   get "/tagtypes/new" do
-    @styles = %w( css/base css/tag_type_list )
+    @styles = %w( css/style css/tag_type_list )
     haml :tag_type_new
   end
 
   post "/tagtypes/new" do
-    @styles = %w( css/base css/tag_type_list )
+    @styles = %w( css/style css/tag_type_list )
     ::TagType.create(:name => params[:name], :description => params[:description])
     redirect "/tagtypes/1"
   end
@@ -309,20 +309,20 @@ class SombreroView < Sinatra::Base
   get "/tagtypes/:page" do
     @page = ::TagType.order_by(:id).extension(:pagination).paginate(params[:page].to_i, 25)
     @tagtypes = @page.all
-    @styles = %w( css/base css/tag_type_list)
+    @styles = %w( css/style css/tag_type_list)
     session["page"] = params[:page]
     haml :tag_type_list
   end
 
   get "/tagtypes/edit/:id" do
     @tag_type = ::TagType.find(:id => params[:id])
-    @styles = %w( css/base css/tag_type_list )
+    @styles = %w( css/style css/tag_type_list )
     haml :tag_type_edit
   end
 
   put "/tagtypes/edit/:id" do
     @tag_type = ::TagType.find(:id => params[:id])
-    @styles = %w( css/base css/tag_type_list )
+    @styles = %w( css/style css/tag_type_list )
     @tag_type.name = params[:name]
     @tag_type.description = params[:description]
     @tag_type.save

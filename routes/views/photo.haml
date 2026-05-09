@@ -1,60 +1,54 @@
 %div#main
-  %div#photo
+  %div{id: "photo", class: "flex justify-center"}
     %a{:href => '/images/' + @photo.path, :target => '_blank', :rel => "noopener noreferrer"}
       %img{:src => '/images/' + @photo.sample_path}
-  %div#photoInfo
-    %table
-      %tr
-        %th
+  %div{id: "photoInfo", class: "pt-4 flex justify-center"}
+    %div{class: "w-[80%]"}
+      %dl{class: "flex flex-wrap"}
+        %dt{class: "w-[15%] font-bold text-right"}
           Photo Id:
-        %td
+        %dd{class: "w-[85%] ps-3"}
           = h @photo.id.to_s
-      %tr
-        %th
+        %dt{class: "w-[15%] font-bold text-right"}
           Size:
-        %td
+        %dd{class: "w-[85%] ps-3"}
           = h(@photo.width.to_s + "x" + @photo.height.to_s)
           pixels
-      %tr
-        %th
+        %dt{class: "w-[15%] font-bold text-right"}
           File size:
-        %td
+        %dd{class: "w-[85%] ps-3"}
           = h @photo.filesize
           bytes
-      %tr
-        %th
+        %dt{class: "w-[15%] font-bold text-right"}
           MD5:
-        %td
+        %dd{class: "w-[85%] ps-3"}
           = h @photo.md5
-      %tr
-        %th
+        %dt{class: "w-[15%] font-bold text-right"}
           SHA256:
-        %td
+        %dd{class: "w-[85%] ps-3"}
           = h @photo.sha256
-      %tr
-        %th
+        %dt{class: "w-[15%] font-bold text-right"}
           Sources:
-        %td
+        %dd{class: "w-[85%] ps-3"}
           %ul
             - @posts.each do |post|
               %li
-                %a{:href => post.url}= post.url
+                %a{:href => post.url, :class => "hover:underline"}= post.url
                 - unless post.page_url.nil? || post.page_url.empty?
                   [
-                  %a{:href => post.page_url}= hostname(post.page_url)
+                  %a{:href => post.page_url, :class => "hover:underline"}= hostname(post.page_url)
                   ]
                 = " (#{post.date})"
-      %tr
-        %th
+        %dt{class: "w-[15%] font-bold text-right"}
           Tags:
-        %td
+        %dd{class: "w-[85%] ps-3"}
           %ul#tagList
             - @tags.sort_by{|t| t.name.to_s}.each do |tag|
               %li
                 = h tag.name
-          %a#editLink
+          %a#editLink{class: "hover:underline"}
             = "(Edit)"
-          %form#updateTags{ :action => "/photo/update-tags", :method => "POST", :enctype => "multipart/form-data" }
+          %form#updateTags{ :class => "hidden", :action => "/photo/update-tags", :method => "POST", :enctype => "multipart/form-data" }
             %input#tags{ :type => "text", :name => "tags", :size => "80", :value => "#{@tags.map{|t| t.name}.join(' ')}"}
             %input{ :type => "hidden", :name => "id", :value => "#{@photo.id}"}
             %input{ :type => "submit", :value => "Update"}

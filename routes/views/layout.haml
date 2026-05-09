@@ -8,30 +8,29 @@
       %link{:rel => "stylesheet", :type => "text/css", :href => "/#{style}.css"}
 
 
-  %body
-    %div#container
-      %div#header
-        %h1
-          %a{:href => "/"} #{SOMBRERO_CONFIG["site_title"]}
-        %div#menu
-          %ul
-            %li
-              %a{:href => "/clip/new"} Clip a photo
-            %li
-              %a{:href => "/post/new"} Post a photo
-      %div#menuBar
-        %ul
-          %li
-            %a{:href => "/recent/1"} Recent
-          %li
-            %a{:href => "/list/1"} List
-          %li
-            Gallery
-          %li
-            Directory
-          %li
-            %a{:href => "/tags/1"} Setting
-      %div#content
+  %body{class: "flex justify-center bg-olive-100 text-slate-700"}
+    %div{id: "container", class: "w-[900px]"}
+      %div{id: "header", class: "h-24 mt-8 px-4 bg-olive-300 border-2 rounded-xl content-center grid grid-cols-10 gap-1"}
+        %div{class: "col-span-8"}
+          %h1.text-3xl
+            %a{:href => "/"} #{SOMBRERO_CONFIG["site_title"]}
+        %div{class: "h-8 w-20 bg-olive-600 rounded-full text-slate-300 flex justify-center items-center"}
+          %a{:href => "/clip/new"} Clip
+        %div{class: "h-8 w-20 bg-olive-600 rounded-full text-slate-300 flex justify-center items-center"}
+          %a{:href => "/post/new"} Post
+      %div{id: "menuBar", class: "py-4 flex flex-row justify-center gap-12"}
+        %div{class: "basis-24 bg-slate-100 border-1 rounded-sm text-center"}
+          %a{:href => "/recent/1"} Recent
+        %div{class: "basis-24 bg-slate-100 border-1 rounded-sm text-center"}
+          %a{:href => "/list/1"} List
+        %div{class: "basis-24 bg-slate-100 border-1 rounded-sm text-center"}
+          Gallery
+        %div{class: "basis-24 bg-slate-100 border-1 rounded-sm text-center"}
+          Directory
+        %div{class: "basis-24 bg-slate-100 border-1 rounded-sm text-center"}
+          %a{:href => "/tags/1"} Setting
+      %div{id: "content", class: "pb-4"}
         != yield
-      %div#footer
-        = "Sombrero v#{SOMBRERO_VERSION}"
+      %div{id: "footer", class: "h-24 p-4 flex justify-center border-t-1 border-olive-400"}
+        %span{class: "text-sm"}
+          = "Sombrero v#{SOMBRERO_VERSION}"

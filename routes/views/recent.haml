@@ -1,81 +1,77 @@
 %div#main
   %div.pageNavi
-    - unless @page.first_page?
-      %span
-        %a{:href => "/recent/#{@page.prev_page}"} &#171; Prev
-    %span= "[ #{@page.current_page} / #{@page.page_count} ]"
-    - unless @page.last_page?
-      %span
-        %a{:href => "/recent/#{@page.next_page}"} Next &#187;
+    %div{class: "flex flex-row justify-center gap-2"}
+      - unless @page.first_page?
+        %span
+          %a{:href => "/recent/#{@page.prev_page}"} &#171; Prev
+      %span= "[ #{@page.current_page} / #{@page.page_count} ]"
+      - unless @page.last_page?
+        %span
+          %a{:href => "/recent/#{@page.next_page}"} Next &#187;
 
   %div#recentList
     - @posts.each do |post|
-      %div.recentPhoto
-        %div.postId
-          = h('#' + post.id.to_s)
-        %div.thumbnailBox
-          %a{:href => '/images/' + post.photo.path, :target => '_blank', :rel => 'noopener noreferrer'}
-            %img{:src => '/images/' + post.photo.thumbnail_path}
-        %div.control
-          %ul
-            %li
-              %a{ :href => ('/post/' + post.id.to_s + '.edit'), :onclick => "return hs.htmlExpand(this, { objectType: 'ajax', width: 500, height: 300 } )" } edit
-            %li
-              %a{ :href => ('/post/' + post.id.to_s + '.delete') } delete
-        %div.photoTitle= (post.title.nil? || post.title.empty?) ? "(untitled)" : post.title
-        %div.photoInfo
-          %table
-            %tr
-              %th
+      %div{class: "recentPhoto border border-solid border-olive-500 rounded-md bg-white m-2 p-2 min-width-[170px]"}
+        %div{class: "grid grid-cols-8 border-b-1 border-gray-200"}
+          %div{class: "postId col-span-6 font-bold"}
+            = h('#' + post.id.to_s)
+          %div{class: "control"}
+            %a{ :href => ('/post/' + post.id.to_s + '.edit'), :onclick => "return hs.htmlExpand(this, { objectType: 'ajax', width: 500, height: 300 } )", :class => "hover:underline" } edit
+          %div.control
+            %a{ :href => ('/post/' + post.id.to_s + '.delete'), :class => "hover:underline" } delete
+        %div{class: "flex flex-row gap-2"}
+          %div{class: "thumbnailBox p-2 min-w-[160px] min-h-[16]px flex justify-center"}
+            %a{:href => '/images/' + post.photo.path, :target => '_blank', :rel => 'noopener noreferrer'}
+              %img{src: '/images/' + post.photo.thumbnail_path, class: "border border-solid border-gray-200"}
+          %div{class: "photoInfo p-1"}
+            %dl{class: "flex flex-wrap"}
+              %dt{class: "w-[15%]"}
+                Tile:
+              %dd{class: "w-[85%]"}
+                = (post.title.nil? || post.title.empty?) ? "(untitled)" : post.title
+              %dt{class: "w-[15%]"}
                 Source:
-              %td
-                %a{:href => post.url}= post.url
-            %tr
-              %th
+              %dd{class: "w-[85%]"}
+                %a{:href => post.url, class: "hover:underline"}= post.url
+              %dt{class: "w-[15%]"}
                 Webpage:
-              %td
-                %a{:href => post.page_url}= post.page_url
-            %tr
-              %th
+              %dd{class: "w-[85%]"}
+                %a{:href => post.page_url, class: "hover:underline"}= post.page_url
+              %dt{class: "w-[15%]"}
                 Photo Id:
-              %td
-                %a{:href => "/photo/#{post.photo.id.to_s}"}= h post.photo.id
-            %tr
-              %th
+              %dd{class: "w-[85%]"}
+                %a{:href => "/photo/#{post.photo.id.to_s}", class: "hover:underline"}= h post.photo.id
+              %dt{class: "w-[15%]"}
                 Size:
-              %td
+              %dd{class: "w-[85%]"}
                 = h(post.photo.width.to_s + "x" + post.photo.height.to_s)
-            %tr
-              %th
+              %dt{class: "w-[15%]"}
                 File size:
-              %td
+              %dd{class: "w-[85%]"}
                 = h post.photo.filesize
-            %tr
-              %th
+              %dt{class: "w-[15%]"}
                 MD5:
-              %td
+              %dd{class: "w-[85%]"}
                 = h post.photo.md5
-            %tr
-              %th
+              %dt{class: "w-[15%]"}
                 SHA256:
-              %td
+              %dd{class: "w-[85%]"}
                 = h post.photo.sha256
-            %tr
-              %th
+              %dt{class: "w-[15%]"}
                 Tags:
-              %td
+              %dd{class: "w-[85%]"}
                 = h post.photo.taggings.map{|t| t.tag.name.to_s}.sort.join(' ')
-            %tr
-              %th
+              %dt{class: "w-[15%]"}
                 Posted:
-              %td
+              %dd{class: "w-[85%]"}
                 = h post.datetime
 
   %div.pageNavi
-    - unless @page.first_page?
-      %span
-        %a{:href => "/recent/#{@page.prev_page}"} &#171; Prev
-    %span= "[ #{@page.current_page} / #{@page.page_count} ]"
-    - unless @page.last_page?
-      %span
-        %a{:href => "/recent/#{@page.next_page}"} Next &#187;
+    %div{class: "flex flex-row justify-center gap-2"}
+      - unless @page.first_page?
+        %span
+          %a{:href => "/recent/#{@page.prev_page}"} &#171; Prev
+      %span= "[ #{@page.current_page} / #{@page.page_count} ]"
+      - unless @page.last_page?
+        %span
+          %a{:href => "/recent/#{@page.next_page}"} Next &#187;

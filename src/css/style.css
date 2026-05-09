@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+@source "../../routes/**/*.haml";
+
+@theme {
+    --font-display: "Oswald", sans-serif;
+}

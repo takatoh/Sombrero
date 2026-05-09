@@ -1,24 +1,28 @@
 %div#main
   %form{ :action => "/clip", :method => "POST" }
-    %table
+    %table{class: "border-separate"}
       %tr
-        %td URL:
+        %td{class: "w-24 font-bold"}
+          URL:
         %td
-          %input{ :type => "text", :name => "url", :size => 100 }
+          %input{ :type => "text", :name => "url", :size => 80, :class => "bg-white border border-2/3 border-olive-500 rounded-sm" }
       %tr
-        %td Page URL:
+        %td{class: "w-24 font-bold"}
+          Page URL:
         %td
-          %input{ :type => "text", :name => "page_url", :size => 100 }
+          %input{ :type => "text", :name => "page_url", :size => 80, :class => "bg-white border border-2/3 border-olive-500 rounded-sm" }
       %tr
-        %td Tags:
+        %td{class: "w-24 font-bold"}
+          Tags:
         %td
-          %input{ :type => "text", :name => "tags", :size => 100 }
+          %input{ :type => "text", :name => "tags", :size => 80, :class => "bg-white border border-2/3 border-olive-500 rounded-sm" }
       %tr
-        %td Force:
+        %td{class: "w-24 font-bold"}
+          Force:
         %td
           %input{ :type => "checkbox", :name => "force" }
       %tr
+        %td{class: "w-24 font-bold"}
         %td
-        %td
-          %input{ :type => "submit", :value => "Clip" }
+          %input{ :type => "submit", :value => "Clip", :class => "w-12 border rounded-md border-olive-600 bg-olive-600 text-slate-200 font-bold" }
 

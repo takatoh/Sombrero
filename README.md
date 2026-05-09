@@ -41,3 +41,10 @@ $ docker compose run --rm sombrero bundle exec rake setup
 ```sh
 $ docker compose up -d
 ```
+
+### TailwindCSS
+ページのスタイルに TailwindCSS を利用しているので、コンテナないで watch させておく。
+
+```sh
+$ npm run watch
+```

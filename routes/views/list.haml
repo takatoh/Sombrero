@@ -1,24 +1,27 @@
 %div#main
   %div.pageNavi
-    - unless @page.first_page?
-      %span
-        %a{:href => "/list/#{@page.prev_page}"} &#171; Prev
-    %span= "[ #{@page.current_page} / #{@page.page_count} ]"
-    - unless @page.last_page?
-      %span
-        %a{:href => "/list/#{@page.next_page}"} Next &#187;
+    %div{class: "flex flex-row justify-center gap-2"}
+      - unless @page.first_page?
+        %span
+          %a{:href => "/list/#{@page.prev_page}"} &#171; Prev
+      %span= "[ #{@page.current_page} / #{@page.page_count} ]"
+      - unless @page.last_page?
+        %span
+          %a{:href => "/list/#{@page.next_page}"} Next &#187;
 
-  %div#photoList
-    - @photos.each do |photo|
-      %div.photoBox
-        %a{:href => '/photo/' + photo.id.to_s}
-          %img.thumbnail{:src => '/images/' + photo.thumbnail_path}
+  %div#photoList{class: "flex justify-center"}
+    %div{class: "py-4 grid grid-cols-4 gap-x-8 gap-y-4"}
+      - @photos.each do |photo|
+        %div{class: "photoBox w-[170px] h-[170px] border border-solid rounded-md border-olive-500 bg-white flex justify-center items-center"}
+          %a{:href => '/photo/' + photo.id.to_s}
+            %img.thumbnail{:src => '/images/' + photo.thumbnail_path, :class => "border border-solid border-gray-200"}
 
   %div.pageNavi
-    - unless @page.first_page?
-      %span
-        %a{:href => "/list/#{@page.prev_page}"} &#171; Prev
-    %span= "[ #{@page.current_page} / #{@page.page_count} ]"
-    - unless @page.last_page?
-      %span
-        %a{:href => "/list/#{@page.next_page}"} Next &#187;
+    %div{class: "flex flex-row justify-center gap-2"}
+      - unless @page.first_page?
+        %span
+          %a{:href => "/list/#{@page.prev_page}"} &#171; Prev
+      %span= "[ #{@page.current_page} / #{@page.page_count} ]"
+      - unless @page.last_page?
+        %span
+          %a{:href => "/list/#{@page.next_page}"} Next &#187;
