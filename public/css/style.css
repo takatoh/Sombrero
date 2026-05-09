@@ -7,14 +7,9 @@
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
-    --color-red-200: oklch(88.5% 0.062 18.334);
-    --color-red-700: oklch(50.5% 0.213 27.518);
     --color-slate-100: oklch(96.8% 0.007 247.896);
     --color-slate-300: oklch(86.9% 0.022 252.894);
-    --color-slate-500: oklch(55.4% 0.046 257.417);
-    --color-slate-600: oklch(44.6% 0.043 257.281);
     --color-slate-700: oklch(37.2% 0.044 257.287);
-    --color-gray-100: oklch(96.7% 0.003 264.542);
     --color-gray-200: oklch(92.8% 0.006 264.531);
     --color-olive-100: oklch(96.6% 0.005 106.5);
     --color-olive-300: oklch(88% 0.011 106.6);
@@ -226,17 +221,11 @@
   .hidden {
     display: none;
   }
-  .table {
-    display: table;
-  }
   .h-8 {
     height: calc(var(--spacing) * 8);
   }
   .h-24 {
     height: calc(var(--spacing) * 24);
-  }
-  .max-h-800 {
-    max-height: calc(var(--spacing) * 800);
   }
   .w-20 {
     width: calc(var(--spacing) * 20);
@@ -253,29 +242,17 @@
   .w-\[900px\] {
     width: 900px;
   }
-  .max-w-600 {
-    max-width: calc(var(--spacing) * 600);
-  }
   .min-w-\[160px\] {
     min-width: 160px;
   }
   .basis-24 {
     flex-basis: calc(var(--spacing) * 24);
   }
-  .border-collapse {
-    border-collapse: collapse;
-  }
-  .resize {
-    resize: both;
-  }
   .grid-cols-8 {
     grid-template-columns: repeat(8, minmax(0, 1fr));
   }
   .grid-cols-10 {
     grid-template-columns: repeat(10, minmax(0, 1fr));
-  }
-  .flex-col {
-    flex-direction: column;
   }
   .flex-row {
     flex-direction: row;
@@ -370,23 +347,14 @@
   .p-4 {
     padding: calc(var(--spacing) * 4);
   }
-  .px-2 {
-    padding-inline: calc(var(--spacing) * 2);
-  }
   .px-4 {
     padding-inline: calc(var(--spacing) * 4);
   }
   .py-4 {
     padding-block: calc(var(--spacing) * 4);
   }
-  .ps-2 {
-    padding-inline-start: calc(var(--spacing) * 2);
-  }
   .ps-3 {
     padding-inline-start: calc(var(--spacing) * 3);
-  }
-  .pe-2 {
-    padding-inline-end: calc(var(--spacing) * 2);
   }
   .pt-4 {
     padding-top: calc(var(--spacing) * 4);
@@ -418,13 +386,6 @@
   .text-slate-700 {
     color: var(--color-slate-700);
   }
-  .underline {
-    text-decoration-line: underline;
-  }
-  .outline {
-    outline-style: var(--tw-outline-style);
-    outline-width: 1px;
-  }
   .hover\:underline {
     &:hover {
       @media (hover: hover) {
@@ -442,17 +403,11 @@
   syntax: "*";
   inherits: false;
 }
-@property --tw-outline-style {
-  syntax: "*";
-  inherits: false;
-  initial-value: solid;
-}
 @layer properties {
   @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
     *, ::before, ::after, ::backdrop {
       --tw-border-style: solid;
       --tw-font-weight: initial;
-      --tw-outline-style: solid;
     }
   }
 }

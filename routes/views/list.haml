@@ -1,12 +1,13 @@
 %div#main
   %div.pageNavi
-    - unless @page.first_page?
-      %span
-        %a{:href => "/list/#{@page.prev_page}"} &#171; Prev
-    %span= "[ #{@page.current_page} / #{@page.page_count} ]"
-    - unless @page.last_page?
-      %span
-        %a{:href => "/list/#{@page.next_page}"} Next &#187;
+    %div{class: "flex flex-row justify-center gap-2"}
+      - unless @page.first_page?
+        %span
+          %a{:href => "/list/#{@page.prev_page}"} &#171; Prev
+      %span= "[ #{@page.current_page} / #{@page.page_count} ]"
+      - unless @page.last_page?
+        %span
+          %a{:href => "/list/#{@page.next_page}"} Next &#187;
 
   %div#photoList
     - @photos.each do |photo|
@@ -15,10 +16,11 @@
           %img.thumbnail{:src => '/images/' + photo.thumbnail_path}
 
   %div.pageNavi
-    - unless @page.first_page?
-      %span
-        %a{:href => "/list/#{@page.prev_page}"} &#171; Prev
-    %span= "[ #{@page.current_page} / #{@page.page_count} ]"
-    - unless @page.last_page?
-      %span
-        %a{:href => "/list/#{@page.next_page}"} Next &#187;
+    %div{class: "flex flex-row justify-center gap-2"}
+      - unless @page.first_page?
+        %span
+          %a{:href => "/list/#{@page.prev_page}"} &#171; Prev
+      %span= "[ #{@page.current_page} / #{@page.page_count} ]"
+      - unless @page.last_page?
+        %span
+          %a{:href => "/list/#{@page.next_page}"} Next &#187;
