@@ -23,12 +23,14 @@
 
     %div#tagTypeList
       %table
-        %tr
-          %th.tagTypeName
-            Name
-          %th.tagTypeDescription
-            Description
-          %th
+        %thead
+          %tr
+            %th.tagTypeName
+              Name
+            %th.tagTypeDescription
+              Description
+            %th
+        %tbody
         - @tagtypes.each do |tagtype|
           %tr
             %td
