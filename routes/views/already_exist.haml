@@ -2,45 +2,39 @@
   %h3
     Rejected:
     = h @message
-  %div.miniPhoto
-    %div.thumbnailBox
+  %div{class: "miniPhoto border border-solid border-olive-500 rounded-md bg-white m-2 p-2 min-width-[170px] flex flex-row gap-2"}
+    %div{class: "thumbnailBox p-2 min-w-[160px] min-h-[16]px flex justify-center"}
       %a{:href => '/images/' + @photo.path}
-        %img{:src => '/images/' + @photo.thumbnail_path}
-    %div.photoInfo
-      %table
-        %tr
-          %th
-            MD5:
-          %td
-            = h @photo.md5
-        %tr
-          %th
-            Photo Id:
-          %td
-            %a{:href => "/photo/#{@photo.id.to_s}"}= h @photo.id
-        %tr
-          %th
-            Size:
-          %td
-            = h(@photo.width.to_s + "x" + @photo.height.to_s)
-        %tr
-          %th
-            File size:
-          %td
-            = h @photo.filesize
-        %tr
-          %th
-            Tags:
-          %td
-            = h @photo.taggings.map{|t| t.tag.name}.join(' ')
-        %tr
-          %th
-            Sources:
-          %td
-            %ul
-              - @photo.posts.each do |post|
-                %li
-                  %a{:href => post.url}= post.url
+        %img{:src => '/images/' + @photo.thumbnail_path, class: "border border-solid border-gray-200"}
+    %div{class: "photoInfo p-1"}
+      %dl{class: "flex flex-wrap"}
+        %dt{class: "w-[15%]"}
+          MD5:
+        %dd{class: "w-[85%]"}
+          = h @photo.md5
+        %dt{class: "w-[15%]"}
+          Photo Id:
+        %dd{class: "w-[85%]"}
+          %a{:href => "/photo/#{@photo.id.to_s}", :class => "hover:underline"}= h @photo.id
+        %dt{class: "w-[15%]"}
+          Size:
+        %dd{class: "w-[85%]"}
+          = h(@photo.width.to_s + "x" + @photo.height.to_s)
+        %dt{class: "w-[15%]"}
+          File size:
+        %dd{class: "w-[85%]"}
+          = h @photo.filesize
+        %dt{class: "w-[15%]"}
+          Tags:
+        %dd{class: "w-[85%]"}
+          = h @photo.taggings.map{|t| t.tag.name}.join(' ')
+        %dt{class: "w-[15%]"}
+          Sources:
+        %dd{class: "w-[85%]"}
+          %ul
+            - @photo.posts.each do |post|
+              %li
+                %a{:href => post.url, :class => "hover:underline"}= post.url
   - if @url_posted
     %div
       %a{ :href => "/" }= h "Back to recent"
