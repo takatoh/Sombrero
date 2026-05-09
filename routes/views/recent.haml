@@ -22,54 +22,48 @@
           %div{class: "thumbnailBox p-2 min-w-[160px] min-h-[16]px flex justify-center"}
             %a{:href => '/images/' + post.photo.path, :target => '_blank', :rel => 'noopener noreferrer'}
               %img{src: '/images/' + post.photo.thumbnail_path, class: "border border-solid border-gray-200"}
-          %div.photoTitle= (post.title.nil? || post.title.empty?) ? "(untitled)" : post.title
           %div.photoInfo
-            %table
-              %tr
-                %th
-                  Source:
-                %td
-                  %a{:href => post.url}= post.url
-              %tr
-                %th
-                  Webpage:
-                %td
-                  %a{:href => post.page_url}= post.page_url
-              %tr
-                %th
-                  Photo Id:
-                %td
-                  %a{:href => "/photo/#{post.photo.id.to_s}"}= h post.photo.id
-              %tr
-                %th
-                  Size:
-                %td
-                  = h(post.photo.width.to_s + "x" + post.photo.height.to_s)
-              %tr
-                %th
-                  File size:
-                %td
-                  = h post.photo.filesize
-              %tr
-                %th
-                  MD5:
-                %td
-                  = h post.photo.md5
-              %tr
-                %th
-                  SHA256:
-                %td
-                  = h post.photo.sha256
-              %tr
-                %th
-                  Tags:
-                %td
-                  = h post.photo.taggings.map{|t| t.tag.name.to_s}.sort.join(' ')
-              %tr
-                %th
-                  Posted:
-                %td
-                  = h post.datetime
+            %dl{class: "flex flex-wrap"}
+              %dt{class: "w-[15%]"}
+                Tile:
+              %dd{class: "w-[85%]"}
+                = (post.title.nil? || post.title.empty?) ? "(untitled)" : post.title
+              %dt{class: "w-[15%]"}
+                Source:
+              %dd{class: "w-[85%]"}
+                %a{:href => post.url}= post.url
+              %dt{class: "w-[15%]"}
+                Webpage:
+              %dd{class: "w-[85%]"}
+                %a{:href => post.page_url}= post.page_url
+              %dt{class: "w-[15%]"}
+                Photo Id:
+              %dd{class: "w-[85%]"}
+                %a{:href => "/photo/#{post.photo.id.to_s}"}= h post.photo.id
+              %dt{class: "w-[15%]"}
+                Size:
+              %dd{class: "w-[85%]"}
+                = h(post.photo.width.to_s + "x" + post.photo.height.to_s)
+              %dt{class: "w-[15%]"}
+                File size:
+              %dd{class: "w-[85%]"}
+                = h post.photo.filesize
+              %dt{class: "w-[15%]"}
+                MD5:
+              %dd{class: "w-[85%]"}
+                = h post.photo.md5
+              %dt{class: "w-[15%]"}
+                SHA256:
+              %dd{class: "w-[85%]"}
+                = h post.photo.sha256
+              %dt{class: "w-[15%]"}
+                Tags:
+              %dd{class: "w-[85%]"}
+                = h post.photo.taggings.map{|t| t.tag.name.to_s}.sort.join(' ')
+              %dt{class: "w-[15%]"}
+                Posted:
+              %dd{class: "w-[85%]"}
+                = h post.datetime
 
   %div.pageNavi
     - unless @page.first_page?
