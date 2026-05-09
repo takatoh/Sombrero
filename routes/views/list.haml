@@ -9,7 +9,7 @@
         %span
           %a{:href => "/list/#{@page.next_page}"} Next &#187;
 
-  %div#photoList
+  %div#photoList{class: "grid grid-cols-4"}
     - @photos.each do |photo|
       %div.photoBox
         %a{:href => '/photo/' + photo.id.to_s}
