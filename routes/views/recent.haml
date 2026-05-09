@@ -10,7 +10,7 @@
 
   %div#recentList
     - @posts.each do |post|
-      %div{class: "recentPhoto border border-solid border-slate-700 bg-white m-2 p-2 min-width-[170px]"}
+      %div{class: "recentPhoto border border-solid border-olive-500 rounded-md bg-white m-2 p-2 min-width-[170px]"}
         %div{class: "grid grid-cols-8 border-b-1 border-gray-200"}
           %div{class: "postId col-span-6 font-bold"}
             = h('#' + post.id.to_s)
@@ -18,11 +18,11 @@
             %a{ :href => ('/post/' + post.id.to_s + '.edit'), :onclick => "return hs.htmlExpand(this, { objectType: 'ajax', width: 500, height: 300 } )" } edit
           %div.control
             %a{ :href => ('/post/' + post.id.to_s + '.delete') } delete
-        %div{class: "flex flex-row"}
+        %div{class: "flex flex-row gap-2"}
           %div{class: "thumbnailBox p-2 min-w-[160px] min-h-[16]px flex justify-center"}
             %a{:href => '/images/' + post.photo.path, :target => '_blank', :rel => 'noopener noreferrer'}
               %img{src: '/images/' + post.photo.thumbnail_path, class: "border border-solid border-gray-200"}
-          %div.photoInfo
+          %div{class: "photoInfo p-1"}
             %dl{class: "flex flex-wrap"}
               %dt{class: "w-[15%]"}
                 Tile:
