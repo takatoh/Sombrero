@@ -1,28 +1,34 @@
-%div#sidebar
-  %ul
-    %li
-      %a{:href => "/tags/1"} Tags
-    %li
-      %a{:href => "/tagtypes/1"} Tag types
+%div{class: "flex"}
+  %div{id: "sidebar", class: "w-40"}
+    %ul
+      %li
+        %a{:href => "/tags/1"} Tags
+      %li
+        %a{:href => "/tagtypes/1"} Tag types
 
-%div#main
-  %h2 Edit tag
+  %div#main
+    %h2{class: "text-2xl"}
+      Edit tag
 
-  %form{ :action => "/tagtypes/edit/#{@tag_type.id}", :method => "POST" }
-    %input{ :type => "hidden", :name => "_method", :value => "PUT" }
-    %table
-      %tr
-        %td Id:
-        %td= @tag_type.id
-      %tr
-        %td Name:
-        %td
-          %input{ :type => "text", :name => "name", :size => 80, :value => @tag_type.name }
-      %tr
-        %td Description:
-        %td
-          %input{ :type => "text", :name => "description", :size => 80, :value => @tag_type.description }
-      %tr
-        %td
-        %td
-          %input{ :type => "submit", :value => "Save" }
+    %form{ :action => "/tagtypes/edit/#{@tag_type.id}", :method => "POST" }
+      %input{ :type => "hidden", :name => "_method", :value => "PUT" }
+      %table{class: "border-separate"}
+        %tr
+          %td{class: "w-24 font-bold"}
+            Id:
+          %td
+            = @tag_type.id
+        %tr
+          %td{class: "w-24 font-bold"}
+            Name:
+          %td
+            %input{ :type => "text", :name => "name", :size => 56, :value => @tag_type.name, :class => "bg-white border border-2/3 border-olive-500 rounded-sm" }
+        %tr
+          %td{class: "w-24 font-bold"}
+            Description:
+          %td
+            %input{ :type => "text", :name => "description", :size => 56, :value => @tag_type.description, :class => "bg-white border border-2/3 border-olive-500 rounded-sm" }
+        %tr
+          %td
+          %td
+            %input{ :type => "submit", :value => "Save", :class => "w-12 border rounded-md border-olive-600 bg-olive-600 text-slate-200 font-bold" }
