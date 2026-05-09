@@ -22,22 +22,22 @@
           %a{:href => "/tagtypes/#{@page.next_page}"} Next &#187;
 
     %div#tagTypeList
-      %table
+      %table{class: "table-fixed border-collapse border-t-2 border-b-2 border-olive-400"}
         %thead
-          %tr
-            %th.tagTypeName
+          %tr{class: "border-b-2 border-olive-400 bg-slate-200"}
+            %th{class: "tagTypeName w-24"}
               Name
-            %th.tagTypeDescription
+            %th{class: "tagTypeDescription w-120"}
               Description
             %th
         %tbody
         - @tagtypes.each do |tagtype|
-          %tr
-            %td
+          %tr{class: "border-b border-olive-400 bg-white"}
+            %td{class: "px-2"}
               = h tagtype.name
-            %td
+            %td{class: "px-2"}
               = h tagtype.description
-            %td
+            %td{class: "px-2"}
               %a{:href => "/tagtypes/edit/#{tagtype.id}"} (edit)
 
     %div{class: "pageNavi flex flex-row justify-center gap-2"}
