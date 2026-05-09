@@ -1,28 +1,28 @@
 %div#main
   %form{ :action => "/post", :method => "POST", :enctype => "multipart/form-data" }
-    %table
+    %table{class: "border-separate"}
       %tr
-        %td{class: "font-bold"}
+        %td{class: "w-24 font-bold"}
           File:
         %td
-          %input{ :type => "file", :name => "file", :size => 90, :class => "bg-white border border-2/3 border-olive-500 rounded-sm" }
+          %input{ :type => "file", :name => "file", :size => 80, :class => "bg-white border border-2/3 border-olive-500 rounded-sm" }
       %tr
-        %td{class: "font-bold"}
+        %td{class: "w-24 font-bold"}
           Source:
         %td
-          %input{ :type => "text", :name => "url", :size => 90, :class => "bg-white border border-2/3 border-olive-500 rounded-sm" }
+          %input{ :type => "text", :name => "url", :size => 80, :class => "bg-white border border-2/3 border-olive-500 rounded-sm" }
       %tr
-        %td{class: "font-bold"}
+        %td{class: "w-24 font-bold"}
           Page URL:
         %td
-          %input{ :type => "text", :name => "page_url", :size => 90, :class => "bg-white border border-2/3 border-olive-500 rounded-sm" }
+          %input{ :type => "text", :name => "page_url", :size => 80, :class => "bg-white border border-2/3 border-olive-500 rounded-sm" }
       %tr
-        %td{class: "font-bold"}
+        %td{class: "w-24 font-bold"}
           Tags:
         %td
-          %input{ :type => "text", :name => "tags", :size => 90, :class => "bg-white border border-2/3 border-olive-500 rounded-sm" }
+          %input{ :type => "text", :name => "tags", :size => 80, :class => "bg-white border border-2/3 border-olive-500 rounded-sm" }
       %tr
-        %td{class: "font-bold"}
+        %td{class: "w-24 font-bold"}
           Force:
         %td
           %input{ :type => "checkbox", :name => "force" }

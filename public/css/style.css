@@ -240,6 +240,12 @@
   .w-20 {
     width: calc(var(--spacing) * 20);
   }
+  .w-24 {
+    width: calc(var(--spacing) * 24);
+  }
+  .w-36 {
+    width: calc(var(--spacing) * 36);
+  }
   .w-\[15\%\] {
     width: 15%;
   }
@@ -260,6 +266,9 @@
   }
   .basis-24 {
     flex-basis: calc(var(--spacing) * 24);
+  }
+  .table-fixed {
+    table-layout: fixed;
   }
   .border-collapse {
     border-collapse: collapse;
