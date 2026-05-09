@@ -19,9 +19,9 @@
           %div.control
             %a{ :href => ('/post/' + post.id.to_s + '.delete') } delete
         %div{class: "flex flex-row"}
-          %div.thumbnailBox
+          %div{class: "thumbnailBox p-2 min-w-[160px] min-h-[16]px flex justify-center"}
             %a{:href => '/images/' + post.photo.path, :target => '_blank', :rel => 'noopener noreferrer'}
-              %img{:src => '/images/' + post.photo.thumbnail_path}
+              %img{src: '/images/' + post.photo.thumbnail_path, class: "border border-solid border-gray-200"}
           %div.photoTitle= (post.title.nil? || post.title.empty?) ? "(untitled)" : post.title
           %div.photoInfo
             %table
