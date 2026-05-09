@@ -31,5 +31,6 @@
           %a{:href => "/tags/1"} Setting
       %div#content
         != yield
-      %div#footer
-        = "Sombrero v#{SOMBRERO_VERSION}"
+      %div{id: "footer", class: "h-24 p-4 flex justify-center border-t-1 border-olive-400"}
+        %span{class: "text-sm"}
+          = "Sombrero v#{SOMBRERO_VERSION}"
