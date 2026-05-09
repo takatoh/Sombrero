@@ -296,12 +296,12 @@ class SombreroView < Sinatra::Base
   # Listing tag types.
 
   get "/tagtypes/new" do
-    @styles = %w( css/style css/tag_type_list )
+    @styles = %w( css/style )
     haml :tag_type_new
   end
 
   post "/tagtypes/new" do
-    @styles = %w( css/style css/tag_type_list )
+    @styles = %w( css/style )
     ::TagType.create(:name => params[:name], :description => params[:description])
     redirect "/tagtypes/1"
   end
@@ -309,20 +309,20 @@ class SombreroView < Sinatra::Base
   get "/tagtypes/:page" do
     @page = ::TagType.order_by(:id).extension(:pagination).paginate(params[:page].to_i, 25)
     @tagtypes = @page.all
-    @styles = %w( css/style css/tag_type_list)
+    @styles = %w( css/style)
     session["page"] = params[:page]
     haml :tag_type_list
   end
 
   get "/tagtypes/edit/:id" do
     @tag_type = ::TagType.find(:id => params[:id])
-    @styles = %w( css/style css/tag_type_list )
+    @styles = %w( css/style )
     haml :tag_type_edit
   end
 
   put "/tagtypes/edit/:id" do
     @tag_type = ::TagType.find(:id => params[:id])
-    @styles = %w( css/style css/tag_type_list )
+    @styles = %w( css/style )
     @tag_type.name = params[:name]
     @tag_type.description = params[:description]
     @tag_type.save
