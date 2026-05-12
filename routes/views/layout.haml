@@ -8,10 +8,10 @@
       %link{:rel => "stylesheet", :type => "text/css", :href => "/#{style}.css"}
 
 
-  %body{class: "flex justify-center bg-olive-100 text-slate-700"}
+  %body{class: "flex justify-center bg-olive-100 text-slate-700 font-display"}
     %div{id: "container", class: "w-[900px]"}
       %div{id: "header", class: "h-24 mt-8 px-8 bg-olive-300 border-2 rounded-xl content-center grid grid-cols-9 gap-1"}
-        %h1{class:"text-3xl font-bold col-span-7"}
+        %h1{class:"text-3xl font-title font-bold col-span-7"}
           %a{:href => "/"} #{SOMBRERO_CONFIG["site_title"]}
         %button{type: "button", onclick: "location.href='/clip/new'", class: "h-8 w-20 bg-olive-600 rounded-full font-bold text-slate-200 flex justify-center items-center"}
           Clip
