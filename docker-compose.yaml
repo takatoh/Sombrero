@@ -9,6 +9,7 @@ services:
     volumes:
       - .:/app:cached
     environment:
+      TZ: Asia/Tokyo
       HOST: 0.0.0.0
       PORT: 9292
       RACK_ENV: ${RACK_ENV:-development}
