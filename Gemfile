@@ -7,6 +7,7 @@ gem "sinatra"
 gem "haml"
 gem "sassc"
 gem "http"
+gem "ruby-vips"
 gem "rake"
 
 gem "puma"
