@@ -6,7 +6,7 @@ gem "rack"
 gem "sinatra"
 gem "haml"
 gem "sassc"
-gem "http"
+gem "http", "~> 5.0"
 gem "ruby-vips"
 gem "rake"
 
