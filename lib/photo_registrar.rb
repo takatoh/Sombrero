@@ -15,6 +15,7 @@ require "digest"
 require "model"
 require "file_fetcher"
 require "photo_storage"
+require "image_processor"
 
 
 class PhotoRegistrar
@@ -150,7 +151,7 @@ class PhotoRegistrar
 
 
   def image_size(file)
-    `identify -format "%[width] %[height]" #{file}`.split(" ").map(&:to_i)
+    ImageProcessor.get_image_size(file)
   end
 
 end   # of class PhotoRegistrar

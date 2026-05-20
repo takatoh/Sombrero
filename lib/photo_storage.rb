@@ -8,11 +8,13 @@ require "pathname"
 require "uri"
 
 require "random_string"
+require "image_processor"
 
 
 class PhotoStorage
 
-  THUMBNAIL_GEOMETRY = "150x150"
+  THUMBNAIL_WIDTH    = 150
+  THUMBNAIL_HEIGHT   = 150
   SAMPLE_WIDTH       = 600
   SAMPLE_HEIGHT      = 800
   FILE_NAME_LETTERS  = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
@@ -61,7 +63,7 @@ class PhotoStorage
     thumbpath = thumb_fullpath(opts[:name])
     return thumb_path(opts[:name]) if File.exist?(thumbpath)
     FileUtils.mkdir_p(thumbpath.parent)
-    system("convert -thumbnail #{THUMBNAIL_GEOMETRY} -flatten #{photopath} #{thumbpath}")
+    ImageProcessor.downsize_to_limit(photopath, THUMBNAIL_WIDTH, THUMBNAIL_HEIGHT, thumbpath)
     thumb_path(opts[:name])
   end
 
@@ -70,13 +72,7 @@ class PhotoStorage
     samplepath = sample_fullpath(opts[:name])
     return sample_path(opts[:name]) if File.exist?(samplepath)
     FileUtils.mkdir_p(samplepath.parent)
-    width = `identify -format %[width] #{photopath}`.to_i
-    height = `identify -format %[height] #{photopath}`.to_i
-    if width > SAMPLE_WIDTH or height > SAMPLE_HEIGHT
-      system("convert -scale #{SAMPLE_WIDTH}x#{SAMPLE_HEIGHT} -flatten #{photopath} #{samplepath}")
-    else
-      FileUtils.cp(photopath, samplepath)
-    end
+    ImageProcessor.downsize_to_limit(photopath, SAMPLE_WIDTH, SAMPLE_HEIGHT, samplepath)
     sample_path(opts[:name])
   end
 

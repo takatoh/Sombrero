@@ -7,7 +7,7 @@ RUN apt-get update \
   && apt-get install -y \
     build-essential \
     pkg-config \
-    imagemagick \
+    libvips-dev \
     nodejs \
     npm \
   && apt-get clean \
