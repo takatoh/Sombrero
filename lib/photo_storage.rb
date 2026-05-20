@@ -13,7 +13,6 @@ require "image_processor"
 
 class PhotoStorage
 
-  THUMBNAIL_GEOMETRY = "150x150"
   THUMBNAIL_WIDTH    = 150
   THUMBNAIL_HEIGHT   = 150
   SAMPLE_WIDTH       = 600
