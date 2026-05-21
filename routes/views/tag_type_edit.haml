@@ -1,12 +1,12 @@
 %div{class: "flex"}
-  %div{id: "sidebar", class: "w-40"}
+  %aside{id: "sidebar", class: "w-40"}
     %ul
       %li
         %a{:href => "/tags/1"} Tags
       %li
         %a{:href => "/tagtypes/1"} Tag types
 
-  %div#main
+  %main
     %h2{class: "text-2xl"}
       Edit tag
 
@@ -31,4 +31,4 @@
         %tr
           %td
           %td
-            %input{ :type => "submit", :value => "Save", :class => "w-12 border rounded-md border-olive-600 bg-olive-600 text-slate-200 font-bold" }
+            %button{ :type => "submit", :class => "w-12 border rounded-md border-olive-600 bg-olive-600 text-slate-200 font-bold" } Save
